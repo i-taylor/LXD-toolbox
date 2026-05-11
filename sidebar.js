@@ -621,7 +621,11 @@
       height: 68px;
       overflow: hidden;
       display: flex; align-items: center; justify-content: center;
+      cursor: zoom-in;
+      position: relative;
+      transition: background .15s;
     }
+    #${ID} .lxd-comp-tile-preview:hover { background: #f0ede6; }
     #${ID} .lxd-comp-tile-preview > * { pointer-events: none; width: 100%; }
     #${ID} .lxd-comp-tile-name { padding: 6px 10px 4px; font-size: .75rem; font-weight: 600; color: #1c1c1e; line-height: 1.3; }
     #${ID} .lxd-comp-tile-actions { display: flex; gap: 5px; padding: 0 10px 9px; }
@@ -733,6 +737,95 @@
     }
     #${ID} .lxd-class-row code { font-size: .73rem; color: #1c1c1e; white-space: nowrap; }
     #${ID} .lxd-class-row span { font-size: .7rem; color: #888; text-align: right; }
+
+    /* ── Preview modal ── */
+    #${ID} .lxd-preview-modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(247,246,242,.97);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      padding: 20px 18px 24px;
+      gap: 14px;
+    }
+    #${ID} .lxd-pm-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    #${ID} .lxd-pm-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #1c1c1e;
+      line-height: 1.3;
+    }
+    #${ID} .lxd-pm-close {
+      background: rgba(0,0,0,.06);
+      border: none;
+      border-radius: 50%;
+      width: 26px; height: 26px;
+      font-size: 14px;
+      cursor: pointer;
+      color: #555;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s;
+    }
+    #${ID} .lxd-pm-close:hover { background: rgba(0,0,0,.13); }
+    #${ID} .lxd-pm-preview-wrap {
+      background: white;
+      border: 1px solid #e4e2dc;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 16px;
+      min-height: 120px;
+    }
+    #${ID} .lxd-pm-preview-inner {
+      width: 100%;
+      transform: scale(1.6);
+      transform-origin: center center;
+      pointer-events: none;
+    }
+    #${ID} .lxd-pm-desc {
+      font-size: .8rem;
+      color: #888;
+      line-height: 1.45;
+    }
+    #${ID} .lxd-pm-actions {
+      display: flex;
+      gap: 8px;
+    }
+    #${ID} .lxd-pm-insert {
+      flex: 1;
+      padding: 8px 14px;
+      background: #00274C;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: .82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    #${ID} .lxd-pm-insert:hover { background: #003a6e; }
+    #${ID} .lxd-pm-copy {
+      padding: 8px 14px;
+      background: #f0ede6;
+      color: #555;
+      border: 1px solid #e4e2dc;
+      border-radius: 8px;
+      font-size: .82rem;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+    }
+    #${ID} .lxd-pm-copy:hover { background: #e8e4db; color: #333; }
 
     /* ── Settings panel ── */
     #${ID} .lxd-settings-btn {
@@ -981,6 +1074,21 @@
       ${STYLE_GUIDE_HTML}
     </div>
 
+    <div class="lxd-preview-modal" id="${ID}-preview-modal" style="display:none">
+      <div class="lxd-pm-header">
+        <div class="lxd-pm-name" id="${ID}-pm-name"></div>
+        <button class="lxd-pm-close" id="${ID}-pm-close">✕</button>
+      </div>
+      <div class="lxd-pm-preview-wrap">
+        <div class="lxd-pm-preview-inner" id="${ID}-pm-preview"></div>
+      </div>
+      <div class="lxd-pm-desc" id="${ID}-pm-desc"></div>
+      <div class="lxd-pm-actions">
+        <button class="lxd-pm-insert" id="${ID}-pm-insert">Insert</button>
+        <button class="lxd-pm-copy"   id="${ID}-pm-copy">Copy</button>
+      </div>
+    </div>
+
   `;
 
   const toast = document.createElement('div');
@@ -1151,6 +1259,42 @@
   document.getElementById(ID + '-back-btn').addEventListener('click', () => {
     showCompHome();
     document.getElementById(ID + '-search').value = '';
+  });
+
+  // ── Preview modal ──────────────────────────────────────────────────────────
+  function hidePreviewModal() {
+    document.getElementById(ID + '-preview-modal').style.display = 'none';
+  }
+
+  sidebar.addEventListener('click', e => {
+    const preview = e.target.closest('.lxd-comp-tile-preview');
+    if (!preview) return;
+    const tile    = preview.closest('.lxd-comp-tile');
+    const name    = tile.querySelector('.lxd-comp-tile-name').textContent.trim();
+    const desc    = COMPONENTS.find(c => c.name.toLowerCase() === tile.dataset.name)?.desc || '';
+    const htmlEnc = tile.querySelector('.lxd-btn-insert')?.dataset.html || '';
+    document.getElementById(ID + '-pm-name').textContent    = name;
+    document.getElementById(ID + '-pm-desc').textContent    = desc;
+    document.getElementById(ID + '-pm-preview').innerHTML   = preview.innerHTML;
+    document.getElementById(ID + '-pm-insert').dataset.html = htmlEnc;
+    document.getElementById(ID + '-pm-copy').dataset.html   = htmlEnc;
+    document.getElementById(ID + '-preview-modal').style.display = 'flex';
+  });
+
+  document.getElementById(ID + '-pm-close').addEventListener('click', hidePreviewModal);
+
+  document.getElementById(ID + '-pm-insert').addEventListener('click', function () {
+    insertHTML(decodeURIComponent(this.dataset.html));
+    hidePreviewModal();
+  });
+
+  document.getElementById(ID + '-pm-copy').addEventListener('click', function () {
+    copyHTML(decodeURIComponent(this.dataset.html));
+    hidePreviewModal();
+  });
+
+  document.addEventListener('keydown', function onKey(e) {
+    if (e.key === 'Escape') hidePreviewModal();
   });
 
   // ── Settings toggle ────────────────────────────────────────────────────────
