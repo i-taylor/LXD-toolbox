@@ -527,38 +527,33 @@
     #${ID} .lxd-back-btn:hover { color: #333; }
     #${ID} .lxd-browse-title { font-weight: 700; font-size: .88rem; color: #1c1c1e; }
 
-    /* ── Component list (level 2 + search) ── */
+    /* ── Component tile grid (level 2 + search) ── */
     #${ID} .lxd-comp-tiles {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
       padding: 8px 10px;
     }
     #${ID} .lxd-comp-tile {
       background: white;
       border: 1px solid #e4e2dc;
       border-radius: 9px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 7px 9px;
+      overflow: hidden;
       transition: box-shadow .15s;
     }
-    #${ID} .lxd-comp-tile:hover { box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+    #${ID} .lxd-comp-tile:hover { box-shadow: 0 3px 10px rgba(0,0,0,.08); }
     #${ID} .lxd-comp-tile-preview {
-      width: 48px; height: 36px;
-      flex-shrink: 0;
-      border-radius: 5px;
+      padding: 7px 7px 5px;
+      border-bottom: 1px solid #f0ede6;
+      height: 44px;
       overflow: hidden;
-      background: #f7f6f2;
-      border: 1px solid #ece9e2;
       display: flex; align-items: center; justify-content: center;
     }
-    #${ID} .lxd-comp-tile-preview > * { transform: scale(.55); transform-origin: center center; pointer-events: none; }
-    #${ID} .lxd-comp-tile-name { flex: 1; font-size: .78rem; font-weight: 600; color: #1c1c1e; line-height: 1.3; min-width: 0; }
-    #${ID} .lxd-comp-tile-actions { display: flex; gap: 4px; flex-shrink: 0; }
-    #${ID} .lxd-comp-tile-actions .lxd-btn-insert { padding: 4px 9px; font-size: .72rem; }
-    #${ID} .lxd-comp-tile-actions .lxd-btn-copy   { padding: 4px 8px; font-size: .72rem; }
+    #${ID} .lxd-comp-tile-preview > * { transform: scale(.9); transform-origin: center center; pointer-events: none; width: 100%; }
+    #${ID} .lxd-comp-tile-name { padding: 4px 7px 3px; font-size: .7rem; font-weight: 600; color: #1c1c1e; line-height: 1.3; }
+    #${ID} .lxd-comp-tile-actions { display: flex; gap: 4px; padding: 0 7px 7px; }
+    #${ID} .lxd-comp-tile-actions .lxd-btn-insert { flex: 1; padding: 3px 4px; font-size: .68rem; }
+    #${ID} .lxd-comp-tile-actions .lxd-btn-copy   { padding: 3px 6px; font-size: .68rem; }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
