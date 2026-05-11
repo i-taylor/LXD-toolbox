@@ -1271,7 +1271,11 @@
     const name    = tile.querySelector('.lxd-comp-tile-name').textContent.trim();
     const desc    = COMPONENTS.find(c => c.name.toLowerCase() === tile.dataset.name)?.desc || '';
     const htmlEnc = tile.querySelector('.lxd-btn-insert')?.dataset.html || '';
-    const inner = decodeURIComponent(htmlEnc);
+    const IMG_PH   = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNlNWU3ZWIiLz48Y2lyY2xlIGN4PSIyMjAiIGN5PSIxMzAiIHI9IjY1IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTAgMzEwIEwyMjAgMTcwIEwzNTAgMjgwIEw0NjAgMjEwIEw4MDAgMzcwIEw4MDAgNDUwIEwwIDQ1MCBaIiBmaWxsPSIjOWNhM2FmIi8+PC9zdmc+';
+    const PHOTO_PH = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSIxMDAiIGZpbGw9IiNlNWU3ZWIiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3OCIgcj0iMzgiIGZpbGw9IiM5Y2EzYWYiLz48cGF0aCBkPSJNMjAgMjAwIFEyMCAxMzggMTAwIDEzOCBRMTgwIDEzOCAxODAgMjAwIFoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
+    const inner = decodeURIComponent(htmlEnc)
+      .replace(/PASTE_IMAGE_URL/g, IMG_PH)
+      .replace(/PASTE_PHOTO_URL/g, PHOTO_PH);
     document.getElementById(ID + '-pm-name').textContent    = name;
     document.getElementById(ID + '-pm-desc').textContent    = desc;
     document.getElementById(ID + '-pm-insert').dataset.html = htmlEnc;
