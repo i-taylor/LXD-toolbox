@@ -1277,7 +1277,7 @@
     document.getElementById(ID + '-pm-insert').dataset.html = htmlEnc;
     document.getElementById(ID + '-pm-copy').dataset.html   = htmlEnc;
     document.getElementById(ID + '-pm-frame').srcdoc = `<!DOCTYPE html><html><head>
-      <link rel="stylesheet" href="https://academic-innovation.github.io/canvas-css/canvas-style.css">
+      <link rel="stylesheet" href="https://academic-innovation.github.io/canvas-css/dist/canvas-style.css">
       <style>body{margin:0;padding:16px;}</style>
     </head><body><div class="new-canvas">${inner}</div></body></html>`;
     document.getElementById(ID + '-preview-modal').style.display = 'flex';
