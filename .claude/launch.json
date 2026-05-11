@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "LXD Toolbox",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3000"],
+      "port": 3000,
+      "cwd": "/Users/isaactay/Github/LXD-toolbox"
+    },
+    {
+      "name": "Course Image Composer",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3001"],
+      "port": 3001,
+      "cwd": "/Users/isaactay/Github/course-homepage-image-generator"
+    }
+  ]
+}

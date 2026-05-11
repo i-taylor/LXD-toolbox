@@ -66,7 +66,7 @@
       color: '#3B82F6',
       desc: 'Info callout — definitions, reminders, key takeaways.',
       preview: '<div style="border:2px solid #3B82F6;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#3B82F6;border-radius:3px;opacity:.7"></div><div style="width:110px;height:6px;background:#bfdbfe;border-radius:3px"></div></div>',
-      html: `<div class="new-canvas">\n<div class="callout-box">\n  <p class="tag">Tag label</p>\n  <p>Put content here</p>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box">\n    <p class="tag">Information</p>\n    <p>Put content here</p>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Callout Box (Action)',
@@ -74,7 +74,7 @@
       color: '#FFCB05',
       desc: 'Action callout — prompts, reflections, learner tasks.',
       preview: '<div style="border:2px solid #FFCB05;background:#fffdf0;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="width:110px;height:6px;background:#fde68a;border-radius:3px"></div></div>',
-      html: `<div class="new-canvas">\n<div class="callout-box action">\n  <p class="tag">Tag label</p>\n  <p>Put content here</p>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Action</p>\n    <p>Put content here</p>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Callout Box (Highlight)',
@@ -82,7 +82,7 @@
       color: '#00274C',
       desc: 'High-visibility callout — warnings, strong emphasis.',
       preview: '<div style="background:#00274c;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#FFCB05;border-radius:3px"></div><div style="width:110px;height:6px;background:rgba(255,255,255,.25);border-radius:3px"></div></div>',
-      html: `<div class="new-canvas">\n<div class="callout-box highlight">\n  <p class="tag">Tag label</p>\n  <p>Put content here</p>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box highlight">\n    <p class="tag">Highlight</p>\n    <p>Put content here</p>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Pull Quote',
@@ -90,7 +90,7 @@
       color: '#FFCB05',
       desc: 'Styled blockquote for key quotes or takeaways.',
       preview: '<div style="border-left:4px solid #FFCB05;background:#fffdf0;padding:8px 12px;border-radius:0 6px 6px 0;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:100px;height:7px;background:#d4a800;border-radius:3px;opacity:.6;font-style:italic"></div><div style="width:55px;height:5px;background:#fde68a;border-radius:3px"></div></div>',
-      html: `<div class="new-canvas">\n<blockquote>\n  <p>Put quote text here</p>\n  <p>Put author name here</p>\n</blockquote>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <blockquote>\n    <p>Put quote text here</p>\n    <p>Put author name here</p>\n  </blockquote>\n</section>\n</div>`
     },
     {
       name: 'Side-by-Side Callout',
@@ -150,7 +150,7 @@
       color: '#00274C',
       desc: 'Expandable FAQ-style sections with details/summary.',
       preview: '<div style="display:flex;flex-direction:column;gap:4px;padding:4px 2px"><div style="background:#f3f4f6;border-radius:4px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center"><div style="width:60px;height:7px;background:#d1d5db;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div><div style="background:#f3f4f6;border-radius:4px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center"><div style="width:80px;height:7px;background:#d1d5db;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div></div>',
-      html: `<div class="new-canvas">\n<section class="accordion">\n  <h2>Frequently Asked Questions</h2>\n  <details>\n    <summary>Accordion Item Title 1</summary>\n    <div>\n      <p>Content for accordion item 1.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Accordion Item Title 2</summary>\n    <div>\n      <p>Content for accordion item 2.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Accordion Item Title 3</summary>\n    <div>\n      <p>Content for accordion item 3.</p>\n    </div>\n  </details>\n</section>\n</div>`
+      html: `<div class="new-canvas">\n<section>\n  <section class="accordion">\n    <h2>Frequently Asked Questions</h2>\n    <details>\n      <summary>Accordion Item Title 1</summary>\n      <div>\n        <p>Content for accordion item 1.</p>\n      </div>\n    </details>\n    <details>\n      <summary>Accordion Item Title 2</summary>\n      <div>\n        <p>Content for accordion item 2.</p>\n      </div>\n    </details>\n    <details>\n      <summary>Accordion Item Title 3</summary>\n      <div>\n        <p>Content for accordion item 3.</p>\n      </div>\n    </details>\n  </section>\n</section>\n</div>`
     },
     {
       name: 'Two-Col (Text / Text)',
@@ -158,7 +158,7 @@
       color: '#8B5CF6',
       desc: 'Two text columns side by side.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div></div>',
-      html: `<div class="new-canvas">\n<div class="two-col text-text">\n  <div>\n    <p>Content for the first column.</p>\n  </div>\n  <div>\n    <p>Content for the second column.</p>\n  </div>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-text">\n    <div>\n      <h4>Column heading</h4>\n      <p>Content for the first column.</p>\n    </div>\n    <div>\n      <h4>Column heading</h4>\n      <p>Content for the second column.</p>\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Two-Col (Text / Text Light Blue)',
@@ -166,7 +166,7 @@
       color: '#3B82F6',
       desc: 'Two text columns with a light blue background.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#eff6ff;border-radius:6px;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#93c5fd;border-radius:3px"></div><div style="height:5px;background:#bfdbfe;border-radius:3px"></div></div><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#93c5fd;border-radius:3px"></div><div style="height:5px;background:#bfdbfe;border-radius:3px"></div></div></div>',
-      html: `<div class="new-canvas">\n<div class="two-col text-text light-blue">\n  <div>\n    <p>Content for the first column.</p>\n  </div>\n  <div>\n    <p>Content for the second column.</p>\n  </div>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-text light-blue">\n    <div>\n      <h4>Column heading</h4>\n      <p>Content for the first column.</p>\n    </div>\n    <div>\n      <h4>Column heading</h4>\n      <p>Content for the second column.</p>\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Two-Col (Text / Image)',
@@ -174,7 +174,7 @@
       color: '#8B5CF6',
       desc: 'Text left, image right.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="width:18px;height:18px;background:#8B5CF6;border-radius:3px;opacity:.4"></div></div></div>',
-      html: `<div class="new-canvas">\n<div class="two-col text-img">\n  <div>\n    <p>Text content for the first column. In the second column, replace the image with your own, and ensure that it is properly sized and alt-texted.</p>\n  </div>\n  <div>\n    <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n  </div>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-img">\n    <div>\n      <h3>Column Heading</h3>\n      <p>Text content for the left column.</p>\n    </div>\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Two-Col (Text / Image Dark)',
@@ -182,7 +182,7 @@
       color: '#1c1c1e',
       desc: 'Text and image side by side, dark background.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#1c1c1e;border-radius:6px;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="height:5px;background:rgba(255,255,255,.2);border-radius:3px"></div></div><div style="background:rgba(255,255,255,.1);border-radius:3px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;background:rgba(255,255,255,.3);border-radius:2px"></div></div></div>',
-      html: `<div class="new-canvas">\n<div class="two-col text-img dark">\n  <div>\n    <p>Text content for the first column.</p>\n  </div>\n  <div>\n    <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n  </div>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-img dark">\n    <div>\n      <h3>Column Heading</h3>\n      <p>Text content for the left column.</p>\n    </div>\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Two-Col (Text / Image Highlight)',
@@ -190,7 +190,7 @@
       color: '#FFCB05',
       desc: 'Text and image side by side, maize highlight background.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#fffdf0;border-radius:6px;border:2px solid #FFCB05;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="height:5px;background:#fde68a;border-radius:3px"></div></div><div style="background:#fef9c3;border-radius:3px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;background:#fde68a;border-radius:2px"></div></div></div>',
-      html: `<div class="new-canvas">\n<div class="two-col text-img highlight">\n  <div>\n    <p>Text content for the first column.</p>\n  </div>\n  <div>\n    <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n  </div>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-img highlight">\n    <div>\n      <h3>Column Heading</h3>\n      <p>Text content for the left column.</p>\n    </div>\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Instructor Panel (Blue)',
@@ -216,7 +216,7 @@
       color: '#F97316',
       desc: 'Full-width image with caption text.',
       preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:linear-gradient(135deg,#fed7aa,#fdba74);border-radius:3px;flex:1"></div><div style="width:80px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
-      html: `<div class="new-canvas">\n<div class="img-caption">\n  <img src="PASTE_IMAGE_URL" alt="Alt text here" loading="lazy">\n  <p><em>Put caption text here</em></p>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="img-caption">\n    <img src="PASTE_IMAGE_URL" alt="Alt text here" loading="lazy">\n    <p><em>Put caption text here</em></p>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Image (Rounded Corners)',
@@ -224,7 +224,7 @@
       color: '#F97316',
       desc: 'Full-width image with rounded corners and caption.',
       preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:linear-gradient(135deg,#fed7aa,#fdba74);border-radius:8px;flex:1"></div><div style="width:80px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
-      html: `<div class="new-canvas">\n<div class="img-caption">\n  <img src="PASTE_IMAGE_URL" class="rounded-corners" alt="Alt text here" loading="lazy">\n  <p><em>Put caption text here</em></p>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="img-caption">\n    <img src="PASTE_IMAGE_URL" class="rounded-corners" alt="Alt text here" loading="lazy">\n    <p><em>Put caption text here</em></p>\n  </div>\n</section>\n</div>`
     },
 
     // ── Tables ─────────────────────────────────────────────────────────────
@@ -234,7 +234,7 @@
       color: '#0EA5E9',
       desc: 'Standard scrollable data table.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:8px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
-      html: `<div class="new-canvas">\n<div class="table-container">\n  <table>\n    <thead>\n      <tr>\n        <th>Header</th>\n        <th>Header</th>\n        <th>Header</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="table-container">\n    <table>\n      <thead>\n        <tr>\n          <th>Header</th>\n          <th>Header</th>\n          <th>Header</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Table (Alternate Rows)',
@@ -242,7 +242,7 @@
       color: '#0EA5E9',
       desc: 'Table with alternating row background colors.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:8px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;background:#f0f9ff;display:flex;gap:8px"><div style="height:5px;background:#bae6fd;border-radius:2px;flex:1"></div><div style="height:5px;background:#bae6fd;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
-      html: `<div class="new-canvas">\n<div class="table-container">\n  <table class="alternate-rows">\n    <thead>\n      <tr>\n        <th>Header</th>\n        <th>Header</th>\n        <th>Header</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="table-container">\n    <table class="alternate-rows">\n      <thead>\n        <tr>\n          <th>Header</th>\n          <th>Header</th>\n          <th>Header</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</section>\n</div>`
     },
     {
       name: 'Table (Alternate Columns)',
@@ -250,74 +250,8 @@
       color: '#0EA5E9',
       desc: 'Table with alternating column background colors.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:4px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.3);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:4px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#f0f9ff;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:4px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#f0f9ff;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
-      html: `<div class="new-canvas">\n<div class="table-container">\n  <table class="alternate-columns">\n    <thead>\n      <tr>\n        <th>Header</th>\n        <th>Header</th>\n        <th>Header</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="table-container">\n    <table class="alternate-columns">\n      <thead>\n        <tr>\n          <th>Header</th>\n          <th>Header</th>\n          <th>Header</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</section>\n</div>`
     },
-
-    // ── Legacy ─────────────────────────────────────────────────────────────
-    {
-      name: 'Accordion A (Legacy)',
-      cat: 'Legacy',
-      color: '#6B7280',
-      desc: 'Legacy accordion style A.',
-      preview: '<div style="display:flex;flex-direction:column;gap:4px;padding:2px"><div style="background:#f3f4f6;border-radius:4px;padding:5px 8px;display:flex;justify-content:space-between"><div style="width:55px;height:6px;background:#9ca3af;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div><div style="background:#f3f4f6;border-radius:4px;padding:5px 8px;display:flex;justify-content:space-between"><div style="width:70px;height:6px;background:#9ca3af;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div></div>',
-      html: `<div class="umich-accordion-a">\n  <div>Accordion A</div>\n  <details>\n    <summary>Item One</summary>\n    <div>\n      <p>Description text for Item One.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Item Two</summary>\n    <div>\n      <p>Description text for Item Two.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Item Three</summary>\n    <div>\n      <p>Description text for Item Three.</p>\n    </div>\n  </details>\n</div>`
-    },
-    {
-      name: 'Accordion B (Legacy)',
-      cat: 'Legacy',
-      color: '#6B7280',
-      desc: 'Legacy accordion style B — glossary/definition style.',
-      preview: '<div style="display:flex;flex-direction:column;gap:4px;padding:2px"><div style="background:#e9d5ff;border-radius:4px;padding:5px 8px;display:flex;justify-content:space-between"><div style="width:55px;height:6px;background:#9ca3af;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div><div style="background:#e9d5ff;border-radius:4px;padding:5px 8px;display:flex;justify-content:space-between"><div style="width:70px;height:6px;background:#9ca3af;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div></div>',
-      html: `<div class="umich-accordion-b">\n  <div>Accordion B</div>\n  <details>\n    <summary>Definition One</summary>\n    <div>\n      <p>Description for Definition 1.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Definition Two</summary>\n    <div>\n      <p>Description for Definition 2.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Definition Three</summary>\n    <div>\n      <p>Description for Definition 3.</p>\n    </div>\n  </details>\n</div>`
-    },
-    {
-      name: 'Blue Page Header (Legacy)',
-      cat: 'Legacy',
-      color: '#1a3a5c',
-      desc: 'Legacy decorative blue bar at the top of a page.',
-      preview: '<div style="background:#1a5276;border-radius:6px;height:52px;display:flex;align-items:center;padding:0 12px"><div style="width:80px;height:10px;background:rgba(255,255,255,.4);border-radius:3px"></div></div>',
-      html: `<div class="bluePageHeader">&nbsp;</div>`
-    },
-    {
-      name: 'Blue Gradient Break (Legacy)',
-      cat: 'Legacy',
-      color: '#00274C',
-      desc: 'Centered blue gradient divider line.',
-      preview: '<div style="display:flex;align-items:center;justify-content:center;height:52px"><div style="width:70%;height:4px;background:linear-gradient(to right,rgba(0,39,76,0),#00274C,rgba(0,39,76,0));border-radius:2px"></div></div>',
-      html: `<div style="padding: 30px 0;">\n  <div style="width: 66%; height: 4px; background: linear-gradient(to right, rgba(0, 39, 76, 0), #00274C, rgba(0, 39, 76, 0)); margin: 0 auto;">&nbsp;</div>\n</div>`
-    },
-    {
-      name: 'Yellow Gradient Break (Legacy)',
-      cat: 'Legacy',
-      color: '#FFCB05',
-      desc: 'Centered maize gradient divider line.',
-      preview: '<div style="display:flex;align-items:center;justify-content:center;height:52px"><div style="width:70%;height:4px;background:linear-gradient(to right,rgba(255,203,5,0),#FFCB05,rgba(255,203,5,0));border-radius:2px"></div></div>',
-      html: `<div style="padding: 30px 0;">\n  <div style="width: 66%; height: 4px; background: linear-gradient(to right, rgba(255, 203, 5, 0), #FFCB05, rgba(255, 203, 5, 0)); margin: 0 auto;">&nbsp;</div>\n</div>`
-    },
-    {
-      name: 'Content Warning (Legacy)',
-      cat: 'Legacy',
-      color: '#1d4ed8',
-      desc: 'Blue content warning box for sensitive material.',
-      preview: '<div style="background:#1d4ed8;border-top:4px solid #60a5fa;border-radius:4px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:80px;height:8px;background:rgba(255,255,255,.7);border-radius:3px"></div><div style="width:110px;height:5px;background:rgba(255,255,255,.3);border-radius:3px"></div></div>',
-      html: `<div style="background-color: #1d4ed8; border-top: 6px solid #60a5fa; padding: 20px; margin: 30px 0; color: white; font-family: Arial;">\n  <h2 style="margin-top: 0; color: white;">Content Note:</h2>\n  <ul>\n    <li>The following content contains [add details here]. [Notes on how to proceed if uncomfortable]</li>\n  </ul>\n</div>`
-    },
-    {
-      name: 'Quote Callout (Legacy)',
-      cat: 'Legacy',
-      color: '#FFCB05',
-      desc: 'Legacy yellow-border quote block.',
-      preview: '<div style="border-top:3px solid #FFCB05;border-bottom:3px solid #FFCB05;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:100px;height:7px;background:#d4a800;border-radius:3px;opacity:.5;font-style:italic"></div><div style="width:55px;height:5px;background:#fde68a;border-radius:3px"></div></div>',
-      html: `<div class="quote divisionLineYellow divisionLineYellowTop">\n  <p style="color: #6b6b6b;">"Put your quote here"</p>\n  <h3>Quote Attribution</h3>\n</div>`
-    },
-    {
-      name: 'Landing Page Footer (Legacy)',
-      cat: 'Legacy',
-      color: '#6B7280',
-      desc: 'Michigan Online footer with logo and tagline.',
-      preview: '<div style="border-top:3px solid #FFCB05;padding:8px 12px;height:52px;display:flex;align-items:center;gap:8px"><div style="width:48px;height:10px;background:#9ca3af;border-radius:2px"></div><div style="width:110px;height:6px;background:#d1d5db;border-radius:2px"></div></div>',
-      html: `<div class="landingPageFooter divisionLineYellowTop">\n  <img role="presentation" src="https://shared-files.online.umich.edu/michigan-online/course-images/current/michiganOnline.png" alt="" width="318" height="56" />\n  <p>A Michigan Online Learning Experience</p>\n</div>`
-    }
 
   ];
 
@@ -687,8 +621,17 @@
   document.head.appendChild(styleEl);
 
   // ── Build HTML ─────────────────────────────────────────────────────────────
+  // Strip the outer <div class="new-canvas"> wrapper — insertHTML manages it
+  function stripWrapper(html) {
+    return html
+      .replace(/^<div class="new-canvas">\n?/, '')
+      .replace(/\n?<\/div>$/, '');
+  }
+
   function componentCards(list) {
-    return list.map(c => `
+    return list.map(c => {
+      const inner = encodeURIComponent(stripWrapper(c.html));
+      return `
       <div class="lxd-card" data-name="${c.name.toLowerCase()}" data-cat="${c.cat}">
         <div class="lxd-card-preview">${c.preview || ''}</div>
         <div class="lxd-card-body">
@@ -696,11 +639,12 @@
           <div class="lxd-card-name">${c.name}</div>
           <div class="lxd-card-desc">${c.desc}</div>
           <div class="lxd-card-actions">
-            <button class="lxd-btn-insert" data-html="${encodeURIComponent(c.html)}">Insert</button>
-            <button class="lxd-btn-copy"   data-html="${encodeURIComponent(c.html)}">Copy</button>
+            <button class="lxd-btn-insert" data-html="${inner}">Insert</button>
+            <button class="lxd-btn-copy"   data-html="${inner}">Copy</button>
           </div>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
 
   function snippetCards(list) {
@@ -716,7 +660,7 @@
       </div>`).join('');
   }
 
-  const CATS = ['All', 'Text', 'Callouts', 'Video', 'Layout', 'Media', 'Tables', 'Legacy'];
+  const CATS = ['All', 'Text', 'Callouts', 'Video', 'Layout', 'Media', 'Tables'];
   const catFilterHTML = CATS.map((c, i) =>
     `<button class="lxd-cat-btn${i === 0 ? ' active' : ''}" data-cat="${c}">${c}</button>`
   ).join('');
@@ -776,22 +720,60 @@
     toast._t = setTimeout(() => toast.classList.remove('show'), 2200);
   }
 
+  function doInsert(ed, html) {
+    const body = ed.getBody();
+    let wrapper = body.querySelector('.new-canvas');
+
+    if (!wrapper) {
+      // First insert — create the page wrapper at end of body, then grab it
+      ed.selection.select(body, true);
+      ed.selection.collapse(false);
+      ed.insertContent('<div class="new-canvas"><p></p></div>');
+      wrapper = body.querySelector('.new-canvas');
+    }
+
+    if (wrapper) {
+      // Always append inside the wrapper, ignoring wherever the cursor was
+      const range = ed.dom.createRng();
+      range.selectNodeContents(wrapper);
+      range.collapse(false); // collapse to end of wrapper contents
+      ed.selection.setRng(range);
+      ed.insertContent(html);
+
+      // Leave cursor at end of wrapper so the next insert also lands there
+      const updated = body.querySelector('.new-canvas');
+      if (updated) {
+        const r = ed.dom.createRng();
+        r.selectNodeContents(updated);
+        r.collapse(false);
+        ed.selection.setRng(r);
+      }
+    } else {
+      // Fallback — wrapper creation failed for some reason
+      ed.insertContent('<div class="new-canvas">' + html + '</div>');
+    }
+
+    showToast('Inserted ✓');
+  }
+
   function insertHTML(html) {
     if (window.tinymce) {
       const ed = tinymce.activeEditor || (tinymce.editors && tinymce.editors[0]);
-      if (ed) { ed.insertContent(html); showToast('Inserted ✓'); return; }
+      if (ed) { doInsert(ed, html); return; }
     }
     for (const f of document.querySelectorAll('iframe')) {
       try {
         const tw = f.contentWindow;
         if (tw && tw.tinymce) {
           const ed = tw.tinymce.activeEditor || (tw.tinymce.editors && tw.tinymce.editors[0]);
-          if (ed) { ed.insertContent(html); showToast('Inserted ✓'); return; }
+          if (ed) { doInsert(ed, html); return; }
         }
       } catch (e) { /* cross-origin */ }
     }
-    navigator.clipboard.writeText(html)
-      .then(() => showToast('Copied to clipboard — paste with ⌘V'))
+    // Clipboard fallback — wrap it for the user to paste
+    const wrapped = '<div class="new-canvas">\n' + html + '\n</div>';
+    navigator.clipboard.writeText(wrapped)
+      .then(() => showToast('Copied — paste into editor with ⌘V'))
       .catch(() => showToast('Could not insert — click inside the editor first'));
   }
 
