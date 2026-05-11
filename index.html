@@ -160,8 +160,31 @@
     color: #bbb;
   }
 
+  .card-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-preview {
+    padding: 7px 14px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, transform 0.1s;
+    letter-spacing: 0.1px;
+  }
+  .btn-preview:hover {
+    border-color: var(--accent, #aaa);
+    color: var(--accent, var(--ink));
+    transform: scale(1.03);
+  }
+
   .btn-open {
-    padding: 7px 16px;
+    padding: 7px 14px;
     background: var(--ink);
     color: white;
     border: none;
@@ -171,11 +194,54 @@
     cursor: pointer;
     transition: background 0.15s, transform 0.1s;
     letter-spacing: 0.1px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
   }
   .btn-open:hover {
     background: var(--accent, #333);
     transform: scale(1.03);
   }
+
+  /* ── Bookmarklet drag target ─────────────────────── */
+  .bookmarklet-wrap {
+    padding: 10px 22px 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bookmarklet-label {
+    font-size: 0.72rem;
+    color: #bbb;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .bookmarklet-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: #f0ede6;
+    border: 1px dashed #c8c4bb;
+    border-radius: 7px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: grab;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .bookmarklet-link:hover {
+    background: #e8e4db;
+    border-color: #aaa;
+    color: var(--ink);
+  }
+  .bookmarklet-link:active { cursor: grabbing; }
 
   /* ── Suggest card ─────────────────────────────────── */
   .card-suggest {
@@ -292,8 +358,18 @@
       </div>
       <div class="card-footer">
         <span class="card-meta">Pan · Zoom · Export</span>
-        <button class="btn-open" style="--accent: #F97316;"
-          onclick="openTool('https://i-taylor.github.io/course-homepage-image-generator/')">Open →</button>
+        <div class="card-actions">
+          <button class="btn-preview" style="--accent: #F97316;"
+            onclick="previewTool('https://i-taylor.github.io/course-homepage-image-generator/')">Preview</button>
+          <a class="btn-open" style="--accent: #F97316;"
+            href="https://i-taylor.github.io/course-homepage-image-generator/" target="_blank" rel="noopener">Open ↗</a>
+        </div>
+      </div>
+      <div class="bookmarklet-wrap">
+        <span class="bookmarklet-label">Drag to bookmarks bar<br>for quick access anywhere</span>
+        <a class="bookmarklet-link"
+          href="javascript:(function(){const x=document.getElementById('__ic');if(x){x.remove();return;}const o=document.createElement('div');o.id='__ic';o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2147483647;display:flex;align-items:center;justify-content:center;';const m=document.createElement('div');m.style.cssText='position:relative;width:92vw;height:92vh;max-width:1200px;border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.45);';const b=document.createElement('button');b.innerHTML='&times;';b.style.cssText='position:absolute;top:10px;right:14px;z-index:1;background:rgba(0,0,0,.45);color:#fff;border:none;border-radius:50%;width:30px;height:30px;font-size:20px;cursor:pointer;line-height:1;';b.onclick=()=>o.remove();const f=document.createElement('iframe');f.src='https://i-taylor.github.io/course-homepage-image-generator/';f.style.cssText='width:100%;height:100%;border:none;';m.append(b,f);o.appendChild(m);document.body.appendChild(o);o.addEventListener('click',e=>{if(e.target===o)o.remove();});document.addEventListener('keydown',function d(e){if(e.key==='Escape'){o.remove();document.removeEventListener('keydown',d);}});})();"
+          title="Drag me to your bookmarks bar">🔖 Image Composer</a>
       </div>
     </div>
 
@@ -305,8 +381,12 @@
       </div>
       <div class="card-footer">
         <span class="card-meta">Copy · Paste · Done</span>
-        <button class="btn-open" style="--accent: #10B981;"
-          onclick="openTool('https://i-taylor.github.io/MO-Image-Cookbook/')">Open →</button>
+        <div class="card-actions">
+          <button class="btn-preview" style="--accent: #10B981;"
+            onclick="previewTool('https://i-taylor.github.io/MO-Image-Cookbook/')">Preview</button>
+          <a class="btn-open" style="--accent: #10B981;"
+            href="https://i-taylor.github.io/MO-Image-Cookbook/" target="_blank" rel="noopener">Open ↗</a>
+        </div>
       </div>
     </div>
 
@@ -335,7 +415,7 @@
   const backdrop = document.getElementById('modal-backdrop');
   const iframe   = document.getElementById('modal-iframe');
 
-  function openTool(url) {
+  function previewTool(url) {
     iframe.src = url;
     backdrop.classList.add('open');
     document.body.style.overflow = 'hidden';
