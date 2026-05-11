@@ -218,7 +218,7 @@
       cat: 'Layout',
       color: '#8B5CF6',
       desc: 'Text left, image right.',
-      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="width:18px;height:18px;background:#8B5CF6;border-radius:3px;opacity:.4"></div></div></div>',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:#ede9fe;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="#ddd6fe"/><circle cx="10" cy="8" r="3" fill="#c4b5fd"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="#c4b5fd"/></svg></div></div>',
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-img">\n    <div>\n      <h3>Column Heading</h3>\n      <p>Text content for the left column.</p>\n    </div>\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
@@ -226,7 +226,7 @@
       cat: 'Layout',
       color: '#1c1c1e',
       desc: 'Text and image side by side, dark background.',
-      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#1c1c1e;border-radius:6px;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="height:5px;background:rgba(255,255,255,.2);border-radius:3px"></div></div><div style="background:rgba(255,255,255,.1);border-radius:3px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;background:rgba(255,255,255,.3);border-radius:2px"></div></div></div>',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#1c1c1e;border-radius:6px;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="height:5px;background:rgba(255,255,255,.2);border-radius:3px"></div></div><div style="background:rgba(255,255,255,.08);border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="rgba(255,255,255,.08)"/><circle cx="10" cy="8" r="3" fill="rgba(255,255,255,.3)"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="rgba(255,255,255,.3)"/></svg></div></div>',
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-img dark">\n    <div>\n      <h3>Column Heading</h3>\n      <p>Text content for the left column.</p>\n    </div>\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
@@ -234,7 +234,7 @@
       cat: 'Layout',
       color: '#FFCB05',
       desc: 'Text and image side by side, maize highlight background.',
-      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#fffdf0;border-radius:6px;border:2px solid #FFCB05;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="height:5px;background:#fde68a;border-radius:3px"></div></div><div style="background:#fef9c3;border-radius:3px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;background:#fde68a;border-radius:2px"></div></div></div>',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#fffdf0;border-radius:6px;border:2px solid #FFCB05;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="height:5px;background:#fde68a;border-radius:3px"></div></div><div style="background:#fef9c3;border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="#fde68a"/><circle cx="10" cy="8" r="3" fill="#d4a800"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="#d4a800"/></svg></div></div>',
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-img highlight">\n    <div>\n      <h3>Column Heading</h3>\n      <p>Text content for the left column.</p>\n    </div>\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
@@ -260,7 +260,7 @@
       cat: 'Media',
       color: '#F97316',
       desc: 'Full-width image with caption text.',
-      preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:linear-gradient(135deg,#fed7aa,#fdba74);border-radius:3px;flex:1"></div><div style="width:80px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
+      preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:#e5e7eb;border-radius:3px;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="44" height="30" viewBox="0 0 44 30"><rect width="44" height="30" fill="#d1d5db"/><circle cx="12" cy="9" r="4" fill="#9ca3af"/><path d="M0 22 L12 12 L20 19 L27 14 L44 25 L44 30 L0 30 Z" fill="#9ca3af"/></svg></div><div style="width:70px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="img-caption">\n    <img src="PASTE_IMAGE_URL" alt="Alt text here" loading="lazy">\n    <p><em>Put caption text here</em></p>\n  </div>\n</section>\n</div>`
     },
     {
@@ -268,7 +268,7 @@
       cat: 'Media',
       color: '#F97316',
       desc: 'Full-width image with rounded corners and caption.',
-      preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:linear-gradient(135deg,#fed7aa,#fdba74);border-radius:8px;flex:1"></div><div style="width:80px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
+      preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:#e5e7eb;border-radius:10px;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="44" height="30" viewBox="0 0 44 30"><rect width="44" height="30" fill="#d1d5db"/><circle cx="12" cy="9" r="4" fill="#9ca3af"/><path d="M0 22 L12 12 L20 19 L27 14 L44 25 L44 30 L0 30 Z" fill="#9ca3af"/></svg></div><div style="width:70px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="img-caption">\n    <img src="PASTE_IMAGE_URL" class="rounded-corners" alt="Alt text here" loading="lazy">\n    <p><em>Put caption text here</em></p>\n  </div>\n</section>\n</div>`
     },
 
