@@ -482,6 +482,16 @@
       color: #1c1c1e;
       overflow: hidden;
     }
+    #${ID} .lxd-resize-handle {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 5px;
+      cursor: ew-resize;
+      z-index: 10;
+      transition: background .15s;
+    }
+    #${ID} .lxd-resize-handle:hover,
+    #${ID} .lxd-resize-handle.dragging { background: rgba(0,39,76,.12); }
     #${ID} * { box-sizing: border-box; }
 
     #${ID} .lxd-head {
@@ -928,6 +938,7 @@
   const sidebar = document.createElement('div');
   sidebar.id = ID;
   sidebar.innerHTML = `
+    <div class="lxd-resize-handle" id="${ID}-resize"></div>
     <div class="lxd-head">
       <div class="lxd-head-title">
         🛠 LXD Sidebar
@@ -1089,6 +1100,31 @@
   document.getElementById(ID + '-close').addEventListener('click', () => {
     sidebar.remove(); toast.remove(); styleEl.remove();
     document.body.style.marginRight = '';
+  });
+
+  // ── Resize handle ──────────────────────────────────────────────────────────
+  document.getElementById(ID + '-resize').addEventListener('mousedown', e => {
+    e.preventDefault();
+    const handle = e.currentTarget;
+    const startX = e.clientX;
+    const startW = sidebar.offsetWidth;
+    handle.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+
+    function onMove(e) {
+      const w = Math.max(260, Math.min(680, startW + (startX - e.clientX)));
+      sidebar.style.width = w + 'px';
+      document.body.style.marginRight = w + 'px';
+      toast.style.right = (w + 20) + 'px';
+    }
+    function onUp() {
+      handle.classList.remove('dragging');
+      document.body.style.userSelect = '';
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    }
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
   });
 
   sidebar.querySelectorAll('.lxd-tab').forEach(tab => {
