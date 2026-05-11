@@ -777,21 +777,18 @@
     }
     #${ID} .lxd-pm-close:hover { background: rgba(0,0,0,.13); }
     #${ID} .lxd-pm-preview-wrap {
-      background: white;
       border: 1px solid #e4e2dc;
       border-radius: 12px;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 16px;
-      min-height: 120px;
+      flex: 1;
+      min-height: 0;
     }
-    #${ID} .lxd-pm-preview-inner {
+    #${ID} .lxd-pm-frame {
       width: 100%;
-      transform: scale(1.6);
-      transform-origin: center center;
-      pointer-events: none;
+      height: 100%;
+      border: none;
+      display: block;
+      background: white;
     }
     #${ID} .lxd-pm-desc {
       font-size: .8rem;
@@ -1080,7 +1077,7 @@
         <button class="lxd-pm-close" id="${ID}-pm-close">✕</button>
       </div>
       <div class="lxd-pm-preview-wrap">
-        <div class="lxd-pm-preview-inner" id="${ID}-pm-preview"></div>
+        <iframe class="lxd-pm-frame" id="${ID}-pm-frame" sandbox="allow-same-origin"></iframe>
       </div>
       <div class="lxd-pm-desc" id="${ID}-pm-desc"></div>
       <div class="lxd-pm-actions">
@@ -1273,11 +1270,15 @@
     const name    = tile.querySelector('.lxd-comp-tile-name').textContent.trim();
     const desc    = COMPONENTS.find(c => c.name.toLowerCase() === tile.dataset.name)?.desc || '';
     const htmlEnc = tile.querySelector('.lxd-btn-insert')?.dataset.html || '';
+    const inner = decodeURIComponent(htmlEnc);
     document.getElementById(ID + '-pm-name').textContent    = name;
     document.getElementById(ID + '-pm-desc').textContent    = desc;
-    document.getElementById(ID + '-pm-preview').innerHTML   = preview.innerHTML;
     document.getElementById(ID + '-pm-insert').dataset.html = htmlEnc;
     document.getElementById(ID + '-pm-copy').dataset.html   = htmlEnc;
+    document.getElementById(ID + '-pm-frame').srcdoc = `<!DOCTYPE html><html><head>
+      <link rel="stylesheet" href="https://academic-innovation.github.io/canvas-css/canvas-style.css">
+      <style>body{margin:0;padding:16px;}</style>
+    </head><body><div class="new-canvas">${inner}</div></body></html>`;
     document.getElementById(ID + '-preview-modal').style.display = 'flex';
   });
 
