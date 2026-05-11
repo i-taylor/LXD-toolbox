@@ -316,12 +316,48 @@
   // ── Style guide data ───────────────────────────────────────────────────────
   const STYLE_GUIDE_HTML = `
     <div class="lxd-sg">
-      <p class="lxd-sg-label">Brand Colors</p>
+
+      <p class="lxd-sg-label">Primary</p>
       <div class="lxd-colors">
-        <div class="lxd-swatch" style="--c:#00274C" data-hex="#00274C"><div class="lxd-swatch-block"></div><span>U-M Blue</span><code>#00274C</code></div>
-        <div class="lxd-swatch" style="--c:#FFCB05" data-hex="#FFCB05"><div class="lxd-swatch-block"></div><span>Maize</span><code>#FFCB05</code></div>
-        <div class="lxd-swatch" style="--c:#1a3a5c" data-hex="#1a3a5c"><div class="lxd-swatch-block"></div><span>Blue Mid</span><code>#1a3a5c</code></div>
-        <div class="lxd-swatch" style="--c:#f7f6f2" data-hex="#f7f6f2"><div class="lxd-swatch-block" style="border:1px solid #ddd"></div><span>Off-white</span><code>#f7f6f2</code></div>
+        <div class="lxd-swatch" style="--c:#00274C" data-hex="#00274C"><div class="lxd-swatch-block"></div><span>um-blue</span><code>#00274C</code></div>
+        <div class="lxd-swatch" style="--c:#ffcb05" data-hex="#ffcb05"><div class="lxd-swatch-block"></div><span>um-maize</span><code>#ffcb05</code></div>
+        <div class="lxd-swatch" style="--c:#ffffff" data-hex="#ffffff"><div class="lxd-swatch-block" style="border:1px solid #e4e2dc"></div><span>white</span><code>#ffffff</code></div>
+      </div>
+
+      <p class="lxd-sg-label" style="margin-top:14px">Secondary</p>
+      <div class="lxd-colors">
+        <div class="lxd-swatch" style="--c:#1022A0" data-hex="#1022A0"><div class="lxd-swatch-block"></div><span>blue CTA</span><code>#1022A0</code></div>
+        <div class="lxd-swatch" style="--c:#305CDE" data-hex="#305CDE"><div class="lxd-swatch-block"></div><span>cool blue</span><code>#305CDE</code></div>
+        <div class="lxd-swatch" style="--c:#59B5F7" data-hex="#59B5F7"><div class="lxd-swatch-block"></div><span>warm blue</span><code>#59B5F7</code></div>
+        <div class="lxd-swatch" style="--c:#FF5B1A" data-hex="#FF5B1A"><div class="lxd-swatch-block"></div><span>accent orange</span><code>#FF5B1A</code></div>
+        <div class="lxd-swatch" style="--c:#FFEA9B" data-hex="#FFEA9B"><div class="lxd-swatch-block"></div><span>yellow light</span><code>#FFEA9B</code></div>
+        <div class="lxd-swatch" style="--c:#fffbeb" data-hex="#fffbeb"><div class="lxd-swatch-block" style="border:1px solid #e4e2dc"></div><span>yellow x-light</span><code>#fffbeb</code></div>
+      </div>
+
+      <p class="lxd-sg-label" style="margin-top:14px">Shapes &amp; Graphics</p>
+      <div class="lxd-colors">
+        <div class="lxd-swatch" style="--c:#59B5F7" data-hex="#59B5F7"><div class="lxd-swatch-block"></div><span>accent warm blue</span><code>#59B5F7</code></div>
+        <div class="lxd-swatch" style="--c:#acdafb" data-hex="#acdafb"><div class="lxd-swatch-block"></div><span>warm blue light</span><code>#acdafb</code></div>
+        <div class="lxd-swatch" style="--c:#def0fd" data-hex="#def0fd"><div class="lxd-swatch-block" style="border:1px solid #e4e2dc"></div><span>warm blue x-light</span><code>#def0fd</code></div>
+        <div class="lxd-swatch" style="--c:#ffcb05" data-hex="#ffcb05"><div class="lxd-swatch-block"></div><span>accent yellow</span><code>#ffcb05</code></div>
+        <div class="lxd-swatch" style="--c:#FF5B1A" data-hex="#FF5B1A"><div class="lxd-swatch-block"></div><span>accent orange</span><code>#FF5B1A</code></div>
+      </div>
+
+      <p class="lxd-sg-label" style="margin-top:14px">Notifications</p>
+      <div class="lxd-colors">
+        <div class="lxd-swatch" style="--c:#008000" data-hex="#008000"><div class="lxd-swatch-block"></div><span>success</span><code>#008000</code></div>
+        <div class="lxd-swatch" style="--c:#fd8904" data-hex="#fd8904"><div class="lxd-swatch-block"></div><span>warning</span><code>#fd8904</code></div>
+        <div class="lxd-swatch" style="--c:#b60000" data-hex="#b60000"><div class="lxd-swatch-block"></div><span>error</span><code>#b60000</code></div>
+        <div class="lxd-swatch" style="--c:#702082" data-hex="#702082"><div class="lxd-swatch-block"></div><span>info</span><code>#702082</code></div>
+      </div>
+
+      <p class="lxd-sg-label" style="margin-top:14px">Grays</p>
+      <div class="lxd-colors">
+        <div class="lxd-swatch" style="--c:#f8f8f8" data-hex="#f8f8f8"><div class="lxd-swatch-block" style="border:1px solid #e4e2dc"></div><span>neutral x-light</span><code>#f8f8f8</code></div>
+        <div class="lxd-swatch" style="--c:#EAEBEA" data-hex="#EAEBEA"><div class="lxd-swatch-block"></div><span>neutral light</span><code>#EAEBEA</code></div>
+        <div class="lxd-swatch" style="--c:#d5d7d5" data-hex="#d5d7d5"><div class="lxd-swatch-block"></div><span>neutral medium</span><code>#d5d7d5</code></div>
+        <div class="lxd-swatch" style="--c:#acafab" data-hex="#acafab"><div class="lxd-swatch-block"></div><span>border default</span><code>#acafab</code></div>
+        <div class="lxd-swatch" style="--c:#797c78" data-hex="#797c78"><div class="lxd-swatch-block"></div><span>neutral dark</span><code>#797c78</code></div>
       </div>
 
       <p class="lxd-sg-label" style="margin-top:16px">Type Scale</p>
@@ -446,30 +482,97 @@
     #${ID} .lxd-tab:hover { color: #555; }
     #${ID} .lxd-tab.active { color: #1c1c1e; border-bottom-color: #FFCB05; }
 
-    /* Category filter */
-    #${ID} .lxd-cat-filter {
-      padding: 7px 10px 5px;
+    /* ── Category tile grid (level 1) ── */
+    #${ID}-panel-components { padding: 0; }
+    #${ID} .lxd-comp-home {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 10px;
+    }
+    #${ID} .lxd-cat-tile {
       background: white;
-      border-bottom: 1px solid #e4e2dc;
+      border: 1px solid #e4e2dc;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .15s, border-color .15s;
+    }
+    #${ID} .lxd-cat-tile:hover { box-shadow: 0 4px 14px rgba(0,0,0,.09); border-color: #ccc; }
+    #${ID} .lxd-cat-tile-accent { height: 4px; background: var(--accent); }
+    #${ID} .lxd-cat-tile-body { padding: 10px 10px 9px; }
+    #${ID} .lxd-cat-tile-name { font-weight: 700; font-size: .85rem; margin-bottom: 3px; color: #1c1c1e; }
+    #${ID} .lxd-cat-tile-count { font-size: .7rem; color: #aaa; }
+
+    /* ── Browse header ── */
+    #${ID} .lxd-browse-head {
       display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px 8px;
+      border-bottom: 1px solid #e4e2dc;
       flex-shrink: 0;
     }
-    #${ID} .lxd-cat-btn {
-      padding: 3px 8px;
-      border-radius: 20px;
-      border: 1px solid #e4e2dc;
-      background: transparent;
-      font-size: .68rem;
+    #${ID} .lxd-back-btn {
+      background: none;
+      border: none;
+      font-size: .75rem;
       font-weight: 600;
       color: #888;
       cursor: pointer;
-      transition: all .15s;
-      white-space: nowrap;
+      padding: 2px 6px 2px 2px;
+      border-radius: 5px;
+      transition: color .15s;
     }
-    #${ID} .lxd-cat-btn:hover { border-color: #bbb; color: #444; }
-    #${ID} .lxd-cat-btn.active { background: #1c1c1e; border-color: #1c1c1e; color: white; }
+    #${ID} .lxd-back-btn:hover { color: #333; }
+    #${ID} .lxd-browse-title { font-weight: 700; font-size: .88rem; color: #1c1c1e; }
+
+    /* ── Component tile grid (level 2 + search) ── */
+    #${ID} .lxd-comp-tiles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 10px;
+    }
+    #${ID} .lxd-comp-tile {
+      background: white;
+      border: 1.5px solid #e4e2dc;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .15s, border-color .15s;
+    }
+    #${ID} .lxd-comp-tile:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    #${ID} .lxd-comp-tile.selected { border-color: #1c1c1e; box-shadow: 0 0 0 1px #1c1c1e; }
+    #${ID} .lxd-comp-tile-preview { padding: 8px 8px 6px; border-bottom: 1px solid #f0ede6; min-height: 52px; }
+    #${ID} .lxd-comp-tile-name { padding: 5px 7px 7px; font-size: .72rem; font-weight: 600; line-height: 1.3; color: #1c1c1e; }
+
+    /* ── Detail bar ── */
+    #${ID} .lxd-detail-bar {
+      flex-shrink: 0;
+      background: #fff;
+      border-top: 2px solid #e4e2dc;
+      padding: 10px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    #${ID} .lxd-detail-info { flex: 1; min-width: 0; }
+    #${ID} .lxd-detail-name { font-weight: 700; font-size: .85rem; margin-bottom: 2px; color: #1c1c1e; }
+    #${ID} .lxd-detail-desc { font-size: .72rem; color: #888; line-height: 1.3; }
+    #${ID} .lxd-detail-actions { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+    #${ID} .lxd-detail-close {
+      background: none;
+      border: none;
+      color: #bbb;
+      cursor: pointer;
+      font-size: 15px;
+      padding: 2px 5px;
+      border-radius: 4px;
+      line-height: 1;
+      transition: color .15s;
+    }
+    #${ID} .lxd-detail-close:hover { color: #555; }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
@@ -498,27 +601,7 @@
     }
     #${ID} .lxd-panel.active { display: block; }
 
-    #${ID} .lxd-card {
-      background: white;
-      border: 1px solid #e4e2dc;
-      border-radius: 10px;
-      margin-bottom: 8px;
-      overflow: hidden;
-      transition: box-shadow .15s;
-    }
-    #${ID} .lxd-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
-    #${ID} .lxd-card-preview { padding: 10px 12px 8px; border-bottom: 1px solid #f0ede6; }
-    #${ID} .lxd-card-body { padding: 8px 12px 10px; }
-    #${ID} .lxd-card-tag {
-      font-size: .65rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .7px;
-      margin-bottom: 2px;
-    }
-    #${ID} .lxd-card-name { font-weight: 700; font-size: .88rem; margin-bottom: 2px; }
-    #${ID} .lxd-card-desc { font-size: .76rem; color: #888; line-height: 1.4; margin-bottom: 8px; }
-    #${ID} .lxd-card-actions { display: flex; gap: 6px; }
+    /* (card styles removed — components panel now uses tile grid) */
 
     #${ID} .lxd-btn-insert {
       flex: 1;
@@ -628,21 +711,38 @@
       .replace(/\n?<\/div>$/, '');
   }
 
-  function componentCards(list) {
+  // ── Category accent colours ────────────────────────────────────────────────
+  const CAT_COLORS = {
+    Text:     '#00274C',
+    Callouts: '#3B82F6',
+    Video:    '#EF4444',
+    Layout:   '#8B5CF6',
+    Media:    '#10B981',
+    Tables:   '#F59E0B',
+  };
+
+  function catTilesHTML() {
+    const cats = [...new Set(COMPONENTS.map(c => c.cat))];
+    return cats.map(cat => {
+      const count = COMPONENTS.filter(c => c.cat === cat).length;
+      const color = CAT_COLORS[cat] || '#888';
+      return `<div class="lxd-cat-tile" data-cat="${cat}" style="--accent:${color}">
+        <div class="lxd-cat-tile-accent"></div>
+        <div class="lxd-cat-tile-body">
+          <div class="lxd-cat-tile-name">${cat}</div>
+          <div class="lxd-cat-tile-count">${count} component${count !== 1 ? 's' : ''}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function compTilesHTML(list) {
     return list.map(c => {
       const inner = encodeURIComponent(stripWrapper(c.html));
-      return `
-      <div class="lxd-card" data-name="${c.name.toLowerCase()}" data-cat="${c.cat}">
-        <div class="lxd-card-preview">${c.preview || ''}</div>
-        <div class="lxd-card-body">
-          <div class="lxd-card-tag" style="color:${c.color}">${c.cat}</div>
-          <div class="lxd-card-name">${c.name}</div>
-          <div class="lxd-card-desc">${c.desc}</div>
-          <div class="lxd-card-actions">
-            <button class="lxd-btn-insert" data-html="${inner}">Insert</button>
-            <button class="lxd-btn-copy"   data-html="${inner}">Copy</button>
-          </div>
-        </div>
+      const desc  = encodeURIComponent(c.desc);
+      return `<div class="lxd-comp-tile" data-name="${c.name.toLowerCase()}" data-html="${inner}" data-label="${c.name}" data-desc="${desc}">
+        <div class="lxd-comp-tile-preview">${c.preview || ''}</div>
+        <div class="lxd-comp-tile-name">${c.name}</div>
       </div>`;
     }).join('');
   }
@@ -659,11 +759,6 @@
         <button class="lxd-btn-copy"   data-html="${encodeURIComponent(s.html)}">Copy</button>
       </div>`).join('');
   }
-
-  const CATS = ['All', 'Text', 'Callouts', 'Video', 'Layout', 'Media', 'Tables'];
-  const catFilterHTML = CATS.map((c, i) =>
-    `<button class="lxd-cat-btn${i === 0 ? ' active' : ''}" data-cat="${c}">${c}</button>`
-  ).join('');
 
   const sidebar = document.createElement('div');
   sidebar.id = ID;
@@ -682,16 +777,24 @@
       <button class="lxd-tab"        data-tab="styleguide">Style Guide</button>
     </div>
 
-    <div class="lxd-cat-filter" id="${ID}-cat-filter">
-      ${catFilterHTML}
-    </div>
-
     <div class="lxd-search-wrap" id="${ID}-search-wrap">
       <input class="lxd-search" id="${ID}-search" placeholder="Search…" type="search">
     </div>
 
     <div class="lxd-panel active" id="${ID}-panel-components">
-      ${componentCards(COMPONENTS)}
+      <div class="lxd-comp-home" id="${ID}-comp-home">
+        ${catTilesHTML()}
+      </div>
+      <div class="lxd-comp-browse" id="${ID}-comp-browse" style="display:none">
+        <div class="lxd-browse-head">
+          <button class="lxd-back-btn" id="${ID}-back-btn">← Back</button>
+          <span class="lxd-browse-title" id="${ID}-browse-title"></span>
+        </div>
+        <div class="lxd-comp-tiles" id="${ID}-comp-tiles"></div>
+      </div>
+      <div class="lxd-comp-search" id="${ID}-comp-search" style="display:none">
+        <div class="lxd-comp-tiles" id="${ID}-search-tiles"></div>
+      </div>
     </div>
 
     <div class="lxd-panel" id="${ID}-panel-snippets">
@@ -700,6 +803,18 @@
 
     <div class="lxd-panel" id="${ID}-panel-styleguide">
       ${STYLE_GUIDE_HTML}
+    </div>
+
+    <div class="lxd-detail-bar" id="${ID}-detail-bar" style="display:none">
+      <div class="lxd-detail-info">
+        <div class="lxd-detail-name" id="${ID}-detail-name"></div>
+        <div class="lxd-detail-desc" id="${ID}-detail-desc"></div>
+      </div>
+      <div class="lxd-detail-actions">
+        <button class="lxd-btn-insert" id="${ID}-detail-insert">Insert</button>
+        <button class="lxd-btn-copy"   id="${ID}-detail-copy">Copy</button>
+        <button class="lxd-detail-close" id="${ID}-detail-close">✕</button>
+      </div>
     </div>
   `;
 
@@ -710,7 +825,7 @@
   document.body.style.marginRight = PUSH_W;
 
   // ── State ──────────────────────────────────────────────────────────────────
-  let activeCat = 'All';
+  let compView = 'home'; // 'home' | 'browse' | 'search'
 
   // ── Helpers ────────────────────────────────────────────────────────────────
   function showToast(msg) {
@@ -783,13 +898,51 @@
       .catch(() => showToast('Copy failed'));
   }
 
-  function applyFilter() {
-    const q = (document.getElementById(ID + '-search').value || '').toLowerCase().trim();
-    document.getElementById(ID + '-panel-components').querySelectorAll('.lxd-card').forEach(card => {
-      const nameMatch = !q || card.dataset.name.includes(q);
-      const catMatch = activeCat === 'All' || card.dataset.cat === activeCat;
-      card.style.display = (nameMatch && catMatch) ? '' : 'none';
-    });
+  // ── Nav helpers ────────────────────────────────────────────────────────────
+  function hideDetailBar() {
+    document.getElementById(ID + '-detail-bar').style.display = 'none';
+    sidebar.querySelectorAll('.lxd-comp-tile.selected').forEach(t => t.classList.remove('selected'));
+  }
+
+  function showDetailBar(tile) {
+    const htmlEnc = tile.dataset.html;
+    document.getElementById(ID + '-detail-name').textContent = tile.dataset.label;
+    document.getElementById(ID + '-detail-desc').textContent = decodeURIComponent(tile.dataset.desc);
+    document.getElementById(ID + '-detail-insert').dataset.html = htmlEnc;
+    document.getElementById(ID + '-detail-copy').dataset.html = htmlEnc;
+    document.getElementById(ID + '-detail-bar').style.display = 'flex';
+  }
+
+  function showCompHome() {
+    compView = 'home';
+    document.getElementById(ID + '-comp-home').style.display = '';
+    document.getElementById(ID + '-comp-browse').style.display = 'none';
+    document.getElementById(ID + '-comp-search').style.display = 'none';
+    hideDetailBar();
+  }
+
+  function showCompBrowse(cat) {
+    compView = 'browse';
+    document.getElementById(ID + '-comp-home').style.display = 'none';
+    document.getElementById(ID + '-comp-browse').style.display = '';
+    document.getElementById(ID + '-comp-search').style.display = 'none';
+    document.getElementById(ID + '-browse-title').textContent = cat;
+    document.getElementById(ID + '-comp-tiles').innerHTML =
+      compTilesHTML(COMPONENTS.filter(c => c.cat === cat));
+    hideDetailBar();
+  }
+
+  function showCompSearch(q) {
+    compView = 'search';
+    document.getElementById(ID + '-comp-home').style.display = 'none';
+    document.getElementById(ID + '-comp-browse').style.display = 'none';
+    document.getElementById(ID + '-comp-search').style.display = '';
+    document.getElementById(ID + '-search-tiles').innerHTML =
+      compTilesHTML(COMPONENTS.filter(c => c.name.toLowerCase().includes(q)));
+    hideDetailBar();
+  }
+
+  function filterSnippets(q) {
     document.getElementById(ID + '-panel-snippets').querySelectorAll('.lxd-snippet').forEach(card => {
       card.style.display = !q || card.dataset.name.includes(q) ? '' : 'none';
     });
@@ -807,21 +960,43 @@
       sidebar.querySelectorAll('.lxd-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(ID + '-panel-' + tab.dataset.tab).classList.add('active');
-      const isComp = tab.dataset.tab === 'components';
-      document.getElementById(ID + '-cat-filter').style.display = isComp ? '' : 'none';
       document.getElementById(ID + '-search-wrap').style.display =
         tab.dataset.tab === 'styleguide' ? 'none' : '';
+      if (tab.dataset.tab !== 'components') hideDetailBar();
+      // Clear search when switching tabs
+      document.getElementById(ID + '-search').value = '';
     });
   });
 
-  sidebar.querySelector('.lxd-cat-filter').addEventListener('click', e => {
-    const btn = e.target.closest('.lxd-cat-btn');
-    if (!btn) return;
-    sidebar.querySelectorAll('.lxd-cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeCat = btn.dataset.cat;
-    applyFilter();
+  // ── Category tile → browse view ────────────────────────────────────────────
+  sidebar.addEventListener('click', e => {
+    const tile = e.target.closest('.lxd-cat-tile');
+    if (!tile) return;
+    showCompBrowse(tile.dataset.cat);
   });
+
+  // ── Back button ────────────────────────────────────────────────────────────
+  document.getElementById(ID + '-back-btn').addEventListener('click', () => {
+    showCompHome();
+    document.getElementById(ID + '-search').value = '';
+  });
+
+  // ── Component tile → select + detail bar ──────────────────────────────────
+  sidebar.addEventListener('click', e => {
+    const tile = e.target.closest('.lxd-comp-tile');
+    if (!tile) return;
+    if (tile.classList.contains('selected')) {
+      tile.classList.remove('selected');
+      hideDetailBar();
+    } else {
+      sidebar.querySelectorAll('.lxd-comp-tile.selected').forEach(t => t.classList.remove('selected'));
+      tile.classList.add('selected');
+      showDetailBar(tile);
+    }
+  });
+
+  // ── Detail bar close ───────────────────────────────────────────────────────
+  document.getElementById(ID + '-detail-close').addEventListener('click', hideDetailBar);
 
   sidebar.addEventListener('click', e => {
     const btn = e.target.closest('.lxd-btn-insert, .lxd-btn-copy');
@@ -838,6 +1013,15 @@
       .then(() => showToast(swatch.dataset.hex + ' copied'));
   });
 
-  document.getElementById(ID + '-search').addEventListener('input', applyFilter);
+  document.getElementById(ID + '-search').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase().trim();
+    const activeTab = sidebar.querySelector('.lxd-tab.active')?.dataset.tab;
+    if (activeTab === 'components') {
+      if (q) showCompSearch(q);
+      else if (compView === 'search') showCompHome();
+    } else {
+      filterSnippets(q);
+    }
+  });
 
 })();
