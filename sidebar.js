@@ -543,17 +543,17 @@
     }
     #${ID} .lxd-comp-tile:hover { box-shadow: 0 3px 10px rgba(0,0,0,.08); }
     #${ID} .lxd-comp-tile-preview {
-      padding: 7px 7px 5px;
+      padding: 10px 12px 8px;
       border-bottom: 1px solid #f0ede6;
-      height: 44px;
+      height: 68px;
       overflow: hidden;
       display: flex; align-items: center; justify-content: center;
     }
-    #${ID} .lxd-comp-tile-preview > * { transform: scale(.9); transform-origin: center center; pointer-events: none; width: 100%; }
-    #${ID} .lxd-comp-tile-name { padding: 4px 7px 3px; font-size: .7rem; font-weight: 600; color: #1c1c1e; line-height: 1.3; }
-    #${ID} .lxd-comp-tile-actions { display: flex; gap: 4px; padding: 0 7px 7px; }
-    #${ID} .lxd-comp-tile-actions .lxd-btn-insert { flex: 1; padding: 3px 4px; font-size: .68rem; }
-    #${ID} .lxd-comp-tile-actions .lxd-btn-copy   { padding: 3px 6px; font-size: .68rem; }
+    #${ID} .lxd-comp-tile-preview > * { pointer-events: none; width: 100%; }
+    #${ID} .lxd-comp-tile-name { padding: 6px 10px 4px; font-size: .75rem; font-weight: 600; color: #1c1c1e; line-height: 1.3; }
+    #${ID} .lxd-comp-tile-actions { display: flex; gap: 5px; padding: 0 10px 9px; }
+    #${ID} .lxd-comp-tile-actions .lxd-btn-insert { flex: 1; padding: 4px 6px; font-size: .72rem; }
+    #${ID} .lxd-comp-tile-actions .lxd-btn-copy   { padding: 4px 8px; font-size: .72rem; }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
@@ -587,7 +587,7 @@
     #${ID} .lxd-btn-insert {
       flex: 1;
       padding: 5px 10px;
-      background: #1c1c1e;
+      background: #00274C;
       color: white;
       border: none;
       border-radius: 6px;
@@ -596,18 +596,18 @@
       cursor: pointer;
       transition: background .15s;
     }
-    #${ID} .lxd-btn-insert:hover { background: #333; }
+    #${ID} .lxd-btn-insert:hover { background: #003a6e; }
     #${ID} .lxd-btn-copy {
       padding: 5px 10px;
-      background: transparent;
-      color: #888;
+      background: #f0ede6;
+      color: #555;
       border: 1px solid #e4e2dc;
       border-radius: 6px;
       font-size: .78rem;
       cursor: pointer;
-      transition: border-color .15s, color .15s;
+      transition: background .15s, color .15s;
     }
-    #${ID} .lxd-btn-copy:hover { border-color: #aaa; color: #555; }
+    #${ID} .lxd-btn-copy:hover { background: #e8e4db; color: #333; }
 
     #${ID} .lxd-snippet {
       background: white;
