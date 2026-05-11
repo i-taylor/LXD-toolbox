@@ -14,110 +14,368 @@
   }
 
   // ── Components data ────────────────────────────────────────────────────────
+  // HTML snippets sourced from academic-innovation/canvas-css cookbook JSON
   const COMPONENTS = [
+
+    // ── Text ───────────────────────────────────────────────────────────────
     {
-      name: 'Display Header',
-      tag: 'Layout',
-      color: '#F97316',
-      desc: 'Full-width hero with collage image and course title.',
-      preview: '<div style="background:linear-gradient(90deg,#ffcb05 38%,#e0e0e0 38%);height:52px;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;left:8px;top:8px;width:90px;height:14px;background:#00274c;border-radius:3px;opacity:.7"></div><div style="position:absolute;left:8px;top:28px;width:60px;height:8px;background:#00274c;border-radius:3px;opacity:.4"></div></div>',
-      html: `<div class="new-canvas">\n  <section class="display-header">\n    <div class="heading">\n      <div>\n        <h2>Welcome to <strong>Course Title</strong></h2>\n      </div>\n      <div class="collage">\n        <div>&nbsp;</div>\n        <div><img src="PASTE_IMAGE_URL_HERE" alt="Describe the image" width="100%" height="100%" /></div>\n      </div>\n    </div>\n  </section>\n</div>`
+      name: 'Text Block',
+      cat: 'Text',
+      color: '#00274C',
+      desc: 'Base content section. Most common building block.',
+      preview: '<div style="padding:6px 8px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:70px;height:9px;background:#00274c;border-radius:3px;opacity:.7"></div><div style="width:100%;height:6px;background:#e5e7eb;border-radius:3px"></div><div style="width:85%;height:6px;background:#e5e7eb;border-radius:3px"></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Heading 2</h2>\n  <p>Paragraph text</p>\n</section>\n</div>`
     },
     {
-      name: 'Info Callout',
-      tag: 'Callout',
-      color: '#3B82F6',
-      desc: 'Blue highlighted box for notes, tips, or important info.',
-      preview: '<div style="border-left:4px solid #3B82F6;background:#eff6ff;border-radius:0 6px 6px 0;padding:8px 10px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:4px"><div style="width:60px;height:8px;background:#3B82F6;border-radius:3px;opacity:.7"></div><div style="width:110px;height:6px;background:#93c5fd;border-radius:3px"></div></div>',
-      html: `<div style="background:#eff6ff;border-left:4px solid #3B82F6;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;">\n  <p><strong>&#128204; Note</strong></p>\n  <p>Your note or tip here.</p>\n</div>`
+      name: 'Text Block (Assignment)',
+      cat: 'Text',
+      color: '#00274C',
+      desc: 'Text block styled for assignment instructions.',
+      preview: '<div style="padding:6px 8px;height:52px;border-left:3px solid #00274c;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:80px;height:9px;background:#00274c;border-radius:3px;opacity:.8"></div><div style="width:100%;height:6px;background:#e5e7eb;border-radius:3px"></div><div style="width:75%;height:6px;background:#e5e7eb;border-radius:3px"></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block assignment">\n  <h2>Your Assignment</h2>\n  <h3>Overview</h3>\n  <p>Assignment instructions go here.</p>\n  <h3>Instructions</h3>\n  <p>Step-by-step instructions. <a href="">link text</a></p>\n</section>\n</div>`
     },
     {
-      name: 'Warning Callout',
-      tag: 'Callout',
-      color: '#F59E0B',
-      desc: 'Amber box for warnings, deadlines, or cautions.',
-      preview: '<div style="border-left:4px solid #F59E0B;background:#fffbeb;border-radius:0 6px 6px 0;padding:8px 10px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:4px"><div style="width:60px;height:8px;background:#F59E0B;border-radius:3px;opacity:.7"></div><div style="width:110px;height:6px;background:#fcd34d;border-radius:3px"></div></div>',
-      html: `<div style="background:#fffbeb;border-left:4px solid #F59E0B;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0;">\n  <p><strong>&#9888;&#65039; Heads up</strong></p>\n  <p>Your warning or deadline here.</p>\n</div>`
-    },
-    {
-      name: 'Two-Column Layout',
-      tag: 'Layout',
+      name: 'Graphical Highlight',
+      cat: 'Text',
       color: '#8B5CF6',
-      desc: 'Side-by-side content columns, stacks on mobile.',
-      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#ede9fe;border-radius:4px"></div><div style="background:#ede9fe;border-radius:4px"></div></div>',
-      html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:16px 0;">\n  <div>\n    <p>Left column content here.</p>\n  </div>\n  <div>\n    <p>Right column content here.</p>\n  </div>\n</div>`
+      desc: 'Two-column highlight — text left, graphic right.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#ede9fe;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:#ddd6fe;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="width:20px;height:20px;background:#8B5CF6;border-radius:50%;opacity:.4"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="graphical-highlight">\n  <div>\n    <p>Highlight content goes here.</p>\n  </div>\n  <div></div>\n</section>\n</div>`
     },
     {
-      name: 'Video Embed',
-      tag: 'Media',
-      color: '#EC4899',
-      desc: 'Responsive 16:9 video container for YouTube, Kaltura, etc.',
-      preview: '<div style="background:#fdf2f8;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center"><div style="width:24px;height:24px;background:#EC4899;border-radius:50%;display:flex;align-items:center;justify-content:center"><div style="border-left:10px solid white;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:3px"></div></div></div>',
-      html: `<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;margin:16px 0;">\n  <iframe src="PASTE_EMBED_URL_HERE"\n    style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"\n    allowfullscreen\n    title="Video title here"></iframe>\n</div>`
+      name: 'Gamut Intro (Gallery)',
+      cat: 'Text',
+      color: '#10B981',
+      desc: 'Text block for introducing a Gamut Gallery tool.',
+      preview: '<div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:60px;height:8px;background:#10B981;border-radius:3px;opacity:.8"></div><div style="width:90px;height:6px;background:rgba(16,185,129,.3);border-radius:3px"></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block gamut-intro gallery">\n  <p>Text block content</p>\n</section>\n</div>`
+    },
+    {
+      name: 'Gamut Intro (Workbook)',
+      cat: 'Text',
+      color: '#10B981',
+      desc: 'Text block for introducing a Gamut Workbook tool.',
+      preview: '<div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:60px;height:8px;background:#059669;border-radius:3px;opacity:.8"></div><div style="width:90px;height:6px;background:rgba(5,150,105,.3);border-radius:3px"></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block gamut-intro workbook">\n  <p>Text block content</p>\n</section>\n</div>`
+    },
+
+    // ── Callouts ───────────────────────────────────────────────────────────
+    {
+      name: 'Callout Box',
+      cat: 'Callouts',
+      color: '#3B82F6',
+      desc: 'Info callout — definitions, reminders, key takeaways.',
+      preview: '<div style="border:2px solid #3B82F6;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#3B82F6;border-radius:3px;opacity:.7"></div><div style="width:110px;height:6px;background:#bfdbfe;border-radius:3px"></div></div>',
+      html: `<div class="new-canvas">\n<div class="callout-box">\n  <p class="tag">Tag label</p>\n  <p>Put content here</p>\n</div>\n</div>`
+    },
+    {
+      name: 'Callout Box (Action)',
+      cat: 'Callouts',
+      color: '#FFCB05',
+      desc: 'Action callout — prompts, reflections, learner tasks.',
+      preview: '<div style="border:2px solid #FFCB05;background:#fffdf0;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="width:110px;height:6px;background:#fde68a;border-radius:3px"></div></div>',
+      html: `<div class="new-canvas">\n<div class="callout-box action">\n  <p class="tag">Tag label</p>\n  <p>Put content here</p>\n</div>\n</div>`
+    },
+    {
+      name: 'Callout Box (Highlight)',
+      cat: 'Callouts',
+      color: '#00274C',
+      desc: 'High-visibility callout — warnings, strong emphasis.',
+      preview: '<div style="background:#00274c;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#FFCB05;border-radius:3px"></div><div style="width:110px;height:6px;background:rgba(255,255,255,.25);border-radius:3px"></div></div>',
+      html: `<div class="new-canvas">\n<div class="callout-box highlight">\n  <p class="tag">Tag label</p>\n  <p>Put content here</p>\n</div>\n</div>`
     },
     {
       name: 'Pull Quote',
-      tag: 'Text',
+      cat: 'Callouts',
       color: '#FFCB05',
-      desc: 'Styled blockquote with maize accent for emphasis.',
-      preview: '<div style="border-left:4px solid #FFCB05;background:#fffdf0;padding:8px 12px;border-radius:0 6px 6px 0;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:100px;height:7px;background:#d4a800;border-radius:3px;opacity:.6"></div><div style="width:60px;height:5px;background:#d4a800;border-radius:3px;opacity:.3"></div></div>',
-      html: `<blockquote style="border-left:4px solid #FFCB05;margin:24px 0;padding:12px 24px;background:#fffdf0;border-radius:0 8px 8px 0;">\n  <p style="font-size:1.15em;font-style:italic;color:#333;margin:0 0 8px;">"Your quote text here."</p>\n  <cite style="font-size:0.85em;color:#888;">&#8212; Attribution</cite>\n</blockquote>`
+      desc: 'Styled blockquote for key quotes or takeaways.',
+      preview: '<div style="border-left:4px solid #FFCB05;background:#fffdf0;padding:8px 12px;border-radius:0 6px 6px 0;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:100px;height:7px;background:#d4a800;border-radius:3px;opacity:.6;font-style:italic"></div><div style="width:55px;height:5px;background:#fde68a;border-radius:3px"></div></div>',
+      html: `<div class="new-canvas">\n<blockquote>\n  <p>Put quote text here</p>\n  <p>Put author name here</p>\n</blockquote>\n</div>`
     },
     {
-      name: 'Numbered Steps',
-      tag: 'Layout',
+      name: 'Side-by-Side Callout',
+      cat: 'Callouts',
+      color: '#6B7280',
+      desc: 'Two side-by-side callout boxes for comparisons.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;height:52px"><div style="border:2px solid #9ca3af;border-radius:5px;padding:5px;display:flex;flex-direction:column;gap:3px"><div style="height:6px;background:#d1d5db;border-radius:2px;width:70%"></div><div style="height:5px;background:#e5e7eb;border-radius:2px"></div></div><div style="border:2px solid #9ca3af;border-radius:5px;padding:5px;display:flex;flex-direction:column;gap:3px"><div style="height:6px;background:#d1d5db;border-radius:2px;width:70%"></div><div style="height:5px;background:#e5e7eb;border-radius:2px"></div></div></div>',
+      html: `<div class="sideBySideCallOutCon">\n  <div class="sideBySideCallOut">\n    <h2>Left heading:</h2>\n    <ul>\n      <li>Sample Text</li>\n      <li>Sample Text</li>\n    </ul>\n  </div>\n  <div class="sideBySideCallOut">\n    <h2>Right heading:</h2>\n    <ul>\n      <li>Sample Text</li>\n      <li>Sample Text</li>\n    </ul>\n  </div>\n</div>`
+    },
+
+    // ── Video ──────────────────────────────────────────────────────────────
+    {
+      name: 'Video Block',
+      cat: 'Video',
       color: '#00274C',
-      desc: 'Styled numbered list for instructions or processes.',
-      preview: '<div style="display:flex;flex-direction:column;gap:6px;padding:4px 0"><div style="display:flex;align-items:center;gap:8px"><div style="width:18px;height:18px;background:#00274c;border-radius:50%;flex-shrink:0"></div><div style="height:7px;background:#e5e7eb;border-radius:3px;flex:1"></div></div><div style="display:flex;align-items:center;gap:8px"><div style="width:18px;height:18px;background:#00274c;border-radius:50%;flex-shrink:0"></div><div style="height:7px;background:#e5e7eb;border-radius:3px;flex:1"></div></div><div style="display:flex;align-items:center;gap:8px"><div style="width:18px;height:18px;background:#00274c;border-radius:50%;flex-shrink:0"></div><div style="height:7px;background:#e5e7eb;border-radius:3px;flex:1"></div></div></div>',
-      html: `<ol style="list-style:none;padding:0;margin:16px 0;counter-reset:steps;">\n  <li style="display:flex;gap:16px;margin-bottom:16px;align-items:flex-start;">\n    <span style="background:#00274C;color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;font-size:.9em;">1</span>\n    <div><p style="margin:6px 0 0;">Step one description here.</p></div>\n  </li>\n  <li style="display:flex;gap:16px;margin-bottom:16px;align-items:flex-start;">\n    <span style="background:#00274C;color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;font-size:.9em;">2</span>\n    <div><p style="margin:6px 0 0;">Step two description here.</p></div>\n  </li>\n  <li style="display:flex;gap:16px;margin-bottom:16px;align-items:flex-start;">\n    <span style="background:#00274C;color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:bold;flex-shrink:0;font-size:.9em;">3</span>\n    <div><p style="margin:6px 0 0;">Step three description here.</p></div>\n  </li>\n</ol>`
+      desc: 'Standard lecture video section.',
+      preview: '<div style="background:#f3f4f6;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:#00274c;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid white;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:#9ca3af;border-radius:3px"></div><div style="width:38px;height:5px;background:#d1d5db;border-radius:3px"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block video-block">\n  <div class="video-tag-wrapper">\n    <p class="tag">Lecture</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
     },
     {
-      name: 'Resource Card',
-      tag: 'Layout',
-      color: '#10B981',
-      desc: 'Styled link block for external resources or readings.',
-      preview: '<div style="border:1px solid #d1fae5;background:#f0fdf4;border-radius:6px;padding:8px 10px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;background:#10B981;border-radius:50%"></div><div style="width:80px;height:7px;background:#6ee7b7;border-radius:3px"></div></div><div style="width:120px;height:6px;background:#a7f3d0;border-radius:3px;margin-left:14px"></div></div>',
-      html: `<div style="border:1px solid #d1fae5;background:#f0fdf4;border-radius:8px;padding:16px 20px;margin:12px 0;display:flex;align-items:flex-start;gap:12px;">\n  <span style="font-size:1.4em;flex-shrink:0;">&#128196;</span>\n  <div>\n    <p style="font-weight:700;margin:0 0 4px;"><a href="PASTE_URL_HERE">Resource Title Here</a></p>\n    <p style="margin:0;font-size:.875em;color:#555;">Brief description of what this resource is and why it's useful.</p>\n  </div>\n</div>`
+      name: 'Video Block (Guest Lecture)',
+      cat: 'Video',
+      color: '#1a3a5c',
+      desc: 'Highlighted video block for guest lecture content.',
+      preview: '<div style="background:#00274c;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:rgba(255,203,5,.9);border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid #00274c;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:rgba(255,255,255,.4);border-radius:3px"></div><div style="width:38px;height:5px;background:rgba(255,255,255,.25);border-radius:3px"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block video-block highlight">\n  <div class="video-tag-wrapper">\n    <p class="tag">Guest lecture</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
+    },
+    {
+      name: 'Video Block (Blue)',
+      cat: 'Video',
+      color: '#3B82F6',
+      desc: 'Blue-tag video block for alternate video labeling.',
+      preview: '<div style="background:#eff6ff;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:#3B82F6;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid white;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:#93c5fd;border-radius:3px"></div><div style="width:38px;height:5px;background:#bfdbfe;border-radius:3px"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block video-block blue">\n  <div class="video-tag-wrapper">\n    <p class="tag">Tag label</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
+    },
+
+    // ── Layout ─────────────────────────────────────────────────────────────
+    {
+      name: 'Course Display Header',
+      cat: 'Layout',
+      color: '#00274C',
+      desc: 'Full hero header for the Course Intro page with collage and nav.',
+      preview: '<div style="background:linear-gradient(90deg,#00274c 45%,#e0e0e0 45%);height:52px;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;left:8px;top:10px;width:90px;height:10px;background:rgba(255,203,5,.9);border-radius:3px"></div><div style="position:absolute;left:8px;top:26px;width:60px;height:7px;background:rgba(255,255,255,.3);border-radius:3px"></div><div style="position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,#ccc 25%,#bbb 25%,#bbb 50%,#ccc 50%,#ccc 75%,#bbb 75%);background-size:8px 8px;opacity:.6"></div></div>',
+      html: `<div class="new-canvas">\n<section class="display-header">\n  <div class="heading">\n    <div>\n      <h2>Welcome to <strong>Course Title</strong></h2>\n      <img class="um-logo" role="presentation" src="https://courses.online.umich.edu/courses/284/files/9377/preview" alt="" width="71" height="75" loading="lazy">\n    </div>\n    <div class="collage">\n      <div>&nbsp;</div>\n      <div><img src="PASTE_IMAGE_URL" alt="Describe the image" loading="lazy"></div>\n    </div>\n  </div>\n  <div class="nav-links">\n    <ul>\n      <li><p><a href="URL here">Start Here</a></p></li>\n      <li><p><a href="URL here">See Syllabus</a></p></li>\n      <li><p><a href="URL here">See Modules</a></p></li>\n      <li><p><a href="URL here">Get Course Support</a></p></li>\n    </ul>\n  </div>\n</section>\n</div>`
+    },
+    {
+      name: 'Course Header (Series)',
+      cat: 'Layout',
+      color: '#1a3a5c',
+      desc: 'Display header with series number sub-title.',
+      preview: '<div style="background:linear-gradient(90deg,#1a3a5c 45%,#e0e0e0 45%);height:52px;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;left:6px;top:6px;width:60px;height:5px;background:rgba(255,255,255,.3);border-radius:2px"></div><div style="position:absolute;left:6px;top:16px;width:90px;height:10px;background:rgba(255,203,5,.9);border-radius:3px"></div><div style="position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,#ccc 25%,#bbb 25%,#bbb 50%,#ccc 50%,#ccc 75%,#bbb 75%);background-size:8px 8px;opacity:.6"></div></div>',
+      html: `<div class="new-canvas">\n<div class="sub-title">\n  <p>Course # of the <em>Course Series Name</em> Series</p>\n</div>\n<section class="display-header">\n  <div class="heading">\n    <div>\n      <p class="tag">Course # of #</p>\n      <h2>Welcome to <strong>Course Title</strong></h2>\n      <img class="um-logo" role="presentation" src="https://courses.online.umich.edu/courses/284/files/9377/preview" alt="" width="71" height="75" loading="lazy">\n    </div>\n    <div class="collage">\n      <div>&nbsp;</div>\n      <div><img src="PASTE_IMAGE_URL" alt="Describe the image" loading="lazy"></div>\n    </div>\n  </div>\n  <div class="nav-links">\n    <ul>\n      <li><p><a href="URL here">Start Here</a></p></li>\n      <li><p><a href="URL here">See Syllabus</a></p></li>\n      <li><p><a href="URL here">See Modules</a></p></li>\n      <li><p><a href="URL here">Get Course Support</a></p></li>\n    </ul>\n  </div>\n</section>\n</div>`
+    },
+    {
+      name: 'Accordion',
+      cat: 'Layout',
+      color: '#00274C',
+      desc: 'Expandable FAQ-style sections with details/summary.',
+      preview: '<div style="display:flex;flex-direction:column;gap:4px;padding:4px 2px"><div style="background:#f3f4f6;border-radius:4px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center"><div style="width:60px;height:7px;background:#d1d5db;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div><div style="background:#f3f4f6;border-radius:4px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center"><div style="width:80px;height:7px;background:#d1d5db;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div></div>',
+      html: `<div class="new-canvas">\n<section class="accordion">\n  <h2>Frequently Asked Questions</h2>\n  <details>\n    <summary>Accordion Item Title 1</summary>\n    <div>\n      <p>Content for accordion item 1.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Accordion Item Title 2</summary>\n    <div>\n      <p>Content for accordion item 2.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Accordion Item Title 3</summary>\n    <div>\n      <p>Content for accordion item 3.</p>\n    </div>\n  </details>\n</section>\n</div>`
+    },
+    {
+      name: 'Two-Col (Text / Text)',
+      cat: 'Layout',
+      color: '#8B5CF6',
+      desc: 'Two text columns side by side.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div></div>',
+      html: `<div class="new-canvas">\n<div class="two-col text-text">\n  <div>\n    <p>Content for the first column.</p>\n  </div>\n  <div>\n    <p>Content for the second column.</p>\n  </div>\n</div>\n</div>`
+    },
+    {
+      name: 'Two-Col (Text / Text Light Blue)',
+      cat: 'Layout',
+      color: '#3B82F6',
+      desc: 'Two text columns with a light blue background.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#eff6ff;border-radius:6px;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#93c5fd;border-radius:3px"></div><div style="height:5px;background:#bfdbfe;border-radius:3px"></div></div><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#93c5fd;border-radius:3px"></div><div style="height:5px;background:#bfdbfe;border-radius:3px"></div></div></div>',
+      html: `<div class="new-canvas">\n<div class="two-col text-text light-blue">\n  <div>\n    <p>Content for the first column.</p>\n  </div>\n  <div>\n    <p>Content for the second column.</p>\n  </div>\n</div>\n</div>`
+    },
+    {
+      name: 'Two-Col (Text / Image)',
+      cat: 'Layout',
+      color: '#8B5CF6',
+      desc: 'Text left, image right.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="width:18px;height:18px;background:#8B5CF6;border-radius:3px;opacity:.4"></div></div></div>',
+      html: `<div class="new-canvas">\n<div class="two-col text-img">\n  <div>\n    <p>Text content for the first column. In the second column, replace the image with your own, and ensure that it is properly sized and alt-texted.</p>\n  </div>\n  <div>\n    <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n  </div>\n</div>\n</div>`
+    },
+    {
+      name: 'Two-Col (Text / Image Dark)',
+      cat: 'Layout',
+      color: '#1c1c1e',
+      desc: 'Text and image side by side, dark background.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#1c1c1e;border-radius:6px;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="height:5px;background:rgba(255,255,255,.2);border-radius:3px"></div></div><div style="background:rgba(255,255,255,.1);border-radius:3px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;background:rgba(255,255,255,.3);border-radius:2px"></div></div></div>',
+      html: `<div class="new-canvas">\n<div class="two-col text-img dark">\n  <div>\n    <p>Text content for the first column.</p>\n  </div>\n  <div>\n    <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n  </div>\n</div>\n</div>`
+    },
+    {
+      name: 'Two-Col (Text / Image Highlight)',
+      cat: 'Layout',
+      color: '#FFCB05',
+      desc: 'Text and image side by side, maize highlight background.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#fffdf0;border-radius:6px;border:2px solid #FFCB05;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="height:5px;background:#fde68a;border-radius:3px"></div></div><div style="background:#fef9c3;border-radius:3px;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;background:#fde68a;border-radius:2px"></div></div></div>',
+      html: `<div class="new-canvas">\n<div class="two-col text-img highlight">\n  <div>\n    <p>Text content for the first column.</p>\n  </div>\n  <div>\n    <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n  </div>\n</div>\n</div>`
+    },
+    {
+      name: 'Instructor Panel (Blue)',
+      cat: 'Layout',
+      color: '#00274C',
+      desc: 'Instructor profile block — U-M Blue variant.',
+      preview: '<div style="display:grid;grid-template-columns:36px 1fr;gap:8px;align-items:center;height:52px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#93c5fd,#60a5fa)"></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:70px;height:8px;background:#00274c;border-radius:3px;opacity:.7"></div><div style="width:100px;height:5px;background:#d1d5db;border-radius:3px"></div></div></div>',
+      html: `<div class="new-canvas">\n<section>\n  <div class="instructor">\n    <div>\n      <img src="PASTE_PHOTO_URL" alt="Headshot of Instructor Name">\n      <h2>Instructor Name</h2>\n      <p><strong>Title, Department</strong></p>\n    </div>\n    <div>\n      <p>Instructor bio goes here.</p>\n    </div>\n  </div>\n</section>\n</div>`
+    },
+    {
+      name: 'Instructor Panel (Maize)',
+      cat: 'Layout',
+      color: '#FFCB05',
+      desc: 'Instructor profile block — U-M Maize variant.',
+      preview: '<div style="display:grid;grid-template-columns:36px 1fr;gap:8px;align-items:center;height:52px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#fde68a,#fbbf24)"></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:70px;height:8px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="width:100px;height:5px;background:#fde68a;border-radius:3px"></div></div></div>',
+      html: `<div class="new-canvas">\n<section>\n  <div class="instructor maize">\n    <div>\n      <img src="PASTE_PHOTO_URL" alt="Headshot of Instructor Name">\n      <h2>Instructor Name</h2>\n      <p><strong>Title, Department</strong></p>\n    </div>\n    <div>\n      <p>Instructor bio goes here.</p>\n    </div>\n  </div>\n</section>\n</div>`
+    },
+
+    // ── Media ──────────────────────────────────────────────────────────────
+    {
+      name: 'Image (Sharp Corners)',
+      cat: 'Media',
+      color: '#F97316',
+      desc: 'Full-width image with caption text.',
+      preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:linear-gradient(135deg,#fed7aa,#fdba74);border-radius:3px;flex:1"></div><div style="width:80px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
+      html: `<div class="new-canvas">\n<div class="img-caption">\n  <img src="PASTE_IMAGE_URL" alt="Alt text here" loading="lazy">\n  <p><em>Put caption text here</em></p>\n</div>\n</div>`
+    },
+    {
+      name: 'Image (Rounded Corners)',
+      cat: 'Media',
+      color: '#F97316',
+      desc: 'Full-width image with rounded corners and caption.',
+      preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:linear-gradient(135deg,#fed7aa,#fdba74);border-radius:8px;flex:1"></div><div style="width:80px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
+      html: `<div class="new-canvas">\n<div class="img-caption">\n  <img src="PASTE_IMAGE_URL" class="rounded-corners" alt="Alt text here" loading="lazy">\n  <p><em>Put caption text here</em></p>\n</div>\n</div>`
+    },
+
+    // ── Tables ─────────────────────────────────────────────────────────────
+    {
+      name: 'Table',
+      cat: 'Tables',
+      color: '#0EA5E9',
+      desc: 'Standard scrollable data table.',
+      preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:8px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
+      html: `<div class="new-canvas">\n<div class="table-container">\n  <table>\n    <thead>\n      <tr>\n        <th>Header</th>\n        <th>Header</th>\n        <th>Header</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n</div>`
+    },
+    {
+      name: 'Table (Alternate Rows)',
+      cat: 'Tables',
+      color: '#0EA5E9',
+      desc: 'Table with alternating row background colors.',
+      preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:8px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;background:#f0f9ff;display:flex;gap:8px"><div style="height:5px;background:#bae6fd;border-radius:2px;flex:1"></div><div style="height:5px;background:#bae6fd;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
+      html: `<div class="new-canvas">\n<div class="table-container">\n  <table class="alternate-rows">\n    <thead>\n      <tr>\n        <th>Header</th>\n        <th>Header</th>\n        <th>Header</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n</div>`
+    },
+    {
+      name: 'Table (Alternate Columns)',
+      cat: 'Tables',
+      color: '#0EA5E9',
+      desc: 'Table with alternating column background colors.',
+      preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:4px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.3);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:4px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#f0f9ff;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:4px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#f0f9ff;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
+      html: `<div class="new-canvas">\n<div class="table-container">\n  <table class="alternate-columns">\n    <thead>\n      <tr>\n        <th>Header</th>\n        <th>Header</th>\n        <th>Header</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n      <tr>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n        <td>Sample text here</td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n</div>`
+    },
+
+    // ── Legacy ─────────────────────────────────────────────────────────────
+    {
+      name: 'Accordion A (Legacy)',
+      cat: 'Legacy',
+      color: '#6B7280',
+      desc: 'Legacy accordion style A.',
+      preview: '<div style="display:flex;flex-direction:column;gap:4px;padding:2px"><div style="background:#f3f4f6;border-radius:4px;padding:5px 8px;display:flex;justify-content:space-between"><div style="width:55px;height:6px;background:#9ca3af;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div><div style="background:#f3f4f6;border-radius:4px;padding:5px 8px;display:flex;justify-content:space-between"><div style="width:70px;height:6px;background:#9ca3af;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div></div>',
+      html: `<div class="umich-accordion-a">\n  <div>Accordion A</div>\n  <details>\n    <summary>Item One</summary>\n    <div>\n      <p>Description text for Item One.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Item Two</summary>\n    <div>\n      <p>Description text for Item Two.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Item Three</summary>\n    <div>\n      <p>Description text for Item Three.</p>\n    </div>\n  </details>\n</div>`
+    },
+    {
+      name: 'Accordion B (Legacy)',
+      cat: 'Legacy',
+      color: '#6B7280',
+      desc: 'Legacy accordion style B — glossary/definition style.',
+      preview: '<div style="display:flex;flex-direction:column;gap:4px;padding:2px"><div style="background:#e9d5ff;border-radius:4px;padding:5px 8px;display:flex;justify-content:space-between"><div style="width:55px;height:6px;background:#9ca3af;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div><div style="background:#e9d5ff;border-radius:4px;padding:5px 8px;display:flex;justify-content:space-between"><div style="width:70px;height:6px;background:#9ca3af;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div></div>',
+      html: `<div class="umich-accordion-b">\n  <div>Accordion B</div>\n  <details>\n    <summary>Definition One</summary>\n    <div>\n      <p>Description for Definition 1.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Definition Two</summary>\n    <div>\n      <p>Description for Definition 2.</p>\n    </div>\n  </details>\n  <details>\n    <summary>Definition Three</summary>\n    <div>\n      <p>Description for Definition 3.</p>\n    </div>\n  </details>\n</div>`
+    },
+    {
+      name: 'Blue Page Header (Legacy)',
+      cat: 'Legacy',
+      color: '#1a3a5c',
+      desc: 'Legacy decorative blue bar at the top of a page.',
+      preview: '<div style="background:#1a5276;border-radius:6px;height:52px;display:flex;align-items:center;padding:0 12px"><div style="width:80px;height:10px;background:rgba(255,255,255,.4);border-radius:3px"></div></div>',
+      html: `<div class="bluePageHeader">&nbsp;</div>`
+    },
+    {
+      name: 'Blue Gradient Break (Legacy)',
+      cat: 'Legacy',
+      color: '#00274C',
+      desc: 'Centered blue gradient divider line.',
+      preview: '<div style="display:flex;align-items:center;justify-content:center;height:52px"><div style="width:70%;height:4px;background:linear-gradient(to right,rgba(0,39,76,0),#00274C,rgba(0,39,76,0));border-radius:2px"></div></div>',
+      html: `<div style="padding: 30px 0;">\n  <div style="width: 66%; height: 4px; background: linear-gradient(to right, rgba(0, 39, 76, 0), #00274C, rgba(0, 39, 76, 0)); margin: 0 auto;">&nbsp;</div>\n</div>`
+    },
+    {
+      name: 'Yellow Gradient Break (Legacy)',
+      cat: 'Legacy',
+      color: '#FFCB05',
+      desc: 'Centered maize gradient divider line.',
+      preview: '<div style="display:flex;align-items:center;justify-content:center;height:52px"><div style="width:70%;height:4px;background:linear-gradient(to right,rgba(255,203,5,0),#FFCB05,rgba(255,203,5,0));border-radius:2px"></div></div>',
+      html: `<div style="padding: 30px 0;">\n  <div style="width: 66%; height: 4px; background: linear-gradient(to right, rgba(255, 203, 5, 0), #FFCB05, rgba(255, 203, 5, 0)); margin: 0 auto;">&nbsp;</div>\n</div>`
+    },
+    {
+      name: 'Content Warning (Legacy)',
+      cat: 'Legacy',
+      color: '#1d4ed8',
+      desc: 'Blue content warning box for sensitive material.',
+      preview: '<div style="background:#1d4ed8;border-top:4px solid #60a5fa;border-radius:4px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:80px;height:8px;background:rgba(255,255,255,.7);border-radius:3px"></div><div style="width:110px;height:5px;background:rgba(255,255,255,.3);border-radius:3px"></div></div>',
+      html: `<div style="background-color: #1d4ed8; border-top: 6px solid #60a5fa; padding: 20px; margin: 30px 0; color: white; font-family: Arial;">\n  <h2 style="margin-top: 0; color: white;">Content Note:</h2>\n  <ul>\n    <li>The following content contains [add details here]. [Notes on how to proceed if uncomfortable]</li>\n  </ul>\n</div>`
+    },
+    {
+      name: 'Quote Callout (Legacy)',
+      cat: 'Legacy',
+      color: '#FFCB05',
+      desc: 'Legacy yellow-border quote block.',
+      preview: '<div style="border-top:3px solid #FFCB05;border-bottom:3px solid #FFCB05;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:100px;height:7px;background:#d4a800;border-radius:3px;opacity:.5;font-style:italic"></div><div style="width:55px;height:5px;background:#fde68a;border-radius:3px"></div></div>',
+      html: `<div class="quote divisionLineYellow divisionLineYellowTop">\n  <p style="color: #6b6b6b;">"Put your quote here"</p>\n  <h3>Quote Attribution</h3>\n</div>`
+    },
+    {
+      name: 'Landing Page Footer (Legacy)',
+      cat: 'Legacy',
+      color: '#6B7280',
+      desc: 'Michigan Online footer with logo and tagline.',
+      preview: '<div style="border-top:3px solid #FFCB05;padding:8px 12px;height:52px;display:flex;align-items:center;gap:8px"><div style="width:48px;height:10px;background:#9ca3af;border-radius:2px"></div><div style="width:110px;height:6px;background:#d1d5db;border-radius:2px"></div></div>',
+      html: `<div class="landingPageFooter divisionLineYellowTop">\n  <img role="presentation" src="https://shared-files.online.umich.edu/michigan-online/course-images/current/michiganOnline.png" alt="" width="318" height="56" />\n  <p>A Michigan Online Learning Experience</p>\n</div>`
     }
+
   ];
 
   // ── Snippets data ──────────────────────────────────────────────────────────
   const SNIPPETS = [
     {
-      name: 'Divider',
+      name: 'Divider (Subtle)',
       color: '#6B7280',
-      desc: 'Subtle horizontal rule to separate sections.',
+      desc: 'Subtle horizontal rule.',
       html: `<hr style="border:none;border-top:2px solid #e5e7eb;margin:24px 0;" />`
     },
     {
-      name: 'Maize Divider',
+      name: 'Divider (Maize)',
       color: '#FFCB05',
-      desc: 'U-M maize accent rule.',
+      desc: 'Short maize accent divider.',
       html: `<hr style="border:none;border-top:3px solid #FFCB05;margin:24px 0;width:60px;" />`
     },
     {
-      name: 'Button Link',
+      name: 'Button (Navy)',
       color: '#00274C',
-      desc: 'Navy CTA button.',
-      html: `<p><a href="PASTE_URL_HERE" style="display:inline-block;background:#00274C;color:white;padding:10px 22px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.9em;">Button Label</a></p>`
+      desc: 'Navy CTA button link.',
+      html: `<p><a href="PASTE_URL" style="display:inline-block;background:#00274C;color:white;padding:10px 22px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.9em;">Button Label</a></p>`
     },
     {
-      name: 'Accordion',
+      name: 'Button (Maize)',
+      color: '#FFCB05',
+      desc: 'Maize CTA button link.',
+      html: `<p><a href="PASTE_URL" style="display:inline-block;background:#FFCB05;color:#1c1c1e;padding:10px 22px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.9em;">Button Label</a></p>`
+    },
+    {
+      name: 'Tag / Pill',
       color: '#8B5CF6',
-      desc: 'Native HTML expand/collapse using &lt;details&gt;.',
-      html: `<details style="border:1px solid #e5e7eb;border-radius:8px;margin:8px 0;overflow:hidden;">\n  <summary style="padding:12px 16px;cursor:pointer;font-weight:600;background:#fafafa;list-style:none;">Section Title &#9660;</summary>\n  <div style="padding:16px;">\n    <p>Hidden content goes here.</p>\n  </div>\n</details>`
+      desc: 'Inline tag label using the .tag class.',
+      html: `<span class="tag">Tag Label</span>`
     },
     {
-      name: 'Image + Caption',
-      color: '#EC4899',
-      desc: 'Centered image with a styled caption below.',
-      html: `<figure style="margin:16px 0;text-align:center;">\n  <img src="PASTE_IMAGE_URL_HERE" alt="Describe the image" style="max-width:100%;border-radius:8px;" />\n  <figcaption style="font-size:.85em;color:#666;margin-top:8px;font-style:italic;">Caption text here.</figcaption>\n</figure>`
+      name: 'UM Logo',
+      color: '#00274C',
+      desc: 'Official University of Michigan block M logo.',
+      html: `<img role="presentation" src="https://shared-files.online.umich.edu/michigan-online/course-images/current/umichlogo.png" alt="" width="71" height="75" />`
     },
     {
-      name: 'Spacer',
+      name: 'Michigan Online Logo',
+      color: '#00274C',
+      desc: 'Michigan Online horizontal lockup.',
+      html: `<img role="presentation" src="https://shared-files.online.umich.edu/michigan-online/course-images/current/michiganOnline.png" alt="" width="318" height="56" />`
+    },
+    {
+      name: 'Spacer (32px)',
       color: '#D1D5DB',
       desc: '32px of vertical breathing room.',
       html: `<div style="height:32px;" aria-hidden="true"></div>`
+    },
+    {
+      name: 'Spacer (64px)',
+      color: '#D1D5DB',
+      desc: '64px of vertical breathing room.',
+      html: `<div style="height:64px;" aria-hidden="true"></div>`
     }
   ];
 
@@ -132,29 +390,43 @@
         <div class="lxd-swatch" style="--c:#f7f6f2" data-hex="#f7f6f2"><div class="lxd-swatch-block" style="border:1px solid #ddd"></div><span>Off-white</span><code>#f7f6f2</code></div>
       </div>
 
-      <p class="lxd-sg-label" style="margin-top:16px">Callout Colors</p>
-      <div class="lxd-colors">
-        <div class="lxd-swatch" style="--c:#3B82F6" data-hex="#3B82F6"><div class="lxd-swatch-block"></div><span>Info</span><code>#3B82F6</code></div>
-        <div class="lxd-swatch" style="--c:#F59E0B" data-hex="#F59E0B"><div class="lxd-swatch-block"></div><span>Warning</span><code>#F59E0B</code></div>
-        <div class="lxd-swatch" style="--c:#10B981" data-hex="#10B981"><div class="lxd-swatch-block"></div><span>Success</span><code>#10B981</code></div>
-        <div class="lxd-swatch" style="--c:#EF4444" data-hex="#EF4444"><div class="lxd-swatch-block"></div><span>Error</span><code>#EF4444</code></div>
-      </div>
-
       <p class="lxd-sg-label" style="margin-top:16px">Type Scale</p>
       <div class="lxd-type">
         <div class="lxd-type-row"><span style="font-size:1.5em;font-weight:700;line-height:1">Heading 2</span><code>1.5em / 700</code></div>
         <div class="lxd-type-row"><span style="font-size:1.25em;font-weight:700;line-height:1">Heading 3</span><code>1.25em / 700</code></div>
+        <div class="lxd-type-row"><span style="font-size:1.1em;font-weight:700;line-height:1">Heading 4</span><code>1.1em / 700</code></div>
         <div class="lxd-type-row"><span style="font-size:1em;line-height:1">Body</span><code>1em / 400</code></div>
-        <div class="lxd-type-row"><span style="font-size:.875em;line-height:1">Small</span><code>.875em / 400</code></div>
-        <div class="lxd-type-row"><span style="font-size:.875em;font-weight:700;line-height:1">Label</span><code>.875em / 700</code></div>
+        <div class="lxd-type-row"><span style="font-size:.875em;line-height:1">Small / Tag</span><code>.875em / 400</code></div>
       </div>
 
-      <p class="lxd-sg-label" style="margin-top:16px">Canvas CSS Classes</p>
+      <p class="lxd-sg-label" style="margin-top:16px">Component Classes</p>
       <div class="lxd-classes">
-        <div class="lxd-class-row"><code>.new-canvas</code><span>Root wrapper for styled pages</span></div>
-        <div class="lxd-class-row"><code>.display-header</code><span>Hero section</span></div>
-        <div class="lxd-class-row"><code>.heading</code><span>Two-col hero layout</span></div>
-        <div class="lxd-class-row"><code>.collage</code><span>Image collage container</span></div>
+        <div class="lxd-class-row"><code>.new-canvas</code><span>Root wrapper (required)</span></div>
+        <div class="lxd-class-row"><code>.text-block</code><span>Content section</span></div>
+        <div class="lxd-class-row"><code>.text-block.assignment</code><span>Assignment instructions</span></div>
+        <div class="lxd-class-row"><code>.text-block.video-block</code><span>Lecture video section</span></div>
+        <div class="lxd-class-row"><code>.text-block.video-block.highlight</code><span>Guest lecture</span></div>
+        <div class="lxd-class-row"><code>.text-block.video-block.blue</code><span>Blue video variant</span></div>
+        <div class="lxd-class-row"><code>.display-header</code><span>Course intro hero</span></div>
+        <div class="lxd-class-row"><code>.sub-title</code><span>Series sub-title bar</span></div>
+        <div class="lxd-class-row"><code>.accordion</code><span>FAQ accordion</span></div>
+        <div class="lxd-class-row"><code>.callout-box</code><span>Info callout</span></div>
+        <div class="lxd-class-row"><code>.callout-box.action</code><span>CTA callout</span></div>
+        <div class="lxd-class-row"><code>.callout-box.highlight</code><span>Navy callout</span></div>
+        <div class="lxd-class-row"><code>.two-col.text-text</code><span>Two text columns</span></div>
+        <div class="lxd-class-row"><code>.two-col.text-img</code><span>Text + image</span></div>
+        <div class="lxd-class-row"><code>.two-col .dark/.highlight</code><span>Two-col variants</span></div>
+        <div class="lxd-class-row"><code>.instructor</code><span>Instructor profile</span></div>
+        <div class="lxd-class-row"><code>.instructor.maize</code><span>Maize variant</span></div>
+        <div class="lxd-class-row"><code>.graphical-highlight</code><span>Graphic + text block</span></div>
+        <div class="lxd-class-row"><code>.gamut-intro.gallery</code><span>Gamut Gallery intro</span></div>
+        <div class="lxd-class-row"><code>.gamut-intro.workbook</code><span>Gamut Workbook intro</span></div>
+        <div class="lxd-class-row"><code>.img-caption</code><span>Image with caption</span></div>
+        <div class="lxd-class-row"><code>.rounded-corners</code><span>Image modifier</span></div>
+        <div class="lxd-class-row"><code>.table-container</code><span>Scrollable table wrapper</span></div>
+        <div class="lxd-class-row"><code>.alternate-rows</code><span>Table row striping</span></div>
+        <div class="lxd-class-row"><code>.alternate-columns</code><span>Table col striping</span></div>
+        <div class="lxd-class-row"><code>.tag</code><span>Inline pill label</span></div>
       </div>
     </div>
   `;
@@ -179,7 +451,6 @@
     }
     #${ID} * { box-sizing: border-box; }
 
-    /* Header */
     #${ID} .lxd-head {
       background: #1c1c1e;
       color: white;
@@ -219,7 +490,6 @@
     }
     #${ID} .lxd-close:hover { background: rgba(255,255,255,.3); }
 
-    /* Tabs */
     #${ID} .lxd-tabs {
       display: flex;
       background: white;
@@ -242,9 +512,33 @@
     #${ID} .lxd-tab:hover { color: #555; }
     #${ID} .lxd-tab.active { color: #1c1c1e; border-bottom-color: #FFCB05; }
 
-    /* Search */
+    /* Category filter */
+    #${ID} .lxd-cat-filter {
+      padding: 7px 10px 5px;
+      background: white;
+      border-bottom: 1px solid #e4e2dc;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    #${ID} .lxd-cat-btn {
+      padding: 3px 8px;
+      border-radius: 20px;
+      border: 1px solid #e4e2dc;
+      background: transparent;
+      font-size: .68rem;
+      font-weight: 600;
+      color: #888;
+      cursor: pointer;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    #${ID} .lxd-cat-btn:hover { border-color: #bbb; color: #444; }
+    #${ID} .lxd-cat-btn.active { background: #1c1c1e; border-color: #1c1c1e; color: white; }
+
     #${ID} .lxd-search-wrap {
-      padding: 10px 12px 8px;
+      padding: 7px 12px 6px;
       background: white;
       border-bottom: 1px solid #e4e2dc;
       flex-shrink: 0;
@@ -262,7 +556,6 @@
     }
     #${ID} .lxd-search:focus { border-color: #aaa; }
 
-    /* Scroll area */
     #${ID} .lxd-panel {
       flex: 1;
       overflow-y: auto;
@@ -271,7 +564,6 @@
     }
     #${ID} .lxd-panel.active { display: block; }
 
-    /* Component card */
     #${ID} .lxd-card {
       background: white;
       border: 1px solid #e4e2dc;
@@ -281,13 +573,8 @@
       transition: box-shadow .15s;
     }
     #${ID} .lxd-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
-    #${ID} .lxd-card-preview {
-      padding: 10px 12px 8px;
-      border-bottom: 1px solid #f0ede6;
-    }
-    #${ID} .lxd-card-body {
-      padding: 8px 12px 10px;
-    }
+    #${ID} .lxd-card-preview { padding: 10px 12px 8px; border-bottom: 1px solid #f0ede6; }
+    #${ID} .lxd-card-body { padding: 8px 12px 10px; }
     #${ID} .lxd-card-tag {
       font-size: .65rem;
       font-weight: 700;
@@ -295,21 +582,10 @@
       letter-spacing: .7px;
       margin-bottom: 2px;
     }
-    #${ID} .lxd-card-name {
-      font-weight: 700;
-      font-size: .88rem;
-      margin-bottom: 2px;
-    }
-    #${ID} .lxd-card-desc {
-      font-size: .76rem;
-      color: #888;
-      line-height: 1.4;
-      margin-bottom: 8px;
-    }
-    #${ID} .lxd-card-actions {
-      display: flex;
-      gap: 6px;
-    }
+    #${ID} .lxd-card-name { font-weight: 700; font-size: .88rem; margin-bottom: 2px; }
+    #${ID} .lxd-card-desc { font-size: .76rem; color: #888; line-height: 1.4; margin-bottom: 8px; }
+    #${ID} .lxd-card-actions { display: flex; gap: 6px; }
+
     #${ID} .lxd-btn-insert {
       flex: 1;
       padding: 5px 10px;
@@ -335,7 +611,6 @@
     }
     #${ID} .lxd-btn-copy:hover { border-color: #aaa; color: #555; }
 
-    /* Snippet card (simpler, no preview) */
     #${ID} .lxd-snippet {
       background: white;
       border: 1px solid #e4e2dc;
@@ -346,16 +621,11 @@
       align-items: center;
       gap: 10px;
     }
-    #${ID} .lxd-snippet-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    #${ID} .lxd-snippet-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
     #${ID} .lxd-snippet-info { flex: 1; min-width: 0; }
     #${ID} .lxd-snippet-name { font-weight: 700; font-size: .85rem; }
     #${ID} .lxd-snippet-desc { font-size: .73rem; color: #888; line-height: 1.3; }
 
-    /* Style guide */
     #${ID} .lxd-sg-label {
       font-size: .68rem;
       font-weight: 700;
@@ -364,12 +634,7 @@
       color: #aaa;
       margin-bottom: 8px;
     }
-    #${ID} .lxd-colors {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
+    #${ID} .lxd-colors { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px; }
     #${ID} .lxd-swatch {
       background: white;
       border: 1px solid #e4e2dc;
@@ -379,46 +644,28 @@
       transition: box-shadow .15s;
     }
     #${ID} .lxd-swatch:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
-    #${ID} .lxd-swatch-block {
-      width: 100%; height: 28px;
-      background: var(--c);
-      border-radius: 5px;
-      margin-bottom: 5px;
-    }
+    #${ID} .lxd-swatch-block { width: 100%; height: 28px; background: var(--c); border-radius: 5px; margin-bottom: 5px; }
     #${ID} .lxd-swatch span { display: block; font-size: .72rem; font-weight: 600; color: #555; }
     #${ID} .lxd-swatch code { font-size: .68rem; color: #aaa; }
 
     #${ID} .lxd-type { display: flex; flex-direction: column; gap: 4px; }
     #${ID} .lxd-type-row {
-      background: white;
-      border: 1px solid #e4e2dc;
-      border-radius: 7px;
-      padding: 7px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      background: white; border: 1px solid #e4e2dc; border-radius: 7px;
+      padding: 7px 10px; display: flex; align-items: center; justify-content: space-between;
     }
     #${ID} .lxd-type-row code { font-size: .7rem; color: #aaa; }
 
     #${ID} .lxd-classes { display: flex; flex-direction: column; gap: 4px; }
     #${ID} .lxd-class-row {
-      background: white;
-      border: 1px solid #e4e2dc;
-      border-radius: 7px;
-      padding: 7px 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      background: white; border: 1px solid #e4e2dc; border-radius: 7px;
+      padding: 7px 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
-    #${ID} .lxd-class-row code { font-size: .75rem; color: #1c1c1e; white-space: nowrap; }
-    #${ID} .lxd-class-row span { font-size: .72rem; color: #888; text-align: right; }
+    #${ID} .lxd-class-row code { font-size: .73rem; color: #1c1c1e; white-space: nowrap; }
+    #${ID} .lxd-class-row span { font-size: .7rem; color: #888; text-align: right; }
 
-    /* Toast */
     #${ID}-toast {
       position: fixed;
-      bottom: 24px;
-      right: 340px;
+      bottom: 24px; right: 340px;
       background: #1c1c1e;
       color: white;
       font-size: .78rem;
@@ -442,10 +689,10 @@
   // ── Build HTML ─────────────────────────────────────────────────────────────
   function componentCards(list) {
     return list.map(c => `
-      <div class="lxd-card" data-name="${c.name.toLowerCase()}">
+      <div class="lxd-card" data-name="${c.name.toLowerCase()}" data-cat="${c.cat}">
         <div class="lxd-card-preview">${c.preview || ''}</div>
         <div class="lxd-card-body">
-          <div class="lxd-card-tag" style="color:${c.color}">${c.tag}</div>
+          <div class="lxd-card-tag" style="color:${c.color}">${c.cat}</div>
           <div class="lxd-card-name">${c.name}</div>
           <div class="lxd-card-desc">${c.desc}</div>
           <div class="lxd-card-actions">
@@ -469,6 +716,11 @@
       </div>`).join('');
   }
 
+  const CATS = ['All', 'Text', 'Callouts', 'Video', 'Layout', 'Media', 'Tables', 'Legacy'];
+  const catFilterHTML = CATS.map((c, i) =>
+    `<button class="lxd-cat-btn${i === 0 ? ' active' : ''}" data-cat="${c}">${c}</button>`
+  ).join('');
+
   const sidebar = document.createElement('div');
   sidebar.id = ID;
   sidebar.innerHTML = `
@@ -484,6 +736,10 @@
       <button class="lxd-tab active" data-tab="components">Components</button>
       <button class="lxd-tab"        data-tab="snippets">Snippets</button>
       <button class="lxd-tab"        data-tab="styleguide">Style Guide</button>
+    </div>
+
+    <div class="lxd-cat-filter" id="${ID}-cat-filter">
+      ${catFilterHTML}
     </div>
 
     <div class="lxd-search-wrap" id="${ID}-search-wrap">
@@ -509,7 +765,10 @@
   document.body.appendChild(sidebar);
   document.body.style.marginRight = PUSH_W;
 
-  // ── Insert / Copy ──────────────────────────────────────────────────────────
+  // ── State ──────────────────────────────────────────────────────────────────
+  let activeCat = 'All';
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
   function showToast(msg) {
     toast.textContent = msg;
     toast.classList.add('show');
@@ -518,12 +777,10 @@
   }
 
   function insertHTML(html) {
-    // RCE v1 / v2 direct
     if (window.tinymce) {
       const ed = tinymce.activeEditor || (tinymce.editors && tinymce.editors[0]);
       if (ed) { ed.insertContent(html); showToast('Inserted ✓'); return; }
     }
-    // RCE v2 sandboxed iframe
     for (const f of document.querySelectorAll('iframe')) {
       try {
         const tw = f.contentWindow;
@@ -531,44 +788,59 @@
           const ed = tw.tinymce.activeEditor || (tw.tinymce.editors && tw.tinymce.editors[0]);
           if (ed) { ed.insertContent(html); showToast('Inserted ✓'); return; }
         }
-      } catch (e) { /* cross-origin, skip */ }
+      } catch (e) { /* cross-origin */ }
     }
-    // Fallback: clipboard
     navigator.clipboard.writeText(html)
       .then(() => showToast('Copied to clipboard — paste with ⌘V'))
-      .catch(() => showToast('Could not insert — try clicking inside the editor first'));
+      .catch(() => showToast('Could not insert — click inside the editor first'));
   }
 
   function copyHTML(html) {
     navigator.clipboard.writeText(html)
-      .then(() => showToast('Copied to clipboard ✓'))
+      .then(() => showToast('Copied ✓'))
       .catch(() => showToast('Copy failed'));
   }
 
-  // ── Events ─────────────────────────────────────────────────────────────────
+  function applyFilter() {
+    const q = (document.getElementById(ID + '-search').value || '').toLowerCase().trim();
+    document.getElementById(ID + '-panel-components').querySelectorAll('.lxd-card').forEach(card => {
+      const nameMatch = !q || card.dataset.name.includes(q);
+      const catMatch = activeCat === 'All' || card.dataset.cat === activeCat;
+      card.style.display = (nameMatch && catMatch) ? '' : 'none';
+    });
+    document.getElementById(ID + '-panel-snippets').querySelectorAll('.lxd-snippet').forEach(card => {
+      card.style.display = !q || card.dataset.name.includes(q) ? '' : 'none';
+    });
+  }
 
-  // Close
+  // ── Events ─────────────────────────────────────────────────────────────────
   document.getElementById(ID + '-close').addEventListener('click', () => {
-    sidebar.remove();
-    toast.remove();
-    styleEl.remove();
+    sidebar.remove(); toast.remove(); styleEl.remove();
     document.body.style.marginRight = '';
   });
 
-  // Tabs
   sidebar.querySelectorAll('.lxd-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       sidebar.querySelectorAll('.lxd-tab').forEach(t => t.classList.remove('active'));
       sidebar.querySelectorAll('.lxd-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(ID + '-panel-' + tab.dataset.tab).classList.add('active');
-      // Hide search on style guide
+      const isComp = tab.dataset.tab === 'components';
+      document.getElementById(ID + '-cat-filter').style.display = isComp ? '' : 'none';
       document.getElementById(ID + '-search-wrap').style.display =
         tab.dataset.tab === 'styleguide' ? 'none' : '';
     });
   });
 
-  // Insert / Copy buttons
+  sidebar.querySelector('.lxd-cat-filter').addEventListener('click', e => {
+    const btn = e.target.closest('.lxd-cat-btn');
+    if (!btn) return;
+    sidebar.querySelectorAll('.lxd-cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCat = btn.dataset.cat;
+    applyFilter();
+  });
+
   sidebar.addEventListener('click', e => {
     const btn = e.target.closest('.lxd-btn-insert, .lxd-btn-copy');
     if (!btn) return;
@@ -577,7 +849,6 @@
     else copyHTML(html);
   });
 
-  // Copy swatch hex
   sidebar.addEventListener('click', e => {
     const swatch = e.target.closest('.lxd-swatch');
     if (!swatch) return;
@@ -585,13 +856,6 @@
       .then(() => showToast(swatch.dataset.hex + ' copied'));
   });
 
-  // Search filter
-  document.getElementById(ID + '-search').addEventListener('input', function () {
-    const q = this.value.toLowerCase().trim();
-    const activePanel = sidebar.querySelector('.lxd-panel.active');
-    activePanel.querySelectorAll('[data-name]').forEach(card => {
-      card.style.display = !q || card.dataset.name.includes(q) ? '' : 'none';
-    });
-  });
+  document.getElementById(ID + '-search').addEventListener('input', applyFilter);
 
 })();
