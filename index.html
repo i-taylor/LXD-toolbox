@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Toolbox</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:     #f7f6f2;
+    --white:  #ffffff;
+    --ink:    #1c1c1e;
+    --muted:  #6b6b72;
+    --border: #e4e2dc;
+    --radius: 14px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image: radial-gradient(circle, #c8c5bc 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  /* ── Header ──────────────────────────────────────── */
+  .site-header {
+    padding: 48px 0 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .site-header h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .site-header h1 span {
+    display: inline-block;
+    background: #FFCB05;
+    border-radius: 6px;
+    padding: 0 6px 2px;
+    margin-left: 2px;
+    font-size: 2rem;
+    vertical-align: middle;
+    transform: rotate(-2deg);
+    line-height: 1.2;
+  }
+
+  .site-header p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .pill-count {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  .pill-count b { color: var(--ink); }
+
+  /* ── Grid ────────────────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Card ────────────────────────────────────────── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent, #e4e2dc);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    animation: fade-up 0.3s ease both;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.04s; }
+  .card:nth-child(2) { animation-delay: 0.08s; }
+  .card:nth-child(3) { animation-delay: 0.12s; }
+
+  .card:hover {
+    transform: translateY(-4px) rotate(0.3deg);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+  }
+
+  .card-body {
+    padding: 20px 22px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .card-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--accent, var(--muted));
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .card-tag .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent, var(--muted));
+    flex-shrink: 0;
+  }
+
+  .card h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.2px;
+  }
+
+  .card p {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-footer {
+    padding: 12px 22px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-meta {
+    font-size: 0.73rem;
+    color: #bbb;
+  }
+
+  .btn-open {
+    padding: 7px 16px;
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.1px;
+  }
+  .btn-open:hover {
+    background: var(--accent, #333);
+    transform: scale(1.03);
+  }
+
+  /* ── Suggest card ─────────────────────────────────── */
+  .card-suggest {
+    background: transparent;
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 24px;
+    text-align: center;
+    gap: 10px;
+    min-height: 180px;
+    transition: border-color 0.2s, background 0.2s;
+    animation: fade-up 0.3s ease 0.16s both;
+  }
+  .card-suggest:hover {
+    border-color: #bbb;
+    background: rgba(255,255,255,0.5);
+  }
+  .card-suggest .suggest-icon { font-size: 1.6rem; }
+  .card-suggest p { font-size: 0.82rem; line-height: 1.55; color: #aaa; }
+  .card-suggest strong { color: var(--muted); }
+
+  /* ── Modal ───────────────────────────────────────── */
+  #modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,18,14,0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  #modal-backdrop.open { display: flex; }
+
+  #modal {
+    position: relative;
+    width: 92vw;
+    height: 92vh;
+    max-width: 1200px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+    background: white;
+    animation: modal-in 0.22s ease;
+  }
+
+  @keyframes modal-in {
+    from { transform: scale(0.96) translateY(8px); opacity: 0; }
+    to   { transform: scale(1)    translateY(0);   opacity: 1; }
+  }
+
+  #modal-close {
+    position: absolute;
+    top: 12px; right: 14px;
+    z-index: 10;
+    background: rgba(0,0,0,0.35);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px; height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  #modal-close:hover { background: rgba(0,0,0,0.6); }
+
+  #modal-iframe { width: 100%; height: 100%; border: none; display: block; }
+
+  /* ── Footer ──────────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 32px 0 0;
+    font-size: 0.75rem;
+    color: #bbb;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 20px 60px; }
+    .site-header h1 { font-size: 2rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="site-header">
+    <div>
+      <h1>The Toolbox<span>🛠</span></h1>
+      <p>Small utilities for the LXD team. Open, use, done.</p>
+    </div>
+    <div class="pill-count"><b>2</b> live</div>
+  </header>
+
+  <div class="grid">
+
+    <div class="card" style="--accent: #F97316;">
+      <div class="card-body">
+        <div class="card-tag"><span class="dot"></span> Image tool</div>
+        <h2>Course Image Composer</h2>
+        <p>Upload a photo, drag to set your focal point, scroll to zoom, export a pre-cropped PNG sized for the Canvas homepage collage.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-meta">Pan · Zoom · Export</span>
+        <button class="btn-open" style="--accent: #F97316;"
+          onclick="openTool('https://i-taylor.github.io/course-homepage-image-generator/')">Open →</button>
+      </div>
+    </div>
+
+    <div class="card" style="--accent: #10B981;">
+      <div class="card-body">
+        <div class="card-tag"><span class="dot"></span> Assets</div>
+        <h2>MO Image Cookbook</h2>
+        <p>Approved logos, course images, and icons with ready-to-paste HTML snippets — accessibility attributes already included.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-meta">Copy · Paste · Done</span>
+        <button class="btn-open" style="--accent: #10B981;"
+          onclick="openTool('https://i-taylor.github.io/MO-Image-Cookbook/')">Open →</button>
+      </div>
+    </div>
+
+    <div class="card-suggest">
+      <span class="suggest-icon">💬</span>
+      <p><strong>Got an idea?</strong><br>What takes you too long?<br>Drop it in #lxd_team.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    Built by the LXD team &nbsp;·&nbsp; Michigan Online &nbsp;·&nbsp; University of Michigan
+  </footer>
+
+</div>
+
+<!-- Modal -->
+<div id="modal-backdrop" onclick="handleBackdropClick(event)">
+  <div id="modal">
+    <button id="modal-close" onclick="closeTool()">×</button>
+    <iframe id="modal-iframe" src="" title="Tool"></iframe>
+  </div>
+</div>
+
+<script>
+  const backdrop = document.getElementById('modal-backdrop');
+  const iframe   = document.getElementById('modal-iframe');
+
+  function openTool(url) {
+    iframe.src = url;
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeTool() {
+    backdrop.classList.remove('open');
+    iframe.src = '';
+    document.body.style.overflow = '';
+  }
+
+  function handleBackdropClick(e) {
+    if (e.target === backdrop) closeTool();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeTool();
+  });
+</script>
+
+</body>
+</html>
