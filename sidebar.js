@@ -1077,7 +1077,7 @@
         <button class="lxd-pm-close" id="${ID}-pm-close">✕</button>
       </div>
       <div class="lxd-pm-preview-wrap">
-        <iframe class="lxd-pm-frame" id="${ID}-pm-frame" sandbox="allow-same-origin"></iframe>
+        <iframe class="lxd-pm-frame" id="${ID}-pm-frame"></iframe>
       </div>
       <div class="lxd-pm-desc" id="${ID}-pm-desc"></div>
       <div class="lxd-pm-actions">
@@ -1240,8 +1240,9 @@
       document.getElementById(ID + '-panel-' + tab.dataset.tab).classList.add('active');
       document.getElementById(ID + '-search-wrap').style.display =
         tab.dataset.tab === 'styleguide' ? 'none' : '';
-      // Clear search when switching tabs
+      // Clear search and reset component nav when switching tabs
       document.getElementById(ID + '-search').value = '';
+      if (tab.dataset.tab === 'components') showCompHome();
     });
   });
 
