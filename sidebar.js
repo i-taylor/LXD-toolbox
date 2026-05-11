@@ -545,34 +545,14 @@
     #${ID} .lxd-comp-tile:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
     #${ID} .lxd-comp-tile.selected { border-color: #1c1c1e; box-shadow: 0 0 0 1px #1c1c1e; }
     #${ID} .lxd-comp-tile-preview { padding: 8px 8px 6px; border-bottom: 1px solid #f0ede6; min-height: 52px; }
-    #${ID} .lxd-comp-tile-name { padding: 5px 7px 7px; font-size: .72rem; font-weight: 600; line-height: 1.3; color: #1c1c1e; }
-
-    /* ── Detail bar ── */
-    #${ID} .lxd-detail-bar {
-      flex-shrink: 0;
-      background: #fff;
-      border-top: 2px solid #e4e2dc;
-      padding: 10px 12px;
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
+    #${ID} .lxd-comp-tile-name { padding: 5px 7px 4px; font-size: .72rem; font-weight: 600; line-height: 1.3; color: #1c1c1e; }
+    #${ID} .lxd-comp-tile-actions { display: flex; gap: 4px; padding: 0 7px 8px; }
+    #${ID} .lxd-comp-tile-actions .lxd-btn-insert {
+      flex: 1; padding: 4px 6px; font-size: .7rem;
     }
-    #${ID} .lxd-detail-info { flex: 1; min-width: 0; }
-    #${ID} .lxd-detail-name { font-weight: 700; font-size: .85rem; margin-bottom: 2px; color: #1c1c1e; }
-    #${ID} .lxd-detail-desc { font-size: .72rem; color: #888; line-height: 1.3; }
-    #${ID} .lxd-detail-actions { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
-    #${ID} .lxd-detail-close {
-      background: none;
-      border: none;
-      color: #bbb;
-      cursor: pointer;
-      font-size: 15px;
-      padding: 2px 5px;
-      border-radius: 4px;
-      line-height: 1;
-      transition: color .15s;
+    #${ID} .lxd-comp-tile-actions .lxd-btn-copy {
+      padding: 4px 7px; font-size: .7rem;
     }
-    #${ID} .lxd-detail-close:hover { color: #555; }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
@@ -739,10 +719,13 @@
   function compTilesHTML(list) {
     return list.map(c => {
       const inner = encodeURIComponent(stripWrapper(c.html));
-      const desc  = encodeURIComponent(c.desc);
-      return `<div class="lxd-comp-tile" data-name="${c.name.toLowerCase()}" data-html="${inner}" data-label="${c.name}" data-desc="${desc}">
+      return `<div class="lxd-comp-tile" data-name="${c.name.toLowerCase()}">
         <div class="lxd-comp-tile-preview">${c.preview || ''}</div>
         <div class="lxd-comp-tile-name">${c.name}</div>
+        <div class="lxd-comp-tile-actions">
+          <button class="lxd-btn-insert" data-html="${inner}">Insert</button>
+          <button class="lxd-btn-copy"   data-html="${inner}">Copy</button>
+        </div>
       </div>`;
     }).join('');
   }
@@ -805,17 +788,6 @@
       ${STYLE_GUIDE_HTML}
     </div>
 
-    <div class="lxd-detail-bar" id="${ID}-detail-bar" style="display:none">
-      <div class="lxd-detail-info">
-        <div class="lxd-detail-name" id="${ID}-detail-name"></div>
-        <div class="lxd-detail-desc" id="${ID}-detail-desc"></div>
-      </div>
-      <div class="lxd-detail-actions">
-        <button class="lxd-btn-insert" id="${ID}-detail-insert">Insert</button>
-        <button class="lxd-btn-copy"   id="${ID}-detail-copy">Copy</button>
-        <button class="lxd-detail-close" id="${ID}-detail-close">✕</button>
-      </div>
-    </div>
   `;
 
   const toast = document.createElement('div');
@@ -899,26 +871,11 @@
   }
 
   // ── Nav helpers ────────────────────────────────────────────────────────────
-  function hideDetailBar() {
-    document.getElementById(ID + '-detail-bar').style.display = 'none';
-    sidebar.querySelectorAll('.lxd-comp-tile.selected').forEach(t => t.classList.remove('selected'));
-  }
-
-  function showDetailBar(tile) {
-    const htmlEnc = tile.dataset.html;
-    document.getElementById(ID + '-detail-name').textContent = tile.dataset.label;
-    document.getElementById(ID + '-detail-desc').textContent = decodeURIComponent(tile.dataset.desc);
-    document.getElementById(ID + '-detail-insert').dataset.html = htmlEnc;
-    document.getElementById(ID + '-detail-copy').dataset.html = htmlEnc;
-    document.getElementById(ID + '-detail-bar').style.display = 'flex';
-  }
-
   function showCompHome() {
     compView = 'home';
     document.getElementById(ID + '-comp-home').style.display = '';
     document.getElementById(ID + '-comp-browse').style.display = 'none';
     document.getElementById(ID + '-comp-search').style.display = 'none';
-    hideDetailBar();
   }
 
   function showCompBrowse(cat) {
@@ -929,7 +886,6 @@
     document.getElementById(ID + '-browse-title').textContent = cat;
     document.getElementById(ID + '-comp-tiles').innerHTML =
       compTilesHTML(COMPONENTS.filter(c => c.cat === cat));
-    hideDetailBar();
   }
 
   function showCompSearch(q) {
@@ -939,7 +895,6 @@
     document.getElementById(ID + '-comp-search').style.display = '';
     document.getElementById(ID + '-search-tiles').innerHTML =
       compTilesHTML(COMPONENTS.filter(c => c.name.toLowerCase().includes(q)));
-    hideDetailBar();
   }
 
   function filterSnippets(q) {
@@ -962,7 +917,6 @@
       document.getElementById(ID + '-panel-' + tab.dataset.tab).classList.add('active');
       document.getElementById(ID + '-search-wrap').style.display =
         tab.dataset.tab === 'styleguide' ? 'none' : '';
-      if (tab.dataset.tab !== 'components') hideDetailBar();
       // Clear search when switching tabs
       document.getElementById(ID + '-search').value = '';
     });
@@ -980,23 +934,6 @@
     showCompHome();
     document.getElementById(ID + '-search').value = '';
   });
-
-  // ── Component tile → select + detail bar ──────────────────────────────────
-  sidebar.addEventListener('click', e => {
-    const tile = e.target.closest('.lxd-comp-tile');
-    if (!tile) return;
-    if (tile.classList.contains('selected')) {
-      tile.classList.remove('selected');
-      hideDetailBar();
-    } else {
-      sidebar.querySelectorAll('.lxd-comp-tile.selected').forEach(t => t.classList.remove('selected'));
-      tile.classList.add('selected');
-      showDetailBar(tile);
-    }
-  });
-
-  // ── Detail bar close ───────────────────────────────────────────────────────
-  document.getElementById(ID + '-detail-close').addEventListener('click', hideDetailBar);
 
   sidebar.addEventListener('click', e => {
     const btn = e.target.closest('.lxd-btn-insert, .lxd-btn-copy');
