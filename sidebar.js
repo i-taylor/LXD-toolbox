@@ -527,32 +527,38 @@
     #${ID} .lxd-back-btn:hover { color: #333; }
     #${ID} .lxd-browse-title { font-weight: 700; font-size: .88rem; color: #1c1c1e; }
 
-    /* ── Component tile grid (level 2 + search) ── */
+    /* ── Component list (level 2 + search) ── */
     #${ID} .lxd-comp-tiles {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px 10px;
     }
     #${ID} .lxd-comp-tile {
       background: white;
-      border: 1.5px solid #e4e2dc;
-      border-radius: 10px;
+      border: 1px solid #e4e2dc;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 9px;
+      transition: box-shadow .15s;
+    }
+    #${ID} .lxd-comp-tile:hover { box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+    #${ID} .lxd-comp-tile-preview {
+      width: 48px; height: 36px;
+      flex-shrink: 0;
+      border-radius: 5px;
       overflow: hidden;
-      cursor: pointer;
-      transition: box-shadow .15s, border-color .15s;
+      background: #f7f6f2;
+      border: 1px solid #ece9e2;
+      display: flex; align-items: center; justify-content: center;
     }
-    #${ID} .lxd-comp-tile:hover { box-shadow: 0 4px 12px rgba(0,0,0,.08); }
-    #${ID} .lxd-comp-tile.selected { border-color: #1c1c1e; box-shadow: 0 0 0 1px #1c1c1e; }
-    #${ID} .lxd-comp-tile-preview { padding: 8px 8px 6px; border-bottom: 1px solid #f0ede6; min-height: 52px; }
-    #${ID} .lxd-comp-tile-name { padding: 5px 7px 4px; font-size: .72rem; font-weight: 600; line-height: 1.3; color: #1c1c1e; }
-    #${ID} .lxd-comp-tile-actions { display: flex; gap: 4px; padding: 0 7px 8px; }
-    #${ID} .lxd-comp-tile-actions .lxd-btn-insert {
-      flex: 1; padding: 4px 6px; font-size: .7rem;
-    }
-    #${ID} .lxd-comp-tile-actions .lxd-btn-copy {
-      padding: 4px 7px; font-size: .7rem;
-    }
+    #${ID} .lxd-comp-tile-preview > * { transform: scale(.55); transform-origin: center center; pointer-events: none; }
+    #${ID} .lxd-comp-tile-name { flex: 1; font-size: .78rem; font-weight: 600; color: #1c1c1e; line-height: 1.3; min-width: 0; }
+    #${ID} .lxd-comp-tile-actions { display: flex; gap: 4px; flex-shrink: 0; }
+    #${ID} .lxd-comp-tile-actions .lxd-btn-insert { padding: 4px 9px; font-size: .72rem; }
+    #${ID} .lxd-comp-tile-actions .lxd-btn-copy   { padding: 4px 8px; font-size: .72rem; }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
