@@ -390,6 +390,28 @@
       </div>
     </div>
 
+    <div class="card" style="--accent: #8B5CF6;">
+      <div class="card-body">
+        <div class="card-tag"><span class="dot"></span> Canvas</div>
+        <h2>Canvas Sidebar</h2>
+        <p>Components, snippets, and style guide — injected as a panel directly inside Canvas. Drag the bookmarklet to your bar and click it on any Canvas page.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-meta">Components · Snippets · Style Guide</span>
+        <div class="card-actions">
+          <button class="btn-preview" style="--accent: #8B5CF6;"
+            onclick="previewTool('https://i-taylor.github.io/LXD-toolbox/sidebar-preview.html')">Preview</button>
+          <span class="btn-open" style="--accent:#8B5CF6;opacity:.4;cursor:default;">Canvas only</span>
+        </div>
+      </div>
+      <div class="bookmarklet-wrap">
+        <span class="bookmarklet-label">Drag to bookmarks bar,<br>click on any Canvas page</span>
+        <a class="bookmarklet-link"
+          href="javascript:(function(){var s=document.createElement('script');s.src='https://i-taylor.github.io/LXD-toolbox/sidebar.js?v='+Date.now();document.head.appendChild(s);})();"
+          title="Drag to bookmarks bar">🛠 LXD Sidebar</a>
+      </div>
+    </div>
+
     <div class="card-suggest">
       <span class="suggest-icon">💬</span>
       <p><strong>Got an idea?</strong><br>What takes you too long?<br>Drop it in #lxd_team.</p>
