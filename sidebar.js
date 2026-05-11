@@ -530,7 +530,7 @@
     /* ── Component tile grid (level 2 + search) ── */
     #${ID} .lxd-comp-tiles {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: 7px;
       padding: 8px 10px;
     }
