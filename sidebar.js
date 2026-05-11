@@ -90,6 +90,15 @@
       color: '#FFCB05',
       desc: 'Styled blockquote for key quotes or takeaways.',
       preview: '<div style="border-left:4px solid #FFCB05;background:#fffdf0;padding:8px 12px;border-radius:0 6px 6px 0;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:100px;height:7px;background:#d4a800;border-radius:3px;opacity:.6;font-style:italic"></div><div style="width:55px;height:5px;background:#fde68a;border-radius:3px"></div></div>',
+      settings: [
+        { id: 'quote',  label: 'Quote text', type: 'text', default: '', placeholder: 'Put quote text here' },
+        { id: 'author', label: 'Author',      type: 'text', default: '', placeholder: 'Put author name here' },
+      ],
+      build(s) {
+        const q = s.quote  || 'Put quote text here';
+        const a = s.author || 'Put author name here';
+        return `<div class="new-canvas">\n<section class="text-block">\n  <blockquote>\n    <p>${q}</p>\n    <p>${a}</p>\n  </blockquote>\n</section>\n</div>`;
+      },
       html: `<div class="new-canvas">\n<section class="text-block">\n  <blockquote>\n    <p>Put quote text here</p>\n    <p>Put author name here</p>\n  </blockquote>\n</section>\n</div>`
     },
     {
@@ -134,6 +143,13 @@
       color: '#00274C',
       desc: 'Full hero header for the Course Intro page with collage and nav links.',
       preview: '<div style="background:linear-gradient(90deg,#00274c 45%,#e0e0e0 45%);height:52px;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;left:8px;top:10px;width:90px;height:10px;background:rgba(255,203,5,.9);border-radius:3px"></div><div style="position:absolute;left:8px;top:26px;width:60px;height:7px;background:rgba(255,255,255,.3);border-radius:3px"></div><div style="position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,#ccc 25%,#bbb 25%,#bbb 50%,#ccc 50%,#ccc 75%,#bbb 75%);background-size:8px 8px;opacity:.6"></div></div>',
+      settings: [
+        { id: 'title', label: 'Course title', type: 'text', default: 'Course Title', placeholder: 'e.g. Introduction to…' },
+      ],
+      build(s) {
+        const t = (s.title || 'Course Title').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return `<div class="new-canvas">\n<section class="display-header">\n  <div class="heading">\n    <div>\n      <h2>Welcome to <strong>${t}</strong></h2>\n      <img class="um-logo" role="presentation" src="https://courses.online.umich.edu/courses/284/files/9377/preview" alt="" width="71" height="75">\n    </div>\n    <div class="collage">\n      <div>&nbsp;</div>\n      <div><img src="PASTE_IMAGE_URL" alt="Describe the image"></div>\n    </div>\n  </div>\n  <div class="nav-links">\n    <ul>\n      <li><p><a href="PASTE_LINK_URL">Start Here</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Syllabus</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Modules</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">Get Course Support</a></p></li>\n    </ul>\n  </div>\n</section>\n</div>`;
+      },
       html: `<div class="new-canvas">\n<section class="display-header">\n  <div class="heading">\n    <div>\n      <h2>Welcome to <strong>Course Title</strong></h2>\n      <img class="um-logo" role="presentation" src="https://courses.online.umich.edu/courses/284/files/9377/preview" alt="" width="71" height="75">\n    </div>\n    <div class="collage">\n      <div>&nbsp;</div>\n      <div><img src="PASTE_IMAGE_URL" alt="Describe the image"></div>\n    </div>\n  </div>\n  <div class="nav-links">\n    <ul>\n      <li><p><a href="PASTE_LINK_URL">Start Here</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Syllabus</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Modules</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">Get Course Support</a></p></li>\n    </ul>\n  </div>\n</section>\n</div>`
     },
     {
@@ -142,6 +158,17 @@
       color: '#00274C',
       desc: 'Display header with a "Course # of #" tag — for courses in a series.',
       preview: '<div style="background:linear-gradient(90deg,#00274c 45%,#e0e0e0 45%);height:52px;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;left:8px;top:6px;width:44px;height:6px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="position:absolute;left:8px;top:17px;width:90px;height:10px;background:rgba(255,203,5,.9);border-radius:3px"></div><div style="position:absolute;left:8px;top:33px;width:60px;height:7px;background:rgba(255,255,255,.3);border-radius:3px"></div><div style="position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,#ccc 25%,#bbb 25%,#bbb 50%,#ccc 50%,#ccc 75%,#bbb 75%);background-size:8px 8px;opacity:.6"></div></div>',
+      settings: [
+        { id: 'num',   label: 'Course #',       type: 'number', default: 1, min: 1, max: 20 },
+        { id: 'total', label: 'Total in series', type: 'number', default: 3, min: 2, max: 20 },
+        { id: 'title', label: 'Course title',    type: 'text',   default: 'Course Title', placeholder: 'e.g. Introduction to…' },
+      ],
+      build(s) {
+        const num   = Math.max(1, +s.num   || 1);
+        const total = Math.max(2, +s.total || 3);
+        const t     = (s.title || 'Course Title').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return `<div class="new-canvas">\n<section class="display-header">\n  <div class="heading">\n    <div>\n      <p class="tag">Course ${num} of ${total}</p>\n      <h2>Welcome to <strong>${t}</strong></h2>\n      <img class="um-logo" role="presentation" src="https://courses.online.umich.edu/courses/284/files/9377/preview" alt="" width="71" height="75">\n    </div>\n    <div class="collage">\n      <div>&nbsp;</div>\n      <div><img src="PASTE_IMAGE_URL" alt="Describe the image"></div>\n    </div>\n  </div>\n  <div class="nav-links">\n    <ul>\n      <li><p><a href="PASTE_LINK_URL">Start Here</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Syllabus</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Modules</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">Get Course Support</a></p></li>\n    </ul>\n  </div>\n</section>\n</div>`;
+      },
       html: `<div class="new-canvas">\n<section class="display-header">\n  <div class="heading">\n    <div>\n      <p class="tag">Course # of #</p>\n      <h2>Welcome to <strong>Course Title</strong></h2>\n      <img class="um-logo" role="presentation" src="https://courses.online.umich.edu/courses/284/files/9377/preview" alt="" width="71" height="75">\n    </div>\n    <div class="collage">\n      <div>&nbsp;</div>\n      <div><img src="PASTE_IMAGE_URL" alt="Describe the image"></div>\n    </div>\n  </div>\n  <div class="nav-links">\n    <ul>\n      <li><p><a href="PASTE_LINK_URL">Start Here</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Syllabus</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Modules</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">Get Course Support</a></p></li>\n    </ul>\n  </div>\n</section>\n</div>`
     },
     {
@@ -158,6 +185,16 @@
       color: '#00274C',
       desc: 'Expandable FAQ-style sections with details/summary.',
       preview: '<div style="display:flex;flex-direction:column;gap:4px;padding:4px 2px"><div style="background:#f3f4f6;border-radius:4px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center"><div style="width:60px;height:7px;background:#d1d5db;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div><div style="background:#f3f4f6;border-radius:4px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center"><div style="width:80px;height:7px;background:#d1d5db;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div></div>',
+      settings: [
+        { id: 'items', label: 'Number of items', type: 'number', default: 3, min: 1, max: 12 },
+      ],
+      build(s) {
+        const n = Math.max(1, Math.min(12, +s.items || 3));
+        const details = Array.from({ length: n }, (_, i) =>
+          `    <details>\n      <summary>Accordion Item Title ${i + 1}</summary>\n      <div>\n        <p>Content for accordion item ${i + 1}.</p>\n      </div>\n    </details>`
+        ).join('\n');
+        return `<div class="new-canvas">\n<section>\n  <section class="accordion">\n    <h2>Frequently Asked Questions</h2>\n${details}\n  </section>\n</section>\n</div>`;
+      },
       html: `<div class="new-canvas">\n<section>\n  <section class="accordion">\n    <h2>Frequently Asked Questions</h2>\n    <details>\n      <summary>Accordion Item Title 1</summary>\n      <div>\n        <p>Content for accordion item 1.</p>\n      </div>\n    </details>\n    <details>\n      <summary>Accordion Item Title 2</summary>\n      <div>\n        <p>Content for accordion item 2.</p>\n      </div>\n    </details>\n    <details>\n      <summary>Accordion Item Title 3</summary>\n      <div>\n        <p>Content for accordion item 3.</p>\n      </div>\n    </details>\n  </section>\n</section>\n</div>`
     },
     {
@@ -242,6 +279,12 @@
       color: '#0EA5E9',
       desc: 'Standard scrollable data table.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:8px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
+      settings: [
+        { id: 'rows',   label: 'Rows',        type: 'number',   default: 3, min: 1, max: 15 },
+        { id: 'cols',   label: 'Columns',      type: 'number',   default: 3, min: 1, max: 8  },
+        { id: 'header', label: 'Header row',   type: 'checkbox', default: true },
+      ],
+      build(s) { return buildTable('', s); },
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="table-container">\n    <table>\n      <thead>\n        <tr>\n          <th>Header</th>\n          <th>Header</th>\n          <th>Header</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</section>\n</div>`
     },
     {
@@ -250,6 +293,12 @@
       color: '#0EA5E9',
       desc: 'Table with alternating row background colors.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:8px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;background:#f0f9ff;display:flex;gap:8px"><div style="height:5px;background:#bae6fd;border-radius:2px;flex:1"></div><div style="height:5px;background:#bae6fd;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
+      settings: [
+        { id: 'rows',   label: 'Rows',        type: 'number',   default: 3, min: 1, max: 15 },
+        { id: 'cols',   label: 'Columns',      type: 'number',   default: 3, min: 1, max: 8  },
+        { id: 'header', label: 'Header row',   type: 'checkbox', default: true },
+      ],
+      build(s) { return buildTable('alternate-rows', s); },
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="table-container">\n    <table class="alternate-rows">\n      <thead>\n        <tr>\n          <th>Header</th>\n          <th>Header</th>\n          <th>Header</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</section>\n</div>`
     },
     {
@@ -258,6 +307,12 @@
       color: '#0EA5E9',
       desc: 'Table with alternating column background colors.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:4px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.3);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:4px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#f0f9ff;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:4px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#f0f9ff;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
+      settings: [
+        { id: 'rows',   label: 'Rows',        type: 'number',   default: 3, min: 1, max: 15 },
+        { id: 'cols',   label: 'Columns',      type: 'number',   default: 3, min: 1, max: 8  },
+        { id: 'header', label: 'Header row',   type: 'checkbox', default: true },
+      ],
+      build(s) { return buildTable('alternate-columns', s); },
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="table-container">\n    <table class="alternate-columns">\n      <thead>\n        <tr>\n          <th>Header</th>\n          <th>Header</th>\n          <th>Header</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</section>\n</div>`
     },
 
@@ -669,6 +724,76 @@
     #${ID} .lxd-class-row code { font-size: .73rem; color: #1c1c1e; white-space: nowrap; }
     #${ID} .lxd-class-row span { font-size: .7rem; color: #888; text-align: right; }
 
+    /* ── Settings panel ── */
+    #${ID} .lxd-settings-btn {
+      padding: 4px 7px;
+      background: #f0ede6;
+      border: 1px solid #e4e2dc;
+      border-radius: 6px;
+      font-size: .75rem;
+      color: #888;
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      line-height: 1;
+    }
+    #${ID} .lxd-settings-btn:hover { background: #e8e4db; color: #555; }
+    #${ID} .lxd-settings-btn.active { background: #00274C; border-color: #00274C; color: white; }
+
+    #${ID} .lxd-comp-tile-settings {
+      border-top: 1px solid #f0ede6;
+      background: #faf9f7;
+      padding: 9px 10px 10px;
+    }
+    #${ID} .lxd-sf-fields {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-end;
+      margin-bottom: 9px;
+    }
+    #${ID} .lxd-sf-field { display: flex; flex-direction: column; gap: 4px; }
+    #${ID} .lxd-sf-text-field { flex: 1; min-width: 120px; }
+    #${ID} .lxd-sf-label {
+      font-size: .63rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: #aaa;
+    }
+    #${ID} .lxd-sf-input {
+      padding: 4px 7px;
+      border: 1px solid #e4e2dc;
+      border-radius: 6px;
+      font-size: .78rem;
+      background: white;
+      color: #1c1c1e;
+      outline: none;
+      transition: border-color .15s;
+    }
+    #${ID} .lxd-sf-input:focus { border-color: #aaa; }
+    #${ID} .lxd-sf-input[type="number"] { width: 58px; }
+    #${ID} .lxd-sf-text { width: 100%; box-sizing: border-box; }
+    #${ID} .lxd-sf-check-row {
+      flex-direction: row;
+      align-items: center;
+      gap: 6px;
+      padding-bottom: 3px;
+    }
+    #${ID} .lxd-sf-check-label { font-size: .76rem; color: #555; cursor: pointer; }
+    #${ID} .lxd-sf-submit {
+      width: 100%;
+      padding: 5px 10px;
+      background: #00274C;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: .74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    #${ID} .lxd-sf-submit:hover { background: #003a6e; }
+
     #${ID}-toast {
       position: fixed;
       bottom: 24px; right: 340px;
@@ -700,6 +825,49 @@
       .replace(/\n?<\/div>$/, '');
   }
 
+  // ── Table builder (shared by all three table variants) ────────────────────
+  function buildTable(cls, s) {
+    const cols = Math.max(1, Math.min(8,  +s.cols || 3));
+    const rows = Math.max(1, Math.min(15, +s.rows || 3));
+    const cls_ = cls ? ` class="${cls}"` : '';
+    const th    = Array(cols).fill('<th>Header</th>').join('');
+    const td    = Array(cols).fill('<td>Cell</td>').join('');
+    const thead = s.header ? `<thead>\n        <tr>${th}</tr>\n      </thead>\n      ` : '';
+    const tbody = Array(rows).fill(`<tr>${td}</tr>`).join('\n        ');
+    return `<div class="new-canvas">\n<section class="text-block">\n  <div class="table-container">\n    <table${cls_}>\n      ${thead}<tbody>\n        ${tbody}\n      </tbody>\n    </table>\n  </div>\n</section>\n</div>`;
+  }
+
+  // ── Settings panel HTML builder ────────────────────────────────────────────
+  function renderSettingsPanel(comp, idx) {
+    const fields = comp.settings.map(f => {
+      if (f.type === 'number') {
+        return `<div class="lxd-sf-field">
+          <div class="lxd-sf-label">${f.label}</div>
+          <input class="lxd-sf-input" type="number" data-field="${f.id}"
+            value="${f.default}" min="${f.min || 1}" max="${f.max || 99}">
+        </div>`;
+      }
+      if (f.type === 'checkbox') {
+        return `<div class="lxd-sf-field lxd-sf-check-row">
+          <input type="checkbox" id="lxd-sf-${idx}-${f.id}" data-field="${f.id}"${f.default ? ' checked' : ''}>
+          <label class="lxd-sf-check-label" for="lxd-sf-${idx}-${f.id}">${f.label}</label>
+        </div>`;
+      }
+      if (f.type === 'text') {
+        return `<div class="lxd-sf-field lxd-sf-text-field">
+          <div class="lxd-sf-label">${f.label}</div>
+          <input class="lxd-sf-input lxd-sf-text" type="text" data-field="${f.id}"
+            value="${f.default}" placeholder="${f.placeholder || ''}">
+        </div>`;
+      }
+      return '';
+    }).join('');
+    return `<div class="lxd-comp-tile-settings" style="display:none">
+      <div class="lxd-sf-fields">${fields}</div>
+      <button class="lxd-sf-submit" data-idx="${idx}">Insert with settings →</button>
+    </div>`;
+  }
+
   // ── Category accent colours ────────────────────────────────────────────────
   const CAT_COLORS = {
     Text:     '#00274C',
@@ -727,14 +895,19 @@
 
   function compTilesHTML(list) {
     return list.map(c => {
+      const idx   = COMPONENTS.indexOf(c);
       const inner = encodeURIComponent(stripWrapper(c.html));
+      const settingsBtn   = c.settings ? `<button class="lxd-settings-btn" data-idx="${idx}" title="Configure">⚙</button>` : '';
+      const settingsPanel = c.settings ? renderSettingsPanel(c, idx) : '';
       return `<div class="lxd-comp-tile" data-name="${c.name.toLowerCase()}">
         <div class="lxd-comp-tile-preview">${c.preview || ''}</div>
         <div class="lxd-comp-tile-name">${c.name}</div>
         <div class="lxd-comp-tile-actions">
           <button class="lxd-btn-insert" data-html="${inner}">Insert</button>
           <button class="lxd-btn-copy"   data-html="${inner}">Copy</button>
+          ${settingsBtn}
         </div>
+        ${settingsPanel}
       </div>`;
     }).join('');
   }
@@ -942,6 +1115,29 @@
   document.getElementById(ID + '-back-btn').addEventListener('click', () => {
     showCompHome();
     document.getElementById(ID + '-search').value = '';
+  });
+
+  // ── Settings toggle ────────────────────────────────────────────────────────
+  sidebar.addEventListener('click', e => {
+    const btn = e.target.closest('.lxd-settings-btn');
+    if (!btn) return;
+    const panel = btn.closest('.lxd-comp-tile').querySelector('.lxd-comp-tile-settings');
+    const opening = panel.style.display === 'none';
+    panel.style.display = opening ? 'block' : 'none';
+    btn.classList.toggle('active', opening);
+  });
+
+  // ── Settings insert ────────────────────────────────────────────────────────
+  sidebar.addEventListener('click', e => {
+    const btn = e.target.closest('.lxd-sf-submit');
+    if (!btn) return;
+    const comp = COMPONENTS[+btn.dataset.idx];
+    if (!comp?.build) return;
+    const vals = {};
+    btn.closest('.lxd-comp-tile-settings').querySelectorAll('[data-field]').forEach(input => {
+      vals[input.dataset.field] = input.type === 'checkbox' ? input.checked : input.value;
+    });
+    insertHTML(stripWrapper(comp.build(vals)));
   });
 
   sidebar.addEventListener('click', e => {
