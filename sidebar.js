@@ -690,77 +690,73 @@
       border-color: #00274C;
       color: white;
     }
-    /* ── Position panel ── */
-    #${ID} .lxd-position-panel {
-      background: white;
-      border-bottom: 1px solid #e4e2dc;
-      flex-shrink: 0;
-    }
-    #${ID} .lxd-pos-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 10px 4px;
-    }
-    #${ID} .lxd-pos-title {
-      font-size: .68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .7px;
+    /* ── Arrange panel ── */
+    #${ID} .lxd-arrange-empty {
+      padding: 32px 16px;
+      text-align: center;
       color: #aaa;
+      font-size: .8rem;
     }
-    #${ID} .lxd-pos-close {
-      background: none;
-      border: none;
-      font-size: 12px;
-      color: #aaa;
-      cursor: pointer;
-      padding: 0 2px;
-      line-height: 1;
-    }
-    #${ID} .lxd-pos-close:hover { color: #555; }
-    #${ID} .lxd-pos-list {
-      padding: 0 10px 8px;
+    #${ID} .lxd-arrange-list {
+      padding: 8px 10px;
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      max-height: 180px;
-      overflow-y: auto;
+      gap: 4px;
     }
-    #${ID} .lxd-pos-option {
+    #${ID} .lxd-arrange-row {
       display: flex;
       align-items: center;
       gap: 7px;
-      padding: 5px 8px;
-      border-radius: 6px;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: background .12s, border-color .12s;
-      font-size: .75rem;
-      color: #444;
+      padding: 6px 8px;
+      border-radius: 7px;
+      border: 1px solid #e4e2dc;
+      background: white;
+      cursor: grab;
+      user-select: none;
+      transition: box-shadow .12s, border-color .12s;
     }
-    #${ID} .lxd-pos-option:hover { background: #f7f6f2; border-color: #e4e2dc; }
-    #${ID} .lxd-pos-option.selected {
-      background: #eff6ff;
-      border-color: #00274C;
-      color: #00274C;
-      font-weight: 600;
+    #${ID} .lxd-arrange-row:hover { border-color: #bbb; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+    #${ID} .lxd-arrange-row.drag-over { border-color: #00274C; box-shadow: 0 0 0 2px rgba(0,39,76,.18); }
+    #${ID} .lxd-arrange-row.dragging { opacity: .4; }
+    #${ID} .lxd-arrange-handle {
+      color: #ccc;
+      font-size: 14px;
+      line-height: 1;
+      cursor: grab;
+      flex-shrink: 0;
     }
-    #${ID} .lxd-pos-arrow { font-size: .75rem; opacity: .5; width: 12px; text-align: center; }
-    #${ID} .lxd-pos-option.selected .lxd-pos-arrow { opacity: 1; }
-    #${ID} .lxd-pos-badge {
-      font-size: .62rem;
+    #${ID} .lxd-arrange-badge {
+      font-size: .6rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: .4px;
+      letter-spacing: .5px;
       padding: 1px 5px;
       border-radius: 3px;
       flex-shrink: 0;
     }
-    #${ID} .lxd-pos-badge-text  { background: #e0e7ff; color: #3730a3; }
-    #${ID} .lxd-pos-badge-video { background: #fef9c3; color: #854d0e; }
-    #${ID} .lxd-pos-badge-other { background: #f3f4f6; color: #6b7280; }
-    #${ID} .lxd-pos-label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    #${ID} .lxd-arrange-badge-text  { background: #e0e7ff; color: #3730a3; }
+    #${ID} .lxd-arrange-badge-video { background: #fef9c3; color: #854d0e; }
+    #${ID} .lxd-arrange-badge-other { background: #f3f4f6; color: #6b7280; }
+    #${ID} .lxd-arrange-label {
+      flex: 1;
+      min-width: 0;
+      font-size: .75rem;
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #${ID} .lxd-arrange-del {
+      background: none;
+      border: none;
+      color: #ccc;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 0 2px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    #${ID} .lxd-arrange-del:hover { color: #e53e3e; }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
@@ -1170,21 +1166,13 @@
 
     <div class="lxd-tabs">
       <button class="lxd-tab active" data-tab="components">Components</button>
+      <button class="lxd-tab"        data-tab="arrange">Arrange</button>
       <button class="lxd-tab"        data-tab="snippets">Snippets</button>
       <button class="lxd-tab"        data-tab="styleguide">Style Guide</button>
     </div>
 
     <div class="lxd-editor-tools">
       <button class="lxd-blocks-btn" id="${ID}-show-blocks" title="Outline text &amp; video blocks in the editor (editor-only, not published)">👁 Blocks</button>
-      <button class="lxd-blocks-btn" id="${ID}-scan-btn" title="Scan editor and choose where to insert">📍 Position</button>
-    </div>
-
-    <div class="lxd-position-panel" id="${ID}-position-panel" style="display:none">
-      <div class="lxd-pos-header">
-        <span class="lxd-pos-title">Insert position</span>
-        <button class="lxd-pos-close" id="${ID}-pos-close">✕</button>
-      </div>
-      <div class="lxd-pos-list" id="${ID}-pos-list"></div>
     </div>
 
     <div class="lxd-search-wrap" id="${ID}-search-wrap">
@@ -1205,6 +1193,10 @@
       <div class="lxd-comp-search" id="${ID}-comp-search" style="display:none">
         <div class="lxd-comp-tiles" id="${ID}-search-tiles"></div>
       </div>
+    </div>
+
+    <div class="lxd-panel" id="${ID}-panel-arrange">
+      <div class="lxd-arrange-list" id="${ID}-arrange-list"></div>
     </div>
 
     <div class="lxd-panel" id="${ID}-panel-snippets">
@@ -1239,9 +1231,8 @@
   document.body.style.marginRight = PUSH_W;
 
   // ── State ──────────────────────────────────────────────────────────────────
-  let compView        = 'home';  // 'home' | 'browse' | 'search'
-  let blocksVisible   = false;
-  let lxdInsertTarget = null;    // { beforeSection: el } | { afterSection: el } | null
+  let compView      = 'home';  // 'home' | 'browse' | 'search'
+  let blocksVisible = false;
 
   // ── Helpers ────────────────────────────────────────────────────────────────
   function showToast(msg) {
@@ -1305,95 +1296,166 @@
     ed.undoManager.transact(() => { section.insertAdjacentHTML('beforebegin', html); });
   }
 
-  // ── Position scanner ────────────────────────────────────────────────────────
-  // Reads current sections from the editor and renders radio-style options in
-  // the sidebar. Entirely sidebar-native — no TinyMCE DOM injection needed.
+  // ── Section label helper ────────────────────────────────────────────────────
   function sectionLabel(section) {
     const cls = section.classList;
-    if (cls.contains('video-block'))    return ['video',  'Video Block'];
-    if (cls.contains('display-header')) return ['other',  'Display Header'];
-    if (cls.contains('accordion'))      return ['other',  'Accordion'];
+    if (cls.contains('video-block'))         return ['video', 'Video Block'];
+    if (cls.contains('display-header'))      return ['other', 'Display Header'];
+    if (cls.contains('accordion'))           return ['other', 'Accordion'];
     if (cls.contains('graphical-highlight')) return ['other', 'Graphical Highlight'];
-    if (cls.contains('assignment'))     return ['other',  'Assignment Block'];
-    if (cls.contains('gamut-intro'))    return ['other',  'Gamut Intro'];
-    // Try to get heading text for plain text-blocks
+    if (cls.contains('assignment'))          return ['other', 'Assignment Block'];
+    if (cls.contains('gamut-intro'))         return ['other', 'Gamut Intro'];
     const h = section.querySelector('h2,h3,h4');
-    const heading = h ? h.textContent.trim().slice(0, 28) : '';
+    const heading = h ? h.textContent.trim().slice(0, 30) : '';
     return ['text', heading || 'Text Block'];
   }
 
-  function buildPositionPanel() {
-    const panel = document.getElementById(ID + '-position-panel');
-    const list  = document.getElementById(ID + '-pos-list');
-    if (!panel || !list) return;
+  // ── Placeholder ─────────────────────────────────────────────────────────────
+  // Keeps a non-publishable landing-zone section at the bottom of .new-canvas.
+  // Stripped from GetContent so it never reaches Canvas storage.
+  const PH_ATTR = 'data-lxd-ph';
+  const PH_CSS_ID = 'lxd-ph-style';
+
+  function ensurePlaceholder(ed) {
+    const wrapper = ed.getBody().querySelector('.new-canvas');
+    if (!wrapper) return;
+    // Remove any stale placeholder first
+    wrapper.querySelectorAll(`[${PH_ATTR}]`).forEach(el => el.remove());
+    const ph = ed.getDoc().createElement('section');
+    ph.className = 'text-block';
+    ph.setAttribute(PH_ATTR, '1');
+    ph.innerHTML = '<p><br></p>';
+    wrapper.appendChild(ph);
+
+    // Inject placeholder styling once per editor session
+    if (!ed.getDoc().getElementById(PH_CSS_ID)) {
+      const style = ed.getDoc().createElement('style');
+      style.id = PH_CSS_ID;
+      style.textContent = `
+        [${PH_ATTR}] {
+          outline: 2px dashed #ccc !important;
+          background: #fafafa !important;
+          min-height: 60px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          cursor: text !important;
+          position: relative !important;
+        }
+        [${PH_ATTR}]::after {
+          content: '↓  Click here, then insert a component';
+          position: absolute;
+          color: #bbb;
+          font-size: 12px;
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+          pointer-events: none;
+          letter-spacing: .2px;
+        }
+        [${PH_ATTR}] p { opacity: 0; margin: 0; }
+      `;
+      ed.getDoc().head.appendChild(style);
+
+      // Strip placeholder from content before Canvas saves it
+      ed.on('GetContent', function (e) {
+        if (e.content && e.content.includes(PH_ATTR)) {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = e.content;
+          tmp.querySelectorAll(`[${PH_ATTR}]`).forEach(el => el.remove());
+          e.content = tmp.innerHTML;
+        }
+      });
+    }
+  }
+
+  // ── Arrange panel ───────────────────────────────────────────────────────────
+  // Reads all real sections (excluding placeholder) and renders a drag-to-reorder
+  // list inside the sidebar. Drag events move actual DOM nodes in the editor.
+  function buildArrangePanel() {
+    const listEl = document.getElementById(ID + '-arrange-list');
+    if (!listEl) return;
 
     const ed = getEditor();
-    if (!ed) { showToast('Open an editor first'); return; }
+    if (!ed) {
+      listEl.innerHTML = '<div class="lxd-arrange-empty">Open a page editor first.</div>';
+      return;
+    }
 
     const wrapper  = ed.getBody().querySelector('.new-canvas');
     const sections = wrapper
-      ? Array.from(wrapper.children).filter(el => el.tagName === 'SECTION')
+      ? Array.from(wrapper.children).filter(el => el.tagName === 'SECTION' && !el.getAttribute(PH_ATTR))
       : [];
 
-    list.innerHTML = '';
+    if (!sections.length) {
+      listEl.innerHTML = '<div class="lxd-arrange-empty">No sections on this page yet.</div>';
+      return;
+    }
 
-    // Helper to create a clickable row
-    function addOption({ arrow, label, badgeType, badgeText, target }) {
-      const isSelected = target === null
-        ? lxdInsertTarget === null
-        : (target.beforeSection && lxdInsertTarget?.beforeSection === target.beforeSection) ||
-          (target.afterSection  && lxdInsertTarget?.afterSection  === target.afterSection);
+    listEl.innerHTML = '';
+    let dragSrc = null;
+
+    sections.forEach((section, idx) => {
+      const [type, label] = sectionLabel(section);
+      const badgeCls = type === 'video' ? 'video' : type === 'text' ? 'text' : 'other';
+      const badgeText = type === 'video' ? 'VIDEO' : type === 'text' ? 'TEXT' : 'BLOCK';
 
       const row = document.createElement('div');
-      row.className = 'lxd-pos-option' + (isSelected ? ' selected' : '');
+      row.className = 'lxd-arrange-row';
+      row.draggable = true;
+      row.dataset.idx = idx;
       row.innerHTML = `
-        <span class="lxd-pos-arrow">${arrow}</span>
-        <span class="lxd-pos-label">${label}</span>
-        ${badgeText ? `<span class="lxd-pos-badge lxd-pos-badge-${badgeType}">${badgeText}</span>` : ''}
+        <span class="lxd-arrange-handle">⠿</span>
+        <span class="lxd-arrange-badge lxd-arrange-badge-${badgeCls}">${badgeText}</span>
+        <span class="lxd-arrange-label" title="${label.replace(/"/g, '&quot;')}">${label}</span>
+        <button class="lxd-arrange-del" title="Delete section">🗑</button>
       `;
-      row.addEventListener('click', () => {
-        lxdInsertTarget = target;
-        buildPositionPanel(); // redraw to show selection
+
+      // ── Drag events ──
+      row.addEventListener('dragstart', e => {
+        dragSrc = section;
+        row.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
       });
-      list.appendChild(row);
-    }
-
-    // "End of page" default
-    addOption({ arrow: '↓', label: 'End of page (default)', badgeType: '', badgeText: '', target: null });
-
-    if (sections.length) {
-      // Before first section
-      const [firstType, firstLabel] = sectionLabel(sections[0]);
-      addOption({
-        arrow: '↑', label: `Before "${firstLabel}"`, badgeType: `${firstType}`,
-        badgeText: firstType === 'video' ? 'VIDEO' : firstType === 'text' ? 'TEXT' : 'BLOCK',
-        target: { beforeSection: sections[0] },
+      row.addEventListener('dragend', () => {
+        row.classList.remove('dragging');
+        listEl.querySelectorAll('.lxd-arrange-row').forEach(r => r.classList.remove('drag-over'));
       });
-
-      // After each section
-      sections.forEach((section, i) => {
-        const [type, label] = sectionLabel(section);
-        addOption({
-          arrow: '↓', label: `After "${label}"`,
-          badgeType: type === 'video' ? 'video' : type === 'text' ? 'text' : 'other',
-          badgeText: type === 'video' ? 'VIDEO' : type === 'text' ? 'TEXT' : 'BLOCK',
-          target: { afterSection: section },
+      row.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        listEl.querySelectorAll('.lxd-arrange-row').forEach(r => r.classList.remove('drag-over'));
+        if (dragSrc !== section) row.classList.add('drag-over');
+      });
+      row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
+      row.addEventListener('drop', e => {
+        e.preventDefault();
+        row.classList.remove('drag-over');
+        if (!dragSrc || dragSrc === section) return;
+        // Move dragSrc immediately before the drop target in the editor DOM
+        ed.undoManager.transact(() => {
+          section.insertAdjacentElement('beforebegin', dragSrc);
+          ensurePlaceholder(ed); // keep placeholder at bottom
         });
+        buildArrangePanel(); // redraw
       });
-    }
 
-    panel.style.display = '';
+      // ── Delete button ──
+      row.querySelector('.lxd-arrange-del').addEventListener('click', () => {
+        if (!confirm(`Delete "${label}"? This cannot be undone.`)) return;
+        ed.undoManager.transact(() => section.remove());
+        buildArrangePanel();
+      });
+
+      listEl.appendChild(row);
+    });
   }
 
   // ── Smart insertion ─────────────────────────────────────────────────────────
-  // Priority: explicit zone target → cursor position → end-of-page fallback
+  // Priority: cursor position → end-of-page (before placeholder) fallback
   //
-  // Zone targets always insert at the exact clicked position (no merging) so
-  // the designer gets exactly what they asked for.
-  // Cursor-aware and end-append use merging for text type as a convenience.
+  // Cursor-aware and end-append both merge inner content for text type as
+  // a convenience — the placeholder is always maintained at the bottom.
   //
-  // type 'text'       → merge inner content into a plain section.text-block
-  //                     (except when an explicit zone target is active)
+  // type 'text'       → merge inner content into nearest plain section.text-block
   // type 'video'      → always its own section (preserves .highlight/.blue classes)
   // type 'standalone' → always its own section
   function doInsert(ed, html, type) {
@@ -1423,23 +1485,16 @@
     }
     const wrapBlock = c => `<section class="text-block">\n${c}\n</section>`;
 
-    // ── 1. Explicit position target (set via sidebar position panel) ────────────
-    if (lxdInsertTarget) {
-      const isBefore = !!lxdInsertTarget.beforeSection;
-      const anchor   = isBefore ? lxdInsertTarget.beforeSection : lxdInsertTarget.afterSection;
-      lxdInsertTarget = null;
-      const insertFn = isBefore ? insertBeforeSection : insertAfterSection;
-      insertFn(ed, anchor, type === 'text' ? wrapBlock(innerContent) : html);
-      buildPositionPanel(); // redraw to show "End of page" is now selected
-      showToast('Inserted ✓');
-      return;
-    }
+    const ph = wrapper.querySelector(`[${PH_ATTR}]`);
 
-    // ── 2. Cursor-aware ──────────────────────────────────────────────────────
+    // ── 1. Cursor-aware ──────────────────────────────────────────────────────
     let cursorSection = null;
     try {
       cursorSection = getAnchorSection(wrapper, ed.selection.getNode());
     } catch (e) {}
+
+    // Ignore cursor if it's sitting inside the placeholder
+    if (cursorSection && cursorSection.getAttribute(PH_ATTR)) cursorSection = null;
 
     if (cursorSection) {
       if (type === 'text') {
@@ -1458,17 +1513,19 @@
           showToast('Inserted ✓');
         }
       } else {
-        // video / standalone after cursor section
+        // video / standalone — insert after cursor section
         insertAfterSection(ed, cursorSection, html);
         showToast('Inserted ✓');
       }
+      ensurePlaceholder(ed);
       return;
     }
 
-    // ── 3. End-of-page fallback ──────────────────────────────────────────────
+    // ── 2. End-of-page fallback (insert before placeholder) ─────────────────
     if (type === 'text') {
-      const dirSections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
-      const last = dirSections[dirSections.length - 1] || null;
+      const realSections = Array.from(wrapper.children)
+        .filter(el => el.tagName === 'SECTION' && !el.getAttribute(PH_ATTR));
+      const last = realSections[realSections.length - 1] || null;
       if (isPlainTextBlock(last)) {
         ed.focus();
         const range = ed.dom.createRng();
@@ -1477,14 +1534,22 @@
         ed.selection.setRng(range);
         ed.insertContent(innerContent);
         showToast('Added to text block ✓');
+      } else if (ph) {
+        insertBeforeSection(ed, ph, wrapBlock(innerContent));
+        showToast('Inserted ✓');
       } else {
         appendToWrapper(ed, wrapper, wrapBlock(innerContent));
         showToast('Inserted ✓');
       }
     } else {
-      appendToWrapper(ed, wrapper, html);
+      if (ph) {
+        insertBeforeSection(ed, ph, html);
+      } else {
+        appendToWrapper(ed, wrapper, html);
+      }
       showToast('Inserted ✓');
     }
+    ensurePlaceholder(ed);
   }
 
   function insertHTML(html, type) {
@@ -1631,25 +1696,9 @@
       edDoc.head.appendChild(style);
       blocksVisible = true;
       this.classList.add('active');
+      ensurePlaceholder(ed);
       showToast('Block outlines on');
     }
-  });
-
-  // ── Position panel ─────────────────────────────────────────────────────────
-  document.getElementById(ID + '-scan-btn').addEventListener('click', () => {
-    const ed = getEditor();
-    if (!ed) { showToast('Open a page editor first'); return; }
-    const panel = document.getElementById(ID + '-position-panel');
-    const isOpen = panel.style.display !== 'none';
-    if (isOpen) {
-      panel.style.display = 'none';
-    } else {
-      buildPositionPanel(); // also sets panel.style.display = ''
-    }
-  });
-
-  document.getElementById(ID + '-pos-close').addEventListener('click', () => {
-    document.getElementById(ID + '-position-panel').style.display = 'none';
   });
 
   sidebar.querySelectorAll('.lxd-tab').forEach(tab => {
@@ -1658,11 +1707,17 @@
       sidebar.querySelectorAll('.lxd-panel').forEach(p => p.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById(ID + '-panel-' + tab.dataset.tab).classList.add('active');
-      document.getElementById(ID + '-search-wrap').style.display =
-        tab.dataset.tab === 'styleguide' ? 'none' : '';
+      const isStyleguide = tab.dataset.tab === 'styleguide';
+      const isArrange    = tab.dataset.tab === 'arrange';
+      document.getElementById(ID + '-search-wrap').style.display = (isStyleguide || isArrange) ? 'none' : '';
       // Clear search and reset component nav when switching tabs
       document.getElementById(ID + '-search').value = '';
       if (tab.dataset.tab === 'components') showCompHome();
+      if (isArrange) {
+        const ed = getEditor();
+        if (ed) ensurePlaceholder(ed);
+        buildArrangePanel();
+      }
     });
   });
 
