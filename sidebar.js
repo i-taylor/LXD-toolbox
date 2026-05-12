@@ -690,6 +690,16 @@
       border-color: #00274C;
       color: white;
     }
+    #${ID} .lxd-target-label {
+      font-size: .67rem;
+      font-weight: 700;
+      color: #FFCB05;
+      background: #1c1c1e;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: .3px;
+      align-self: center;
+    }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
@@ -1105,6 +1115,7 @@
 
     <div class="lxd-editor-tools">
       <button class="lxd-blocks-btn" id="${ID}-show-blocks" title="Outline text &amp; video blocks in the editor (editor-only, not published)">👁 Show Blocks</button>
+      <span class="lxd-target-label" id="${ID}-target-label" style="display:none">↓ target set</span>
     </div>
 
     <div class="lxd-search-wrap" id="${ID}-search-wrap">
@@ -1159,8 +1170,10 @@
   document.body.style.marginRight = PUSH_W;
 
   // ── State ──────────────────────────────────────────────────────────────────
-  let compView = 'home'; // 'home' | 'browse' | 'search'
+  let compView      = 'home';  // 'home' | 'browse' | 'search'
   let blocksVisible = false;
+  let lxdInsertTarget = null;  // { afterSection: el } — set by zone button click
+  let _zoneHandler  = null;    // stored NodeChange handler so it can be removed
 
   // ── Helpers ────────────────────────────────────────────────────────────────
   function showToast(msg) {
@@ -1188,10 +1201,67 @@
     return null;
   }
 
-  // Smart insertion:
-  //   type 'text'       → accumulate inner content in last plain section.text-block
-  //   type 'video'      → accumulate inner content in last section.video-block
-  //   type 'standalone' → insert the full section(s) at end of .new-canvas wrapper
+  // True if section is a plain, non-special text-block (can accumulate content into it)
+  function isPlainTextBlock(el) {
+    return el && el.tagName === 'SECTION' &&
+      el.classList.contains('text-block') &&
+      !el.classList.contains('video-block') &&
+      !el.classList.contains('assignment') &&
+      !el.classList.contains('gamut-intro') &&
+      !el.classList.contains('display-header') &&
+      !el.classList.contains('graphical-highlight');
+  }
+
+  // Walk up from cursorNode to find the direct SECTION child of wrapper that contains it
+  function getAnchorSection(wrapper, cursorNode) {
+    try {
+      let el = cursorNode;
+      while (el && el.parentElement !== wrapper) el = el.parentElement;
+      return (el && el !== wrapper) ? el : null;
+    } catch (e) { return null; }
+  }
+
+  // Low-level: append html at end of wrapper contents
+  function appendToWrapper(ed, wrapper, html) {
+    const range = ed.dom.createRng();
+    range.selectNodeContents(wrapper);
+    range.collapse(false);
+    ed.selection.setRng(range);
+    ed.insertContent(html);
+  }
+
+  // Low-level: insert html immediately after a section element
+  function insertAfterSection(ed, section, html) {
+    const range = ed.dom.createRng();
+    range.setStartAfter(section);
+    range.collapse(true);
+    ed.selection.setRng(range);
+    ed.insertContent(html);
+  }
+
+  // Show/clear the sidebar "↓ target set" indicator
+  function setTargetLabel(section) {
+    const label = document.getElementById(ID + '-target-label');
+    if (!label) return;
+    if (section) {
+      const cls = section.classList;
+      const kind = cls.contains('video-block') ? 'video block'
+                 : cls.contains('display-header') ? 'display header'
+                 : cls.contains('accordion') ? 'accordion'
+                 : 'text block';
+      label.textContent = `↓ after ${kind}`;
+      label.style.display = '';
+    } else {
+      label.style.display = 'none';
+    }
+  }
+
+  // ── Smart insertion ─────────────────────────────────────────────────────────
+  // Priority: explicit zone target → cursor position → end-of-page fallback
+  //
+  // type 'text'       → merge inner content into a plain section.text-block
+  // type 'video'      → always its own section (preserves .highlight/.blue classes)
+  // type 'standalone' → always its own section
   function doInsert(ed, html, type) {
     const body = ed.getBody();
     let wrapper = body.querySelector('.new-canvas');
@@ -1202,14 +1272,13 @@
       ed.insertContent('<div class="new-canvas"></div>');
       wrapper = body.querySelector('.new-canvas');
     }
-
     if (!wrapper) {
       ed.insertContent('<div class="new-canvas">' + html + '</div>');
       showToast('Inserted ✓');
       return;
     }
 
-    // For text type: strip the section wrapper to get bare inner content for merging
+    // Strip section wrapper for text type → get bare inner content for merging
     let innerContent = html;
     if (type === 'text') {
       innerContent = html
@@ -1218,47 +1287,70 @@
         .trim();
     }
 
-    // Get direct section children of wrapper to find the last section
-    const directSections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
-    const lastSection = directSections[directSections.length - 1] || null;
+    // ── Determine anchor section (where to insert relative to) ──────────────
+    let anchor = null;
+    let anchorSource = 'end'; // 'zone' | 'cursor' | 'end'
 
-    let targetSection = null;
-    let newBlockHTML  = null;
-
-    if (type === 'text') {
-      // Append to last text-block only if it's a plain text-block (not video, not special class)
-      const isPlain = lastSection &&
-        lastSection.classList.contains('text-block') &&
-        !lastSection.classList.contains('video-block') &&
-        !lastSection.classList.contains('assignment') &&
-        !lastSection.classList.contains('gamut-intro') &&
-        !lastSection.classList.contains('display-header') &&
-        !lastSection.classList.contains('graphical-highlight');
-      if (isPlain) {
-        targetSection = lastSection;
-      } else {
-        newBlockHTML = `<section class="text-block">\n${innerContent}\n</section>`;
+    if (lxdInsertTarget?.afterSection) {
+      // Zone button was explicitly clicked — highest priority
+      anchor = lxdInsertTarget.afterSection;
+      anchorSource = 'zone';
+      lxdInsertTarget = null;
+      setTargetLabel(null);
+      if (blocksVisible) {
+        const ed2 = getEditor();
+        if (ed2) buildZoneOverlay(ed2); // redraw zones without selected state
       }
     } else {
-      // 'video' and 'standalone' both insert the full section html at end of wrapper.
-      // Video blocks are always their own section (each video = one section.text-block.video-block)
-      // and must preserve their variant classes (.highlight, .blue), so no merging.
-      newBlockHTML = html;
+      // Try cursor position (TinyMCE preserves selection across sidebar clicks)
+      const cursorNode = ed.selection.getNode();
+      const cursorSection = getAnchorSection(wrapper, cursorNode);
+      if (cursorSection) {
+        anchor = cursorSection;
+        anchorSource = 'cursor';
+      }
     }
 
-    if (targetSection) {
-      const range = ed.dom.createRng();
-      range.selectNodeContents(targetSection);
-      range.collapse(false);
-      ed.selection.setRng(range);
-      ed.insertContent(innerContent);
-      showToast('Added to block ✓');
+    // ── Insert based on type + anchor ───────────────────────────────────────
+    if (type === 'text') {
+      if (anchor && isPlainTextBlock(anchor)) {
+        // Merge into the anchor text-block
+        const range = ed.dom.createRng();
+        range.selectNodeContents(anchor);
+        range.collapse(false);
+        ed.selection.setRng(range);
+        ed.insertContent(innerContent);
+        showToast(anchorSource === 'zone' ? 'Added ✓' : 'Added to text block ✓');
+
+      } else if (anchor) {
+        // Cursor / zone is in a non-text-block section — insert new text-block after it
+        insertAfterSection(ed, anchor, `<section class="text-block">\n${innerContent}\n</section>`);
+        showToast('Inserted ✓');
+
+      } else {
+        // No anchor — smart end-append: merge into last text-block if possible
+        const dirSections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
+        const last = dirSections[dirSections.length - 1] || null;
+        if (isPlainTextBlock(last)) {
+          const range = ed.dom.createRng();
+          range.selectNodeContents(last);
+          range.collapse(false);
+          ed.selection.setRng(range);
+          ed.insertContent(innerContent);
+          showToast('Added to text block ✓');
+        } else {
+          appendToWrapper(ed, wrapper, `<section class="text-block">\n${innerContent}\n</section>`);
+          showToast('Inserted ✓');
+        }
+      }
+
     } else {
-      const range = ed.dom.createRng();
-      range.selectNodeContents(wrapper);
-      range.collapse(false);
-      ed.selection.setRng(range);
-      ed.insertContent(newBlockHTML);
+      // video / standalone — insert full section html (preserves all classes)
+      if (anchor) {
+        insertAfterSection(ed, anchor, html);
+      } else {
+        appendToWrapper(ed, wrapper, html);
+      }
       showToast('Inserted ✓');
     }
   }
@@ -1272,6 +1364,85 @@
     navigator.clipboard.writeText(wrapped)
       .then(() => showToast('Copied — paste into editor with ⌘V'))
       .catch(() => showToast('Could not insert — click inside the editor first'));
+  }
+
+  // ── Show Blocks zone overlay ────────────────────────────────────────────────
+  // Builds a fixed-position overlay (outside TinyMCE's content body) with maize
+  // + bands between each section. Clicking a band sets it as the explicit insert target.
+  function buildZoneOverlay(ed) {
+    if (!blocksVisible) return;
+    const edDoc = ed.getDoc();
+
+    let overlay = edDoc.getElementById('lxd-zone-overlay');
+    if (!overlay) {
+      overlay = edDoc.createElement('div');
+      overlay.id = 'lxd-zone-overlay';
+      overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9997;overflow:hidden;';
+      edDoc.body.appendChild(overlay);
+    }
+    overlay.innerHTML = '';
+
+    const wrapper = ed.getBody().querySelector('.new-canvas');
+    if (!wrapper) return;
+
+    const wRect    = wrapper.getBoundingClientRect();
+    const sections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
+
+    sections.forEach((section, i) => {
+      const sRect      = section.getBoundingClientRect();
+      const isSelected = lxdInsertTarget?.afterSection === section;
+
+      const zone = edDoc.createElement('div');
+      zone.style.cssText = [
+        'position:fixed',
+        `left:${wRect.left}px`,
+        `width:${wRect.width}px`,
+        `top:${sRect.bottom - 10}px`,
+        'height:20px',
+        'pointer-events:auto',
+        'display:flex',
+        'align-items:center',
+        'cursor:pointer',
+        `opacity:${isSelected ? '1' : '0'}`,
+        'transition:opacity .15s',
+        'z-index:9998',
+      ].join(';');
+
+      const lineColor = isSelected ? '#FFCB05' : '#FFCB05';
+      zone.innerHTML = `
+        <div style="flex:1;height:2px;background:${lineColor};opacity:.85;border-radius:1px"></div>
+        <div style="flex-shrink:0;background:${lineColor};color:#1c1c1e;font-size:11px;font-weight:800;
+          width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+          font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1;margin:0 4px;">+</div>
+        <div style="flex:1;height:2px;background:${lineColor};opacity:.85;border-radius:1px"></div>
+      `;
+
+      zone.addEventListener('mouseenter', () => { zone.style.opacity = '1'; });
+      zone.addEventListener('mouseleave', () => {
+        if (lxdInsertTarget?.afterSection !== section) zone.style.opacity = '0';
+      });
+      zone.addEventListener('click', e => {
+        e.stopPropagation();
+        if (lxdInsertTarget?.afterSection === section) {
+          // Click again to deselect
+          lxdInsertTarget = null;
+          setTargetLabel(null);
+        } else {
+          lxdInsertTarget = { afterSection: section };
+          setTargetLabel(section);
+        }
+        buildZoneOverlay(ed); // redraw to reflect new selection
+      });
+
+      overlay.appendChild(zone);
+    });
+  }
+
+  function removeZoneOverlay(ed) {
+    try {
+      const el = ed.getDoc().getElementById('lxd-zone-overlay');
+      if (el) el.remove();
+    } catch (e) {}
   }
 
   function copyHTML(html) {
@@ -1315,6 +1486,16 @@
 
   // ── Events ─────────────────────────────────────────────────────────────────
   document.getElementById(ID + '-close').addEventListener('click', () => {
+    // Clean up any editor-injected styles/overlays before removing sidebar
+    const ed = getEditor();
+    if (ed) {
+      try {
+        const edDoc = ed.getDoc();
+        edDoc.getElementById('lxd-block-vis')?.remove();
+        edDoc.getElementById('lxd-zone-overlay')?.remove();
+      } catch (e) {}
+      if (_zoneHandler) { ed.off('NodeChange', _zoneHandler); _zoneHandler = null; }
+    }
     sidebar.remove(); toast.remove(); styleEl.remove();
     document.body.style.marginRight = '';
   });
@@ -1349,13 +1530,19 @@
     const ed = getEditor();
     if (!ed) { showToast('Open a page editor first'); return; }
     const edDoc = ed.getDoc();
-    const existingStyle = edDoc.getElementById('lxd-block-vis');
 
-    if (blocksVisible && existingStyle) {
-      existingStyle.remove();
+    if (blocksVisible) {
+      // ── Turn off ──────────────────────────────────────────────────────────
+      const existingStyle = edDoc.getElementById('lxd-block-vis');
+      if (existingStyle) existingStyle.remove();
+      removeZoneOverlay(ed);
+      if (_zoneHandler) { ed.off('NodeChange', _zoneHandler); _zoneHandler = null; }
+      lxdInsertTarget = null;
+      setTargetLabel(null);
       blocksVisible = false;
       this.classList.remove('active');
     } else {
+      // ── Turn on ───────────────────────────────────────────────────────────
       const style = edDoc.createElement('style');
       style.id = 'lxd-block-vis';
       style.textContent = `
@@ -1401,7 +1588,11 @@
       edDoc.head.appendChild(style);
       blocksVisible = true;
       this.classList.add('active');
-      showToast('Block outlines on');
+      buildZoneOverlay(ed);
+      // Rebuild zone positions whenever content or cursor changes
+      _zoneHandler = () => buildZoneOverlay(ed);
+      ed.on('NodeChange', _zoneHandler);
+      showToast('Block outlines on — click + to set insert position');
     }
   });
 
