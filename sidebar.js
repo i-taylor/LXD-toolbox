@@ -1221,34 +1221,20 @@
     } catch (e) { return null; }
   }
 
-  // Low-level: append html at end of wrapper contents
+  // Low-level DOM helpers — bypass selection/focus entirely for section-level inserts.
+  // insertAdjacentHTML puts content exactly where asked without TinyMCE's cursor fighting us.
+  // undoManager.transact() keeps the change on the undo stack.
+
   function appendToWrapper(ed, wrapper, html) {
-    ed.focus();
-    const range = ed.dom.createRng();
-    range.selectNodeContents(wrapper);
-    range.collapse(false);
-    ed.selection.setRng(range);
-    ed.insertContent(html);
+    ed.undoManager.transact(() => { wrapper.insertAdjacentHTML('beforeend', html); });
   }
 
-  // Low-level: insert html immediately after a section element
   function insertAfterSection(ed, section, html) {
-    ed.focus();
-    const range = ed.dom.createRng();
-    range.setStartAfter(section);
-    range.collapse(true);
-    ed.selection.setRng(range);
-    ed.insertContent(html);
+    ed.undoManager.transact(() => { section.insertAdjacentHTML('afterend', html); });
   }
 
-  // Low-level: insert html immediately before a section element
   function insertBeforeSection(ed, section, html) {
-    ed.focus();
-    const range = ed.dom.createRng();
-    range.setStartBefore(section);
-    range.collapse(true);
-    ed.selection.setRng(range);
-    ed.insertContent(html);
+    ed.undoManager.transact(() => { section.insertAdjacentHTML('beforebegin', html); });
   }
 
   // Show/clear the sidebar target indicator
@@ -1330,6 +1316,7 @@
       if (type === 'text') {
         if (isPlainTextBlock(cursorSection)) {
           // Merge into the text-block the cursor is in
+          ed.focus();
           ed.focus();
           const range = ed.dom.createRng();
           range.selectNodeContents(cursorSection);
