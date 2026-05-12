@@ -1272,6 +1272,23 @@
       !el.classList.contains('graphical-highlight');
   }
 
+  // Walk up from cursorNode to find the nearest sub-element the cursor is nested inside
+  // that we should "break out of" before inserting a bare paragraph.
+  // Returns the sub-element, or null if the cursor is in open text-block space.
+  const BREAK_OUT = ['.callout-box', 'blockquote', '.two-col', '.img-caption', '.table-container'];
+  function getCursorSubWrapper(cursorNode, section) {
+    let el = cursorNode;
+    while (el && el !== section) {
+      if (el.matches) {
+        for (const sel of BREAK_OUT) {
+          if (el.matches(sel)) return el;
+        }
+      }
+      el = el.parentElement;
+    }
+    return null;
+  }
+
   // Walk up from cursorNode to find the direct SECTION child of wrapper that contains it
   function getAnchorSection(wrapper, cursorNode) {
     try {
@@ -1726,9 +1743,15 @@
     if (cursorSection && cursorSection.getAttribute(PH_ATTR)) cursorSection = null;
 
     if (cursorSection && isPlainTextBlock(cursorSection)) {
-      // Inside a mergeable text-block — drop the <p> at the cursor
-      ed.focus();
-      ed.insertContent('<p>Paragraph text</p>');
+      // Inside a plain text-block — but check if the cursor is nested inside
+      // a callout, blockquote, two-col, etc. If so, break out past that element.
+      const subWrapper = getCursorSubWrapper(ed.selection.getNode(), cursorSection);
+      if (subWrapper) {
+        ed.undoManager.transact(() => subWrapper.insertAdjacentHTML('afterend', '<p>Paragraph text</p>'));
+      } else {
+        ed.focus();
+        ed.insertContent('<p>Paragraph text</p>');
+      }
     } else if (cursorSection) {
       // Inside a video block, callout, header, etc. — break out into a new section
       insertAfterSection(ed, cursorSection, '<section class="text-block">\n  <p>Paragraph text</p>\n</section>');
