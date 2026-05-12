@@ -1173,6 +1173,7 @@
 
     <div class="lxd-editor-tools">
       <button class="lxd-blocks-btn" id="${ID}-show-blocks" title="Outline text &amp; video blocks in the editor (editor-only, not published)">👁 Blocks</button>
+      <button class="lxd-blocks-btn" id="${ID}-insert-p" title="Insert a paragraph at your cursor">¶ Paragraph</button>
     </div>
 
     <div class="lxd-search-wrap" id="${ID}-search-wrap">
@@ -1699,6 +1700,15 @@
       ensurePlaceholder(ed);
       showToast('Block outlines on');
     }
+  });
+
+  // ── Insert paragraph ───────────────────────────────────────────────────────
+  document.getElementById(ID + '-insert-p').addEventListener('click', () => {
+    const ed = getEditor();
+    if (!ed) { showToast('Open a page editor first'); return; }
+    ed.focus();
+    ed.insertContent('<p>Paragraph text</p>');
+    showToast('Paragraph inserted ✓');
   });
 
   sidebar.querySelectorAll('.lxd-tab').forEach(tab => {
