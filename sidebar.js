@@ -21,6 +21,7 @@
     {
       name: 'Text Block',
       cat: 'Text',
+      type: 'text',
       color: '#00274C',
       desc: 'Base content section. Most common building block.',
       preview: '<div style="padding:6px 8px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:70px;height:9px;background:#00274c;border-radius:3px;opacity:.7"></div><div style="width:100%;height:6px;background:#e5e7eb;border-radius:3px"></div><div style="width:85%;height:6px;background:#e5e7eb;border-radius:3px"></div></div>',
@@ -29,6 +30,7 @@
     {
       name: 'Text Block (Assignment)',
       cat: 'Text',
+      type: 'standalone',
       color: '#00274C',
       desc: 'Text block styled for assignment instructions.',
       preview: '<div style="padding:6px 8px;height:52px;border-left:3px solid #00274c;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:80px;height:9px;background:#00274c;border-radius:3px;opacity:.8"></div><div style="width:100%;height:6px;background:#e5e7eb;border-radius:3px"></div><div style="width:75%;height:6px;background:#e5e7eb;border-radius:3px"></div></div>',
@@ -37,6 +39,7 @@
     {
       name: 'Graphical Highlight',
       cat: 'Text',
+      type: 'standalone',
       color: '#8B5CF6',
       desc: 'Two-column highlight — text left, graphic right.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#ede9fe;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:#ddd6fe;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="width:20px;height:20px;background:#8B5CF6;border-radius:50%;opacity:.4"></div></div></div>',
@@ -45,6 +48,7 @@
     {
       name: 'Gamut Intro (Gallery)',
       cat: 'Text',
+      type: 'standalone',
       color: '#10B981',
       desc: 'Text block for introducing a Gamut Gallery tool.',
       preview: '<div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:60px;height:8px;background:#10B981;border-radius:3px;opacity:.8"></div><div style="width:90px;height:6px;background:rgba(16,185,129,.3);border-radius:3px"></div></div>',
@@ -53,6 +57,7 @@
     {
       name: 'Gamut Intro (Workbook)',
       cat: 'Text',
+      type: 'standalone',
       color: '#10B981',
       desc: 'Text block for introducing a Gamut Workbook tool.',
       preview: '<div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:60px;height:8px;background:#059669;border-radius:3px;opacity:.8"></div><div style="width:90px;height:6px;background:rgba(5,150,105,.3);border-radius:3px"></div></div>',
@@ -63,6 +68,7 @@
     {
       name: 'Callout Box',
       cat: 'Callouts',
+      type: 'text',
       color: '#3B82F6',
       desc: 'Info callout — definitions, reminders, key takeaways.',
       preview: '<div style="border:2px solid #3B82F6;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#3B82F6;border-radius:3px;opacity:.7"></div><div style="width:110px;height:6px;background:#bfdbfe;border-radius:3px"></div></div>',
@@ -71,6 +77,7 @@
     {
       name: 'Callout Box (Action)',
       cat: 'Callouts',
+      type: 'text',
       color: '#FFCB05',
       desc: 'Action callout — prompts, reflections, learner tasks.',
       preview: '<div style="border:2px solid #FFCB05;background:#fffdf0;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="width:110px;height:6px;background:#fde68a;border-radius:3px"></div></div>',
@@ -79,6 +86,7 @@
     {
       name: 'Callout Box (Highlight)',
       cat: 'Callouts',
+      type: 'text',
       color: '#00274C',
       desc: 'High-visibility callout — warnings, strong emphasis.',
       preview: '<div style="background:#00274c;border-radius:8px;padding:8px 12px;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:50px;height:7px;background:#FFCB05;border-radius:3px"></div><div style="width:110px;height:6px;background:rgba(255,255,255,.25);border-radius:3px"></div></div>',
@@ -87,6 +95,7 @@
     {
       name: 'Pull Quote',
       cat: 'Callouts',
+      type: 'text',
       color: '#FFCB05',
       desc: 'Styled blockquote for key quotes or takeaways.',
       preview: '<div style="border-left:4px solid #FFCB05;background:#fffdf0;padding:8px 12px;border-radius:0 6px 6px 0;height:52px;display:flex;flex-direction:column;justify-content:center;gap:5px"><div style="width:100px;height:7px;background:#d4a800;border-radius:3px;opacity:.6;font-style:italic"></div><div style="width:55px;height:5px;background:#fde68a;border-radius:3px"></div></div>',
@@ -104,6 +113,7 @@
     {
       name: 'Side-by-Side Callout',
       cat: 'Callouts',
+      type: 'standalone',
       color: '#6B7280',
       desc: 'Two side-by-side callout boxes for comparisons.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;height:52px"><div style="border:2px solid #9ca3af;border-radius:5px;padding:5px;display:flex;flex-direction:column;gap:3px"><div style="height:6px;background:#d1d5db;border-radius:2px;width:70%"></div><div style="height:5px;background:#e5e7eb;border-radius:2px"></div></div><div style="border:2px solid #9ca3af;border-radius:5px;padding:5px;display:flex;flex-direction:column;gap:3px"><div style="height:6px;background:#d1d5db;border-radius:2px;width:70%"></div><div style="height:5px;background:#e5e7eb;border-radius:2px"></div></div></div>',
@@ -114,6 +124,7 @@
     {
       name: 'Video Block',
       cat: 'Video',
+      type: 'video',
       color: '#00274C',
       desc: 'Standard lecture video section.',
       preview: '<div style="background:#f3f4f6;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:#00274c;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid white;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:#9ca3af;border-radius:3px"></div><div style="width:38px;height:5px;background:#d1d5db;border-radius:3px"></div></div></div>',
@@ -122,6 +133,7 @@
     {
       name: 'Video Block (Guest Lecture)',
       cat: 'Video',
+      type: 'video',
       color: '#1a3a5c',
       desc: 'Highlighted video block for guest lecture content.',
       preview: '<div style="background:#00274c;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:rgba(255,203,5,.9);border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid #00274c;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:rgba(255,255,255,.4);border-radius:3px"></div><div style="width:38px;height:5px;background:rgba(255,255,255,.25);border-radius:3px"></div></div></div>',
@@ -130,6 +142,7 @@
     {
       name: 'Video Block (Blue)',
       cat: 'Video',
+      type: 'video',
       color: '#3B82F6',
       desc: 'Blue-tag video block for alternate video labeling.',
       preview: '<div style="background:#eff6ff;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:#3B82F6;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid white;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:#93c5fd;border-radius:3px"></div><div style="width:38px;height:5px;background:#bfdbfe;border-radius:3px"></div></div></div>',
@@ -140,6 +153,7 @@
     {
       name: 'Course Display Header',
       cat: 'Layout',
+      type: 'standalone',
       color: '#00274C',
       desc: 'Full hero header for the Course Intro page with collage and nav links.',
       preview: '<div style="background:linear-gradient(90deg,#00274c 45%,#e0e0e0 45%);height:52px;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;left:8px;top:10px;width:90px;height:10px;background:rgba(255,203,5,.9);border-radius:3px"></div><div style="position:absolute;left:8px;top:26px;width:60px;height:7px;background:rgba(255,255,255,.3);border-radius:3px"></div><div style="position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,#ccc 25%,#bbb 25%,#bbb 50%,#ccc 50%,#ccc 75%,#bbb 75%);background-size:8px 8px;opacity:.6"></div></div>',
@@ -155,6 +169,7 @@
     {
       name: 'Course Display Header (Series)',
       cat: 'Layout',
+      type: 'standalone',
       color: '#00274C',
       desc: 'Display header with a "Course # of #" tag — for courses in a series.',
       preview: '<div style="background:linear-gradient(90deg,#00274c 45%,#e0e0e0 45%);height:52px;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;left:8px;top:6px;width:44px;height:6px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="position:absolute;left:8px;top:17px;width:90px;height:10px;background:rgba(255,203,5,.9);border-radius:3px"></div><div style="position:absolute;left:8px;top:33px;width:60px;height:7px;background:rgba(255,255,255,.3);border-radius:3px"></div><div style="position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,#ccc 25%,#bbb 25%,#bbb 50%,#ccc 50%,#ccc 75%,#bbb 75%);background-size:8px 8px;opacity:.6"></div></div>',
@@ -174,6 +189,7 @@
     {
       name: 'Course Header (Series)',
       cat: 'Layout',
+      type: 'standalone',
       color: '#1a3a5c',
       desc: 'Display header with series number sub-title.',
       preview: '<div style="background:linear-gradient(90deg,#1a3a5c 45%,#e0e0e0 45%);height:52px;border-radius:6px;position:relative;overflow:hidden"><div style="position:absolute;left:6px;top:6px;width:60px;height:5px;background:rgba(255,255,255,.3);border-radius:2px"></div><div style="position:absolute;left:6px;top:16px;width:90px;height:10px;background:rgba(255,203,5,.9);border-radius:3px"></div><div style="position:absolute;right:0;top:0;bottom:0;width:55%;background:linear-gradient(135deg,#ccc 25%,#bbb 25%,#bbb 50%,#ccc 50%,#ccc 75%,#bbb 75%);background-size:8px 8px;opacity:.6"></div></div>',
@@ -182,6 +198,7 @@
     {
       name: 'Accordion',
       cat: 'Layout',
+      type: 'standalone',
       color: '#00274C',
       desc: 'Expandable FAQ-style sections with details/summary.',
       preview: '<div style="display:flex;flex-direction:column;gap:4px;padding:4px 2px"><div style="background:#f3f4f6;border-radius:4px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center"><div style="width:60px;height:7px;background:#d1d5db;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div><div style="background:#f3f4f6;border-radius:4px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center"><div style="width:80px;height:7px;background:#d1d5db;border-radius:3px"></div><span style="color:#aaa;font-size:9px">▾</span></div></div>',
@@ -200,6 +217,7 @@
     {
       name: 'Two-Col (Text / Text)',
       cat: 'Layout',
+      type: 'text',
       color: '#8B5CF6',
       desc: 'Two text columns side by side.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div></div>',
@@ -208,6 +226,7 @@
     {
       name: 'Two-Col (Text / Text Light Blue)',
       cat: 'Layout',
+      type: 'text',
       color: '#3B82F6',
       desc: 'Two text columns with a light blue background.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#eff6ff;border-radius:6px;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#93c5fd;border-radius:3px"></div><div style="height:5px;background:#bfdbfe;border-radius:3px"></div></div><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#93c5fd;border-radius:3px"></div><div style="height:5px;background:#bfdbfe;border-radius:3px"></div></div></div>',
@@ -216,6 +235,7 @@
     {
       name: 'Two-Col (Text / Image)',
       cat: 'Layout',
+      type: 'text',
       color: '#8B5CF6',
       desc: 'Text left, image right.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:#ede9fe;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="#ddd6fe"/><circle cx="10" cy="8" r="3" fill="#c4b5fd"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="#c4b5fd"/></svg></div></div>',
@@ -224,6 +244,7 @@
     {
       name: 'Two-Col (Text / Image Dark)',
       cat: 'Layout',
+      type: 'text',
       color: '#1c1c1e',
       desc: 'Text and image side by side, dark background.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#1c1c1e;border-radius:6px;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="height:5px;background:rgba(255,255,255,.2);border-radius:3px"></div></div><div style="background:rgba(255,255,255,.08);border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="rgba(255,255,255,.08)"/><circle cx="10" cy="8" r="3" fill="rgba(255,255,255,.3)"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="rgba(255,255,255,.3)"/></svg></div></div>',
@@ -232,6 +253,7 @@
     {
       name: 'Two-Col (Text / Image Highlight)',
       cat: 'Layout',
+      type: 'text',
       color: '#FFCB05',
       desc: 'Text and image side by side, maize highlight background.',
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#fffdf0;border-radius:6px;border:2px solid #FFCB05;padding:6px"><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="height:5px;background:#fde68a;border-radius:3px"></div></div><div style="background:#fef9c3;border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="#fde68a"/><circle cx="10" cy="8" r="3" fill="#d4a800"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="#d4a800"/></svg></div></div>',
@@ -240,6 +262,7 @@
     {
       name: 'Instructor Panel (Blue)',
       cat: 'Layout',
+      type: 'standalone',
       color: '#00274C',
       desc: 'Instructor profile block — U-M Blue variant.',
       preview: '<div style="display:grid;grid-template-columns:36px 1fr;gap:8px;align-items:center;height:52px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#93c5fd,#60a5fa)"></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:70px;height:8px;background:#00274c;border-radius:3px;opacity:.7"></div><div style="width:100px;height:5px;background:#d1d5db;border-radius:3px"></div></div></div>',
@@ -248,6 +271,7 @@
     {
       name: 'Instructor Panel (Maize)',
       cat: 'Layout',
+      type: 'standalone',
       color: '#FFCB05',
       desc: 'Instructor profile block — U-M Maize variant.',
       preview: '<div style="display:grid;grid-template-columns:36px 1fr;gap:8px;align-items:center;height:52px"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#fde68a,#fbbf24)"></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:70px;height:8px;background:#d4a800;border-radius:3px;opacity:.8"></div><div style="width:100px;height:5px;background:#fde68a;border-radius:3px"></div></div></div>',
@@ -258,6 +282,7 @@
     {
       name: 'Image (Sharp Corners)',
       cat: 'Media',
+      type: 'text',
       color: '#F97316',
       desc: 'Full-width image with caption text.',
       preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:#e5e7eb;border-radius:3px;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="44" height="30" viewBox="0 0 44 30"><rect width="44" height="30" fill="#d1d5db"/><circle cx="12" cy="9" r="4" fill="#9ca3af"/><path d="M0 22 L12 12 L20 19 L27 14 L44 25 L44 30 L0 30 Z" fill="#9ca3af"/></svg></div><div style="width:70px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
@@ -266,6 +291,7 @@
     {
       name: 'Image (Rounded Corners)',
       cat: 'Media',
+      type: 'text',
       color: '#F97316',
       desc: 'Full-width image with rounded corners and caption.',
       preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:#e5e7eb;border-radius:10px;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="44" height="30" viewBox="0 0 44 30"><rect width="44" height="30" fill="#d1d5db"/><circle cx="12" cy="9" r="4" fill="#9ca3af"/><path d="M0 22 L12 12 L20 19 L27 14 L44 25 L44 30 L0 30 Z" fill="#9ca3af"/></svg></div><div style="width:70px;height:5px;background:#d1d5db;border-radius:3px;margin:0 auto"></div></div>',
@@ -276,6 +302,7 @@
     {
       name: 'Table',
       cat: 'Tables',
+      type: 'text',
       color: '#0EA5E9',
       desc: 'Standard scrollable data table.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:8px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
@@ -290,6 +317,7 @@
     {
       name: 'Table (Alternate Rows)',
       cat: 'Tables',
+      type: 'text',
       color: '#0EA5E9',
       desc: 'Table with alternating row background colors.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:8px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;background:#f0f9ff;display:flex;gap:8px"><div style="height:5px;background:#bae6fd;border-radius:2px;flex:1"></div><div style="height:5px;background:#bae6fd;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:8px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
@@ -304,6 +332,7 @@
     {
       name: 'Table (Alternate Columns)',
       cat: 'Tables',
+      type: 'text',
       color: '#0EA5E9',
       desc: 'Table with alternating column background colors.',
       preview: '<div style="border:1px solid #e5e7eb;border-radius:5px;overflow:hidden;height:52px"><div style="background:#00274c;padding:5px 8px;display:flex;gap:4px"><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.3);border-radius:2px;flex:1"></div><div style="height:6px;background:rgba(255,255,255,.5);border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:4px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#f0f9ff;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div><div style="padding:5px 8px;display:flex;gap:4px"><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div><div style="height:5px;background:#f0f9ff;border-radius:2px;flex:1"></div><div style="height:5px;background:#e5e7eb;border-radius:2px;flex:1"></div></div></div>',
@@ -631,6 +660,36 @@
     #${ID} .lxd-comp-tile-actions { display: flex; gap: 5px; padding: 0 10px 9px; }
     #${ID} .lxd-comp-tile-actions .lxd-btn-insert { flex: 1; padding: 4px 6px; font-size: .72rem; }
     #${ID} .lxd-comp-tile-actions .lxd-btn-copy   { padding: 4px 8px; font-size: .72rem; }
+
+    /* ── Editor tools strip ── */
+    #${ID} .lxd-editor-tools {
+      background: #f7f6f2;
+      border-bottom: 1px solid #e4e2dc;
+      padding: 5px 10px;
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    #${ID} .lxd-blocks-btn {
+      padding: 3px 9px;
+      background: white;
+      border: 1px solid #e4e2dc;
+      border-radius: 5px;
+      font-size: .7rem;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: background .15s, color .15s, border-color .15s;
+    }
+    #${ID} .lxd-blocks-btn:hover { background: #f0ede6; color: #333; border-color: #ccc; }
+    #${ID} .lxd-blocks-btn.active {
+      background: #00274C;
+      border-color: #00274C;
+      color: white;
+    }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
@@ -995,15 +1054,16 @@
 
   function compTilesHTML(list) {
     return list.map(c => {
-      const idx   = COMPONENTS.indexOf(c);
-      const inner = encodeURIComponent(stripWrapper(c.html));
+      const idx      = COMPONENTS.indexOf(c);
+      const inner    = encodeURIComponent(stripWrapper(c.html));
+      const compType = c.type || 'standalone';
       const settingsBtn   = c.settings ? `<button class="lxd-settings-btn" data-idx="${idx}" title="Configure">⚙</button>` : '';
       const settingsPanel = c.settings ? renderSettingsPanel(c, idx) : '';
       return `<div class="lxd-comp-tile" data-name="${c.name.toLowerCase()}">
         <div class="lxd-comp-tile-preview">${c.preview || ''}</div>
         <div class="lxd-comp-tile-name">${c.name}</div>
         <div class="lxd-comp-tile-actions">
-          <button class="lxd-btn-insert" data-html="${inner}">Insert</button>
+          <button class="lxd-btn-insert" data-html="${inner}" data-type="${compType}">Insert</button>
           <button class="lxd-btn-copy"   data-html="${inner}">Copy</button>
           ${settingsBtn}
         </div>
@@ -1041,6 +1101,10 @@
       <button class="lxd-tab active" data-tab="components">Components</button>
       <button class="lxd-tab"        data-tab="snippets">Snippets</button>
       <button class="lxd-tab"        data-tab="styleguide">Style Guide</button>
+    </div>
+
+    <div class="lxd-editor-tools">
+      <button class="lxd-blocks-btn" id="${ID}-show-blocks" title="Outline text &amp; video blocks in the editor (editor-only, not published)">👁 Show Blocks</button>
     </div>
 
     <div class="lxd-search-wrap" id="${ID}-search-wrap">
@@ -1096,6 +1160,7 @@
 
   // ── State ──────────────────────────────────────────────────────────────────
   let compView = 'home'; // 'home' | 'browse' | 'search'
+  let blocksVisible = false;
 
   // ── Helpers ────────────────────────────────────────────────────────────────
   function showToast(msg) {
@@ -1105,56 +1170,108 @@
     toast._t = setTimeout(() => toast.classList.remove('show'), 2200);
   }
 
-  function doInsert(ed, html) {
-    const body = ed.getBody();
-    let wrapper = body.querySelector('.new-canvas');
-
-    if (!wrapper) {
-      // First insert — create the page wrapper at end of body, then grab it
-      ed.selection.select(body, true);
-      ed.selection.collapse(false);
-      ed.insertContent('<div class="new-canvas"><p></p></div>');
-      wrapper = body.querySelector('.new-canvas');
-    }
-
-    if (wrapper) {
-      // Always append inside the wrapper, ignoring wherever the cursor was
-      const range = ed.dom.createRng();
-      range.selectNodeContents(wrapper);
-      range.collapse(false); // collapse to end of wrapper contents
-      ed.selection.setRng(range);
-      ed.insertContent(html);
-
-      // Leave cursor at end of wrapper so the next insert also lands there
-      const updated = body.querySelector('.new-canvas');
-      if (updated) {
-        const r = ed.dom.createRng();
-        r.selectNodeContents(updated);
-        r.collapse(false);
-        ed.selection.setRng(r);
-      }
-    } else {
-      // Fallback — wrapper creation failed for some reason
-      ed.insertContent('<div class="new-canvas">' + html + '</div>');
-    }
-
-    showToast('Inserted ✓');
-  }
-
-  function insertHTML(html) {
+  // Find the active TinyMCE editor (checks page scope and iframes)
+  function getEditor() {
     if (window.tinymce) {
       const ed = tinymce.activeEditor || (tinymce.editors && tinymce.editors[0]);
-      if (ed) { doInsert(ed, html); return; }
+      if (ed) return ed;
     }
     for (const f of document.querySelectorAll('iframe')) {
       try {
         const tw = f.contentWindow;
         if (tw && tw.tinymce) {
           const ed = tw.tinymce.activeEditor || (tw.tinymce.editors && tw.tinymce.editors[0]);
-          if (ed) { doInsert(ed, html); return; }
+          if (ed) return ed;
         }
       } catch (e) { /* cross-origin */ }
     }
+    return null;
+  }
+
+  // Smart insertion:
+  //   type 'text'       → accumulate inner content in last plain section.text-block
+  //   type 'video'      → accumulate inner content in last section.video-block
+  //   type 'standalone' → insert the full section(s) at end of .new-canvas wrapper
+  function doInsert(ed, html, type) {
+    const body = ed.getBody();
+    let wrapper = body.querySelector('.new-canvas');
+
+    if (!wrapper) {
+      ed.selection.select(body, true);
+      ed.selection.collapse(false);
+      ed.insertContent('<div class="new-canvas"></div>');
+      wrapper = body.querySelector('.new-canvas');
+    }
+
+    if (!wrapper) {
+      ed.insertContent('<div class="new-canvas">' + html + '</div>');
+      showToast('Inserted ✓');
+      return;
+    }
+
+    // For text/video types: strip the section wrapper to get bare inner content
+    let innerContent = html;
+    if (type === 'text' || type === 'video') {
+      innerContent = html
+        .replace(/^<section[^>]*>\n?/, '')
+        .replace(/\n?<\/section>$/, '')
+        .trim();
+    }
+
+    // Get direct section children of wrapper to find the last section
+    const directSections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
+    const lastSection = directSections[directSections.length - 1] || null;
+
+    let targetSection = null;
+    let newBlockHTML  = null;
+
+    if (type === 'text') {
+      // Append to last text-block only if it's a plain text-block (not video, not special class)
+      const isPlain = lastSection &&
+        lastSection.classList.contains('text-block') &&
+        !lastSection.classList.contains('video-block') &&
+        !lastSection.classList.contains('assignment') &&
+        !lastSection.classList.contains('gamut-intro') &&
+        !lastSection.classList.contains('display-header') &&
+        !lastSection.classList.contains('graphical-highlight');
+      if (isPlain) {
+        targetSection = lastSection;
+      } else {
+        newBlockHTML = `<section class="text-block">\n${innerContent}\n</section>`;
+      }
+    } else if (type === 'video') {
+      // Append to last video-block section if it's the most recent section
+      if (lastSection && lastSection.classList.contains('video-block')) {
+        targetSection = lastSection;
+      } else {
+        newBlockHTML = `<section class="text-block video-block">\n${innerContent}\n</section>`;
+      }
+    } else {
+      // standalone — insert the full html (already section-wrapped) at end of wrapper
+      newBlockHTML = html;
+    }
+
+    if (targetSection) {
+      const range = ed.dom.createRng();
+      range.selectNodeContents(targetSection);
+      range.collapse(false);
+      ed.selection.setRng(range);
+      ed.insertContent(innerContent);
+      showToast('Added to block ✓');
+    } else {
+      const range = ed.dom.createRng();
+      range.selectNodeContents(wrapper);
+      range.collapse(false);
+      ed.selection.setRng(range);
+      ed.insertContent(newBlockHTML);
+      showToast('Inserted ✓');
+    }
+  }
+
+  function insertHTML(html, type) {
+    type = type || 'standalone';
+    const ed = getEditor();
+    if (ed) { doInsert(ed, html, type); return; }
     // Clipboard fallback — wrap it for the user to paste
     const wrapped = '<div class="new-canvas">\n' + html + '\n</div>';
     navigator.clipboard.writeText(wrapped)
@@ -1232,6 +1349,67 @@
     document.addEventListener('mouseup', onUp);
   });
 
+  // ── Show Blocks toggle ─────────────────────────────────────────────────────
+  document.getElementById(ID + '-show-blocks').addEventListener('click', function () {
+    const ed = getEditor();
+    if (!ed) { showToast('Open a page editor first'); return; }
+    const edDoc = ed.getDoc();
+    const existingStyle = edDoc.getElementById('lxd-block-vis');
+
+    if (blocksVisible && existingStyle) {
+      existingStyle.remove();
+      blocksVisible = false;
+      this.classList.remove('active');
+    } else {
+      const style = edDoc.createElement('style');
+      style.id = 'lxd-block-vis';
+      style.textContent = `
+        section.text-block:not(.video-block) {
+          outline: 2px dashed #00274C !important;
+          position: relative !important;
+        }
+        section.text-block:not(.video-block)::before {
+          content: 'TEXT BLOCK';
+          position: absolute;
+          top: 0; left: 0;
+          background: #00274C;
+          color: white;
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: .6px;
+          padding: 2px 7px;
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+          pointer-events: none;
+          z-index: 9999;
+          border-radius: 0 0 4px 0;
+        }
+        section.text-block.video-block {
+          outline: 2px dashed #FFCB05 !important;
+          position: relative !important;
+        }
+        section.text-block.video-block::before {
+          content: 'VIDEO BLOCK';
+          position: absolute;
+          top: 0; left: 0;
+          background: #FFCB05;
+          color: #1c1c1e;
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: .6px;
+          padding: 2px 7px;
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+          pointer-events: none;
+          z-index: 9999;
+          border-radius: 0 0 4px 0;
+        }
+      `;
+      edDoc.head.appendChild(style);
+      blocksVisible = true;
+      this.classList.add('active');
+      showToast('Block outlines on');
+    }
+  });
+
   sidebar.querySelectorAll('.lxd-tab').forEach(tab => {
     tab.addEventListener('click', () => {
       sidebar.querySelectorAll('.lxd-tab').forEach(t => t.classList.remove('active'));
@@ -1268,18 +1446,20 @@
     const preview = e.target.closest('.lxd-comp-tile-preview');
     if (!preview) return;
     const tile    = preview.closest('.lxd-comp-tile');
+    const pmComp  = COMPONENTS.find(c => c.name.toLowerCase() === tile.dataset.name);
     const name    = tile.querySelector('.lxd-comp-tile-name').textContent.trim();
-    const desc    = COMPONENTS.find(c => c.name.toLowerCase() === tile.dataset.name)?.desc || '';
+    const desc    = pmComp?.desc || '';
     const htmlEnc = tile.querySelector('.lxd-btn-insert')?.dataset.html || '';
     const IMG_PH   = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNlNWU3ZWIiLz48Y2lyY2xlIGN4PSIyMjAiIGN5PSIxMzAiIHI9IjY1IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTAgMzEwIEwyMjAgMTcwIEwzNTAgMjgwIEw0NjAgMjEwIEw4MDAgMzcwIEw4MDAgNDUwIEwwIDQ1MCBaIiBmaWxsPSIjOWNhM2FmIi8+PC9zdmc+';
     const PHOTO_PH = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSIxMDAiIGZpbGw9IiNlNWU3ZWIiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3OCIgcj0iMzgiIGZpbGw9IiM5Y2EzYWYiLz48cGF0aCBkPSJNMjAgMjAwIFEyMCAxMzggMTAwIDEzOCBRMTgwIDEzOCAxODAgMjAwIFoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
     const inner = decodeURIComponent(htmlEnc)
       .replace(/PASTE_IMAGE_URL/g, IMG_PH)
       .replace(/PASTE_PHOTO_URL/g, PHOTO_PH);
-    document.getElementById(ID + '-pm-name').textContent    = name;
-    document.getElementById(ID + '-pm-desc').textContent    = desc;
-    document.getElementById(ID + '-pm-insert').dataset.html = htmlEnc;
-    document.getElementById(ID + '-pm-copy').dataset.html   = htmlEnc;
+    document.getElementById(ID + '-pm-name').textContent       = name;
+    document.getElementById(ID + '-pm-desc').textContent       = desc;
+    document.getElementById(ID + '-pm-insert').dataset.html    = htmlEnc;
+    document.getElementById(ID + '-pm-insert').dataset.type    = pmComp?.type || 'standalone';
+    document.getElementById(ID + '-pm-copy').dataset.html      = htmlEnc;
     document.getElementById(ID + '-pm-frame').srcdoc = `<!DOCTYPE html><html><head>
       <link rel="stylesheet" href="https://academic-innovation.github.io/canvas-css/dist/canvas-style.css">
       <style>body{margin:0;padding:16px;}</style>
@@ -1290,7 +1470,7 @@
   document.getElementById(ID + '-pm-close').addEventListener('click', hidePreviewModal);
 
   document.getElementById(ID + '-pm-insert').addEventListener('click', function () {
-    insertHTML(decodeURIComponent(this.dataset.html));
+    insertHTML(decodeURIComponent(this.dataset.html), this.dataset.type || 'standalone');
     hidePreviewModal();
   });
 
@@ -1323,14 +1503,14 @@
     btn.closest('.lxd-comp-tile-settings').querySelectorAll('[data-field]').forEach(input => {
       vals[input.dataset.field] = input.type === 'checkbox' ? input.checked : input.value;
     });
-    insertHTML(stripWrapper(comp.build(vals)));
+    insertHTML(stripWrapper(comp.build(vals)), comp.type || 'standalone');
   });
 
   sidebar.addEventListener('click', e => {
     const btn = e.target.closest('.lxd-btn-insert, .lxd-btn-copy');
     if (!btn) return;
     const html = decodeURIComponent(btn.dataset.html);
-    if (btn.classList.contains('lxd-btn-insert')) insertHTML(html);
+    if (btn.classList.contains('lxd-btn-insert')) insertHTML(html, btn.dataset.type || 'standalone');
     else copyHTML(html);
   });
 
