@@ -348,61 +348,82 @@
   ];
 
   // ── Snippets data ──────────────────────────────────────────────────────────
-  const SNIPPETS = [
+  // ── Pages data ─────────────────────────────────────────────────────────────
+  // Each entry is a full pre-built page template — multiple sections inserted
+  // together. 'sections' is an array of { html, type } objects so doInsert
+  // handles each one with the correct merging / standalone rules.
+  const PAGES = [
     {
-      name: 'Divider (Subtle)',
-      color: '#6B7280',
-      desc: 'Subtle horizontal rule.',
-      html: `<hr style="border:none;border-top:2px solid #e5e7eb;margin:24px 0;" />`
-    },
-    {
-      name: 'Divider (Maize)',
-      color: '#FFCB05',
-      desc: 'Short maize accent divider.',
-      html: `<hr style="border:none;border-top:3px solid #FFCB05;margin:24px 0;width:60px;" />`
-    },
-    {
-      name: 'Button (Navy)',
+      name: 'Course Introduction',
+      desc: 'Display header with welcome text, learning objectives callout, and navigation links.',
       color: '#00274C',
-      desc: 'Navy CTA button link.',
-      html: `<p><a href="PASTE_URL" style="display:inline-block;background:#00274C;color:white;padding:10px 22px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.9em;">Button Label</a></p>`
+      sections: [
+        { type: 'standalone', html: `<div class="new-canvas">\n<section class="display-header">\n  <div class="heading">\n    <div>\n      <h2>Welcome to <strong>Course Title</strong></h2>\n      <img class="um-logo" role="presentation" src="https://courses.online.umich.edu/courses/284/files/9377/preview" alt="" width="71" height="75">\n    </div>\n    <div class="collage">\n      <div>&nbsp;</div>\n      <div><img src="PASTE_IMAGE_URL" alt="Describe the image"></div>\n    </div>\n  </div>\n  <div class="nav-links">\n    <ul>\n      <li><p><a href="PASTE_LINK_URL">Start Here</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Syllabus</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Modules</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">Get Course Support</a></p></li>\n    </ul>\n  </div>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Welcome</h2>\n  <p>Write your welcome message here. Introduce yourself, the course, and what learners can expect.</p>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box">\n    <p class="tag">Learning Objectives</p>\n    <p>By the end of this course, you will be able to:</p>\n    <ul>\n      <li>Objective 1</li>\n      <li>Objective 2</li>\n      <li>Objective 3</li>\n    </ul>\n  </div>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>How This Course Works</h2>\n  <p>Describe the course structure, weekly rhythm, and what learners should do first.</p>\n</section>\n</div>` },
+      ]
     },
     {
-      name: 'Button (Maize)',
+      name: 'Module Overview',
+      desc: 'Module header, overview paragraph, learning objectives, and estimated time callout.',
+      color: '#3B82F6',
+      sections: [
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Module #: Module Title</h2>\n  <p>Brief overview of what this module covers and why it matters to learners.</p>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box">\n    <p class="tag">Learning Objectives</p>\n    <p>By the end of this module, you will be able to:</p>\n    <ul>\n      <li>Objective 1</li>\n      <li>Objective 2</li>\n      <li>Objective 3</li>\n    </ul>\n  </div>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Estimated Time</p>\n    <p>This module takes approximately <strong>X hours</strong> to complete.</p>\n  </div>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>What You'll Need</h2>\n  <p>List any readings, tools, or materials learners should have ready before starting.</p>\n</section>\n</div>` },
+      ]
+    },
+    {
+      name: 'Lecture Page',
+      desc: 'Video block, key concepts text section, and a key takeaways callout.',
+      color: '#1a3a5c',
+      sections: [
+        { type: 'video', html: `<div class="new-canvas">\n<section class="text-block video-block">\n  <div class="video-tag-wrapper">\n    <p class="tag">Lecture</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of what this video covers.</p>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Key Concepts</h2>\n  <p>Expand on the main ideas from the video. Add context, definitions, or examples here.</p>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box highlight">\n    <p class="tag">Key Takeaways</p>\n    <ul>\n      <li>Takeaway 1</li>\n      <li>Takeaway 2</li>\n      <li>Takeaway 3</li>\n    </ul>\n  </div>\n</section>\n</div>` },
+      ]
+    },
+    {
+      name: 'Guest Lecture Page',
+      desc: 'Guest lecture video block, speaker bio section, and reflection prompt.',
       color: '#FFCB05',
-      desc: 'Maize CTA button link.',
-      html: `<p><a href="PASTE_URL" style="display:inline-block;background:#FFCB05;color:#1c1c1e;padding:10px 22px;border-radius:6px;text-decoration:none;font-weight:700;font-size:.9em;">Button Label</a></p>`
+      sections: [
+        { type: 'video', html: `<div class="new-canvas">\n<section class="text-block video-block highlight">\n  <div class="video-tag-wrapper">\n    <p class="tag">Guest Lecture</p>\n  </div>\n  <h2>Talk Title</h2>\n  <p>Brief description of the guest lecture and what learners will hear.</p>\n</section>\n</div>` },
+        { type: 'standalone', html: `<div class="new-canvas">\n<section>\n  <div class="instructor">\n    <div>\n      <img src="PASTE_PHOTO_URL" alt="Headshot of Guest Name">\n      <h2>Guest Name</h2>\n      <p><strong>Title, Organization</strong></p>\n    </div>\n    <div>\n      <p>Guest bio and relevant background goes here.</p>\n    </div>\n  </div>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Reflection</p>\n    <p>As you watch, consider: <strong>What stood out to you? How does this connect to the course themes?</strong></p>\n  </div>\n</section>\n</div>` },
+      ]
     },
     {
-      name: 'Tag / Pill',
+      name: 'Assignment Page',
+      desc: 'Assignment block with overview, instructions, and a submission action callout.',
       color: '#8B5CF6',
-      desc: 'Inline tag label using the .tag class.',
-      html: `<span class="tag">Tag Label</span>`
+      sections: [
+        { type: 'standalone', html: `<div class="new-canvas">\n<section class="text-block assignment">\n  <h2>Assignment Title</h2>\n  <h3>Overview</h3>\n  <p>Describe the assignment purpose and what learners will produce.</p>\n  <h3>Instructions</h3>\n  <ol>\n    <li>Step one of the assignment.</li>\n    <li>Step two of the assignment.</li>\n    <li>Step three of the assignment.</li>\n  </ol>\n  <h3>Evaluation Criteria</h3>\n  <p>Explain how the assignment will be graded or what success looks like.</p>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Submission</p>\n    <p>Submit your work via <a href="PASTE_LINK_URL">this link</a> by <strong>Date / Time</strong>.</p>\n  </div>\n</section>\n</div>` },
+      ]
     },
     {
-      name: 'UM Logo',
-      color: '#00274C',
-      desc: 'Official University of Michigan block M logo.',
-      html: `<img role="presentation" src="https://shared-files.online.umich.edu/michigan-online/course-images/current/umichlogo.png" alt="" width="71" height="75" />`
+      name: 'Reading & Discussion Page',
+      desc: 'Reading prompt, key questions callout, and a discussion action block.',
+      color: '#10B981',
+      sections: [
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Reading: Title</h2>\n  <p>Introduce the reading — why it was chosen and what learners should focus on as they read.</p>\n  <p><a href="PASTE_LINK_URL">Access the reading here →</a></p>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box">\n    <p class="tag">Guiding Questions</p>\n    <ul>\n      <li>Question 1?</li>\n      <li>Question 2?</li>\n      <li>Question 3?</li>\n    </ul>\n  </div>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Discussion Prompt</p>\n    <p>Write your discussion prompt here. Specify where learners should post and any response requirements.</p>\n    <p><a href="PASTE_LINK_URL">Go to the discussion →</a></p>\n  </div>\n</section>\n</div>` },
+      ]
     },
     {
-      name: 'Michigan Online Logo',
-      color: '#00274C',
-      desc: 'Michigan Online horizontal lockup.',
-      html: `<img role="presentation" src="https://shared-files.online.umich.edu/michigan-online/course-images/current/michiganOnline.png" alt="" width="318" height="56" />`
+      name: 'Meet Your Instructor',
+      desc: 'Welcome text, instructor bio panel, and an invitation to connect callout.',
+      color: '#F97316',
+      sections: [
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Meet Your Instructor</h2>\n  <p>We'd like to introduce you to the instructor leading this course.</p>\n</section>\n</div>` },
+        { type: 'standalone', html: `<div class="new-canvas">\n<section>\n  <div class="instructor">\n    <div>\n      <img src="PASTE_PHOTO_URL" alt="Headshot of Instructor Name">\n      <h2>Instructor Name</h2>\n      <p><strong>Title, Department</strong></p>\n    </div>\n    <div>\n      <p>Instructor bio goes here. Share research interests, teaching philosophy, and relevant experience.</p>\n    </div>\n  </div>\n</section>\n</div>` },
+        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Connect</p>\n    <p>Have questions? Reach out during <a href="PASTE_LINK_URL">office hours</a> or post in the <a href="PASTE_LINK_URL">Q&amp;A discussion</a>.</p>\n  </div>\n</section>\n</div>` },
+      ]
     },
-    {
-      name: 'Spacer (32px)',
-      color: '#D1D5DB',
-      desc: '32px of vertical breathing room.',
-      html: `<div style="height:32px;" aria-hidden="true"></div>`
-    },
-    {
-      name: 'Spacer (64px)',
-      color: '#D1D5DB',
-      desc: '64px of vertical breathing room.',
-      html: `<div style="height:64px;" aria-hidden="true"></div>`
-    }
   ];
 
   // ── Style guide data ───────────────────────────────────────────────────────
@@ -812,20 +833,33 @@
     }
     #${ID} .lxd-btn-copy:hover { background: #e8e4db; color: #333; }
 
-    #${ID} .lxd-snippet {
+    /* ── Pages panel ── */
+    #${ID} .lxd-page-card {
       background: white;
       border: 1px solid #e4e2dc;
       border-radius: 10px;
-      padding: 10px 12px;
+      padding: 12px 14px;
       margin-bottom: 8px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    #${ID} .lxd-page-card:hover { border-color: #bbb; box-shadow: 0 1px 4px rgba(0,0,0,.07); }
+    #${ID} .lxd-page-card-head {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      margin-bottom: 4px;
     }
-    #${ID} .lxd-snippet-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    #${ID} .lxd-snippet-info { flex: 1; min-width: 0; }
-    #${ID} .lxd-snippet-name { font-weight: 700; font-size: .85rem; }
-    #${ID} .lxd-snippet-desc { font-size: .73rem; color: #888; line-height: 1.3; }
+    #${ID} .lxd-page-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    #${ID} .lxd-page-name { font-weight: 700; font-size: .85rem; flex: 1; }
+    #${ID} .lxd-page-sections {
+      font-size: .68rem;
+      color: #aaa;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    #${ID} .lxd-page-desc { font-size: .73rem; color: #888; line-height: 1.3; margin-bottom: 10px; }
+    #${ID} .lxd-page-actions { display: flex; gap: 6px; }
 
     #${ID} .lxd-sg-label {
       font-size: .68rem;
@@ -1139,16 +1173,19 @@
     }).join('');
   }
 
-  function snippetCards(list) {
-    return list.map(s => `
-      <div class="lxd-snippet" data-name="${s.name.toLowerCase()}">
-        <div class="lxd-snippet-dot" style="background:${s.color}"></div>
-        <div class="lxd-snippet-info">
-          <div class="lxd-snippet-name">${s.name}</div>
-          <div class="lxd-snippet-desc">${s.desc}</div>
+  function pageCards(list) {
+    return list.map((p, i) => `
+      <div class="lxd-page-card">
+        <div class="lxd-page-card-head">
+          <div class="lxd-page-dot" style="background:${p.color}"></div>
+          <span class="lxd-page-name">${p.name}</span>
+          <span class="lxd-page-sections">${p.sections.length} section${p.sections.length !== 1 ? 's' : ''}</span>
         </div>
-        <button class="lxd-btn-insert" data-html="${encodeURIComponent(s.html)}">Insert</button>
-        <button class="lxd-btn-copy"   data-html="${encodeURIComponent(s.html)}">Copy</button>
+        <div class="lxd-page-desc">${p.desc}</div>
+        <div class="lxd-page-actions">
+          <button class="lxd-btn-insert" data-page-idx="${i}">Insert</button>
+          <button class="lxd-btn-copy"   data-page-idx="${i}">Copy HTML</button>
+        </div>
       </div>`).join('');
   }
 
@@ -1167,7 +1204,7 @@
     <div class="lxd-tabs">
       <button class="lxd-tab active" data-tab="components">Components</button>
       <button class="lxd-tab"        data-tab="arrange">Arrange</button>
-      <button class="lxd-tab"        data-tab="snippets">Snippets</button>
+      <button class="lxd-tab"        data-tab="pages">Pages</button>
       <button class="lxd-tab"        data-tab="styleguide">Style Guide</button>
     </div>
 
@@ -1200,8 +1237,8 @@
       <div class="lxd-arrange-list" id="${ID}-arrange-list"></div>
     </div>
 
-    <div class="lxd-panel" id="${ID}-panel-snippets">
-      ${snippetCards(SNIPPETS)}
+    <div class="lxd-panel" id="${ID}-panel-pages">
+      ${pageCards(PAGES)}
     </div>
 
     <div class="lxd-panel" id="${ID}-panel-styleguide">
@@ -1614,12 +1651,6 @@
       compTilesHTML(COMPONENTS.filter(c => c.name.toLowerCase().includes(q)));
   }
 
-  function filterSnippets(q) {
-    document.getElementById(ID + '-panel-snippets').querySelectorAll('.lxd-snippet').forEach(card => {
-      card.style.display = !q || card.dataset.name.includes(q) ? '' : 'none';
-    });
-  }
-
   // ── Events ─────────────────────────────────────────────────────────────────
   document.getElementById(ID + '-close').addEventListener('click', () => {
     // Clean up any editor-injected styles/overlays before removing sidebar
@@ -1776,7 +1807,8 @@
       document.getElementById(ID + '-panel-' + tab.dataset.tab).classList.add('active');
       const isStyleguide = tab.dataset.tab === 'styleguide';
       const isArrange    = tab.dataset.tab === 'arrange';
-      document.getElementById(ID + '-search-wrap').style.display = (isStyleguide || isArrange) ? 'none' : '';
+      const isPages      = tab.dataset.tab === 'pages';
+      document.getElementById(ID + '-search-wrap').style.display = (isStyleguide || isArrange || isPages) ? 'none' : '';
       // Clear search and reset component nav when switching tabs
       document.getElementById(ID + '-search').value = '';
       if (tab.dataset.tab === 'components') showCompHome();
@@ -1847,6 +1879,38 @@
     if (e.key === 'Escape') hidePreviewModal();
   });
 
+  // ── Pages tab — Insert and Copy HTML ──────────────────────────────────────
+  function insertPage(page) {
+    const ed = getEditor();
+    if (!ed) { showToast('Open a page editor first'); return; }
+    // Insert each section in sequence using the same smart-insert rules
+    page.sections.forEach(s => doInsert(ed, s.html, s.type));
+    showToast(`"${page.name}" inserted ✓`);
+  }
+
+  function copyPageHTML(page) {
+    const combined = page.sections.map(s => {
+      // Strip the outer <div class="new-canvas"> wrapper from each section
+      return s.html
+        .replace(/^<div class="new-canvas">\n?/, '')
+        .replace(/\n?<\/div>$/, '')
+        .trim();
+    }).join('\n');
+    const full = `<div class="new-canvas">\n${combined}\n</div>`;
+    navigator.clipboard.writeText(full)
+      .then(() => showToast('Page HTML copied ✓'))
+      .catch(() => showToast('Copy failed'));
+  }
+
+  document.getElementById(ID + '-panel-pages').addEventListener('click', e => {
+    const btn = e.target.closest('.lxd-btn-insert, .lxd-btn-copy');
+    if (!btn || btn.dataset.pageIdx === undefined) return;
+    const page = PAGES[+btn.dataset.pageIdx];
+    if (!page) return;
+    if (btn.classList.contains('lxd-btn-insert')) insertPage(page);
+    else copyPageHTML(page);
+  });
+
   // ── Settings toggle ────────────────────────────────────────────────────────
   sidebar.addEventListener('click', e => {
     const btn = e.target.closest('.lxd-settings-btn');
@@ -1887,13 +1951,8 @@
 
   document.getElementById(ID + '-search').addEventListener('input', e => {
     const q = e.target.value.toLowerCase().trim();
-    const activeTab = sidebar.querySelector('.lxd-tab.active')?.dataset.tab;
-    if (activeTab === 'components') {
-      if (q) showCompSearch(q);
-      else if (compView === 'search') showCompHome();
-    } else {
-      filterSnippets(q);
-    }
+    if (q) showCompSearch(q);
+    else if (compView === 'search') showCompHome();
   });
 
 })();
