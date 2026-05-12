@@ -1223,6 +1223,7 @@
 
   // Low-level: append html at end of wrapper contents
   function appendToWrapper(ed, wrapper, html) {
+    ed.focus();
     const range = ed.dom.createRng();
     range.selectNodeContents(wrapper);
     range.collapse(false);
@@ -1232,6 +1233,7 @@
 
   // Low-level: insert html immediately after a section element
   function insertAfterSection(ed, section, html) {
+    ed.focus();
     const range = ed.dom.createRng();
     range.setStartAfter(section);
     range.collapse(true);
@@ -1239,27 +1241,41 @@
     ed.insertContent(html);
   }
 
-  // Show/clear the sidebar "↓ target set" indicator
-  function setTargetLabel(section) {
+  // Low-level: insert html immediately before a section element
+  function insertBeforeSection(ed, section, html) {
+    ed.focus();
+    const range = ed.dom.createRng();
+    range.setStartBefore(section);
+    range.collapse(true);
+    ed.selection.setRng(range);
+    ed.insertContent(html);
+  }
+
+  // Show/clear the sidebar target indicator
+  function setTargetLabel(target) {
     const label = document.getElementById(ID + '-target-label');
     if (!label) return;
-    if (section) {
-      const cls = section.classList;
-      const kind = cls.contains('video-block') ? 'video block'
-                 : cls.contains('display-header') ? 'display header'
-                 : cls.contains('accordion') ? 'accordion'
-                 : 'text block';
-      label.textContent = `↓ after ${kind}`;
-      label.style.display = '';
-    } else {
-      label.style.display = 'none';
-    }
+    if (!target) { label.style.display = 'none'; return; }
+    const section = target.afterSection || target.beforeSection;
+    const arrow   = target.beforeSection ? '↑ before' : '↓ after';
+    const cls     = section.classList;
+    const kind    = cls.contains('video-block')    ? 'video block'
+                  : cls.contains('display-header') ? 'display header'
+                  : cls.contains('accordion')      ? 'accordion'
+                  : 'text block';
+    label.textContent = `${arrow} ${kind}`;
+    label.style.display = '';
   }
 
   // ── Smart insertion ─────────────────────────────────────────────────────────
   // Priority: explicit zone target → cursor position → end-of-page fallback
   //
+  // Zone targets always insert at the exact clicked position (no merging) so
+  // the designer gets exactly what they asked for.
+  // Cursor-aware and end-append use merging for text type as a convenience.
+  //
   // type 'text'       → merge inner content into a plain section.text-block
+  //                     (except when an explicit zone target is active)
   // type 'video'      → always its own section (preserves .highlight/.blue classes)
   // type 'standalone' → always its own section
   function doInsert(ed, html, type) {
@@ -1267,6 +1283,7 @@
     let wrapper = body.querySelector('.new-canvas');
 
     if (!wrapper) {
+      ed.focus();
       ed.selection.select(body, true);
       ed.selection.collapse(false);
       ed.insertContent('<div class="new-canvas"></div>');
@@ -1286,71 +1303,71 @@
         .replace(/\n?<\/section>$/, '')
         .trim();
     }
+    const wrapBlock = c => `<section class="text-block">\n${c}\n</section>`;
 
-    // ── Determine anchor section (where to insert relative to) ──────────────
-    let anchor = null;
-    let anchorSource = 'end'; // 'zone' | 'cursor' | 'end'
-
-    if (lxdInsertTarget?.afterSection) {
-      // Zone button was explicitly clicked — highest priority
-      anchor = lxdInsertTarget.afterSection;
-      anchorSource = 'zone';
+    // ── 1. Explicit zone target (highest priority) ───────────────────────────
+    if (lxdInsertTarget) {
+      const isBefore = !!lxdInsertTarget.beforeSection;
+      const anchor   = isBefore ? lxdInsertTarget.beforeSection : lxdInsertTarget.afterSection;
       lxdInsertTarget = null;
       setTargetLabel(null);
-      if (blocksVisible) {
-        const ed2 = getEditor();
-        if (ed2) buildZoneOverlay(ed2); // redraw zones without selected state
-      }
-    } else {
-      // Try cursor position (TinyMCE preserves selection across sidebar clicks)
-      const cursorNode = ed.selection.getNode();
-      const cursorSection = getAnchorSection(wrapper, cursorNode);
-      if (cursorSection) {
-        anchor = cursorSection;
-        anchorSource = 'cursor';
-      }
+      if (blocksVisible) buildZoneOverlay(ed);
+
+      const insertFn = isBefore ? insertBeforeSection : insertAfterSection;
+      // Zone targets always place an exact new block — never silently merge
+      insertFn(ed, anchor, type === 'text' ? wrapBlock(innerContent) : html);
+      showToast('Inserted ✓');
+      return;
     }
 
-    // ── Insert based on type + anchor ───────────────────────────────────────
-    if (type === 'text') {
-      if (anchor && isPlainTextBlock(anchor)) {
-        // Merge into the anchor text-block
-        const range = ed.dom.createRng();
-        range.selectNodeContents(anchor);
-        range.collapse(false);
-        ed.selection.setRng(range);
-        ed.insertContent(innerContent);
-        showToast(anchorSource === 'zone' ? 'Added ✓' : 'Added to text block ✓');
+    // ── 2. Cursor-aware ──────────────────────────────────────────────────────
+    let cursorSection = null;
+    try {
+      cursorSection = getAnchorSection(wrapper, ed.selection.getNode());
+    } catch (e) {}
 
-      } else if (anchor) {
-        // Cursor / zone is in a non-text-block section — insert new text-block after it
-        insertAfterSection(ed, anchor, `<section class="text-block">\n${innerContent}\n</section>`);
-        showToast('Inserted ✓');
-
-      } else {
-        // No anchor — smart end-append: merge into last text-block if possible
-        const dirSections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
-        const last = dirSections[dirSections.length - 1] || null;
-        if (isPlainTextBlock(last)) {
+    if (cursorSection) {
+      if (type === 'text') {
+        if (isPlainTextBlock(cursorSection)) {
+          // Merge into the text-block the cursor is in
+          ed.focus();
           const range = ed.dom.createRng();
-          range.selectNodeContents(last);
+          range.selectNodeContents(cursorSection);
           range.collapse(false);
           ed.selection.setRng(range);
           ed.insertContent(innerContent);
           showToast('Added to text block ✓');
         } else {
-          appendToWrapper(ed, wrapper, `<section class="text-block">\n${innerContent}\n</section>`);
+          // Cursor is in a non-mergeable section — new text-block after it
+          insertAfterSection(ed, cursorSection, wrapBlock(innerContent));
           showToast('Inserted ✓');
         }
-      }
-
-    } else {
-      // video / standalone — insert full section html (preserves all classes)
-      if (anchor) {
-        insertAfterSection(ed, anchor, html);
       } else {
-        appendToWrapper(ed, wrapper, html);
+        // video / standalone after cursor section
+        insertAfterSection(ed, cursorSection, html);
+        showToast('Inserted ✓');
       }
+      return;
+    }
+
+    // ── 3. End-of-page fallback ──────────────────────────────────────────────
+    if (type === 'text') {
+      const dirSections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
+      const last = dirSections[dirSections.length - 1] || null;
+      if (isPlainTextBlock(last)) {
+        ed.focus();
+        const range = ed.dom.createRng();
+        range.selectNodeContents(last);
+        range.collapse(false);
+        ed.selection.setRng(range);
+        ed.insertContent(innerContent);
+        showToast('Added to text block ✓');
+      } else {
+        appendToWrapper(ed, wrapper, wrapBlock(innerContent));
+        showToast('Inserted ✓');
+      }
+    } else {
+      appendToWrapper(ed, wrapper, html);
       showToast('Inserted ✓');
     }
   }
@@ -1367,8 +1384,10 @@
   }
 
   // ── Show Blocks zone overlay ────────────────────────────────────────────────
-  // Builds a fixed-position overlay (outside TinyMCE's content body) with maize
-  // + bands between each section. Clicking a band sets it as the explicit insert target.
+  // Injects a fixed-position overlay into the TinyMCE iframe document body
+  // (NOT into the editor content, so zones are never saved or published).
+  // One zone ABOVE the first section and one BELOW each section.
+  // Clicking a zone sets it as the explicit insert target; click again to deselect.
   function buildZoneOverlay(ed) {
     if (!blocksVisible) return;
     const edDoc = ed.getDoc();
@@ -1382,60 +1401,51 @@
     }
     overlay.innerHTML = '';
 
-    const wrapper = ed.getBody().querySelector('.new-canvas');
+    const wrapper  = ed.getBody().querySelector('.new-canvas');
     if (!wrapper) return;
-
     const wRect    = wrapper.getBoundingClientRect();
     const sections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
+    if (!sections.length) return;
 
-    sections.forEach((section, i) => {
-      const sRect      = section.getBoundingClientRect();
-      const isSelected = lxdInsertTarget?.afterSection === section;
+    // Zone ABOVE the first section (beforeSection target)
+    const firstRect = sections[0].getBoundingClientRect();
+    makeZone({ overlay, edDoc, ed, top: firstRect.top - 10,
+      left: wRect.left, width: wRect.width, section: sections[0], isBefore: true });
 
-      const zone = edDoc.createElement('div');
-      zone.style.cssText = [
-        'position:fixed',
-        `left:${wRect.left}px`,
-        `width:${wRect.width}px`,
-        `top:${sRect.bottom - 10}px`,
-        'height:20px',
-        'pointer-events:auto',
-        'display:flex',
-        'align-items:center',
-        'cursor:pointer',
-        `opacity:${isSelected ? '1' : '0'}`,
-        'transition:opacity .15s',
-        'z-index:9998',
-      ].join(';');
-
-      const lineColor = isSelected ? '#FFCB05' : '#FFCB05';
-      zone.innerHTML = `
-        <div style="flex:1;height:2px;background:${lineColor};opacity:.85;border-radius:1px"></div>
-        <div style="flex-shrink:0;background:${lineColor};color:#1c1c1e;font-size:11px;font-weight:800;
-          width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-          font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1;margin:0 4px;">+</div>
-        <div style="flex:1;height:2px;background:${lineColor};opacity:.85;border-radius:1px"></div>
-      `;
-
-      zone.addEventListener('mouseenter', () => { zone.style.opacity = '1'; });
-      zone.addEventListener('mouseleave', () => {
-        if (lxdInsertTarget?.afterSection !== section) zone.style.opacity = '0';
-      });
-      zone.addEventListener('click', e => {
-        e.stopPropagation();
-        if (lxdInsertTarget?.afterSection === section) {
-          // Click again to deselect
-          lxdInsertTarget = null;
-          setTargetLabel(null);
-        } else {
-          lxdInsertTarget = { afterSection: section };
-          setTargetLabel(section);
-        }
-        buildZoneOverlay(ed); // redraw to reflect new selection
-      });
-
-      overlay.appendChild(zone);
+    // Zone BELOW each section (afterSection targets)
+    sections.forEach(section => {
+      const sRect = section.getBoundingClientRect();
+      makeZone({ overlay, edDoc, ed, top: sRect.bottom - 10,
+        left: wRect.left, width: wRect.width, section, isBefore: false });
     });
+  }
+
+  function makeZone({ overlay, edDoc, ed, top, left, width, section, isBefore }) {
+    const isSelected = () => isBefore
+      ? lxdInsertTarget?.beforeSection === section
+      : lxdInsertTarget?.afterSection  === section;
+
+    const zone = edDoc.createElement('div');
+    zone.style.cssText = `position:fixed;left:${left}px;width:${width}px;top:${top}px;height:20px;pointer-events:auto;display:flex;align-items:center;cursor:pointer;opacity:${isSelected() ? '1' : '0'};transition:opacity .15s;z-index:9998;`;
+    zone.innerHTML = `
+      <div style="flex:1;height:2px;background:#FFCB05;opacity:.85;border-radius:1px"></div>
+      <div style="flex-shrink:0;background:#FFCB05;color:#1c1c1e;font-size:11px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1;margin:0 4px">+</div>
+      <div style="flex:1;height:2px;background:#FFCB05;opacity:.85;border-radius:1px"></div>
+    `;
+    zone.addEventListener('mouseenter', () => { zone.style.opacity = '1'; });
+    zone.addEventListener('mouseleave', () => { if (!isSelected()) zone.style.opacity = '0'; });
+    zone.addEventListener('click', e => {
+      e.stopPropagation();
+      if (isSelected()) {
+        lxdInsertTarget = null;
+        setTargetLabel(null);
+      } else {
+        lxdInsertTarget = isBefore ? { beforeSection: section } : { afterSection: section };
+        setTargetLabel(lxdInsertTarget);
+      }
+      buildZoneOverlay(ed);
+    });
+    overlay.appendChild(zone);
   }
 
   function removeZoneOverlay(ed) {
