@@ -1703,11 +1703,45 @@
   });
 
   // ── Insert paragraph ───────────────────────────────────────────────────────
+  // If cursor is inside a plain text-block → insert <p> inline at cursor.
+  // If cursor is inside a video block, callout, or other special section →
+  // exit that section and create a new text-block after it, matching the
+  // same behaviour as inserting a Text Block component with an H2.
   document.getElementById(ID + '-insert-p').addEventListener('click', () => {
     const ed = getEditor();
     if (!ed) { showToast('Open a page editor first'); return; }
-    ed.focus();
-    ed.insertContent('<p>Paragraph text</p>');
+
+    const wrapper = ed.getBody().querySelector('.new-canvas');
+
+    if (!wrapper) {
+      // No canvas structure yet — plain inline insert
+      ed.focus();
+      ed.insertContent('<p>Paragraph text</p>');
+      showToast('Paragraph inserted ✓');
+      return;
+    }
+
+    let cursorSection = null;
+    try { cursorSection = getAnchorSection(wrapper, ed.selection.getNode()); } catch (e) {}
+    if (cursorSection && cursorSection.getAttribute(PH_ATTR)) cursorSection = null;
+
+    if (cursorSection && isPlainTextBlock(cursorSection)) {
+      // Inside a mergeable text-block — drop the <p> at the cursor
+      ed.focus();
+      ed.insertContent('<p>Paragraph text</p>');
+    } else if (cursorSection) {
+      // Inside a video block, callout, header, etc. — break out into a new section
+      insertAfterSection(ed, cursorSection, '<section class="text-block">\n  <p>Paragraph text</p>\n</section>');
+    } else {
+      // No cursor — insert before placeholder / at end of page
+      const ph = wrapper.querySelector(`[${PH_ATTR}]`);
+      if (ph) {
+        insertBeforeSection(ed, ph, '<section class="text-block">\n  <p>Paragraph text</p>\n</section>');
+      } else {
+        appendToWrapper(ed, wrapper, '<section class="text-block">\n  <p>Paragraph text</p>\n</section>');
+      }
+    }
+    ensurePlaceholder(ed);
     showToast('Paragraph inserted ✓');
   });
 
