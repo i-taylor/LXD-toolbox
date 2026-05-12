@@ -1209,9 +1209,9 @@
       return;
     }
 
-    // For text/video types: strip the section wrapper to get bare inner content
+    // For text type: strip the section wrapper to get bare inner content for merging
     let innerContent = html;
-    if (type === 'text' || type === 'video') {
+    if (type === 'text') {
       innerContent = html
         .replace(/^<section[^>]*>\n?/, '')
         .replace(/\n?<\/section>$/, '')
@@ -1239,15 +1239,10 @@
       } else {
         newBlockHTML = `<section class="text-block">\n${innerContent}\n</section>`;
       }
-    } else if (type === 'video') {
-      // Append to last video-block section if it's the most recent section
-      if (lastSection && lastSection.classList.contains('video-block')) {
-        targetSection = lastSection;
-      } else {
-        newBlockHTML = `<section class="text-block video-block">\n${innerContent}\n</section>`;
-      }
     } else {
-      // standalone — insert the full html (already section-wrapped) at end of wrapper
+      // 'video' and 'standalone' both insert the full section html at end of wrapper.
+      // Video blocks are always their own section (each video = one section.text-block.video-block)
+      // and must preserve their variant classes (.highlight, .blue), so no merging.
       newBlockHTML = html;
     }
 
