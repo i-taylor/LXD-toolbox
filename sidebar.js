@@ -690,16 +690,77 @@
       border-color: #00274C;
       color: white;
     }
-    #${ID} .lxd-target-label {
-      font-size: .67rem;
-      font-weight: 700;
-      color: #FFCB05;
-      background: #1c1c1e;
-      padding: 2px 7px;
-      border-radius: 4px;
-      letter-spacing: .3px;
-      align-self: center;
+    /* ── Position panel ── */
+    #${ID} .lxd-position-panel {
+      background: white;
+      border-bottom: 1px solid #e4e2dc;
+      flex-shrink: 0;
     }
+    #${ID} .lxd-pos-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px 4px;
+    }
+    #${ID} .lxd-pos-title {
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      color: #aaa;
+    }
+    #${ID} .lxd-pos-close {
+      background: none;
+      border: none;
+      font-size: 12px;
+      color: #aaa;
+      cursor: pointer;
+      padding: 0 2px;
+      line-height: 1;
+    }
+    #${ID} .lxd-pos-close:hover { color: #555; }
+    #${ID} .lxd-pos-list {
+      padding: 0 10px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+    #${ID} .lxd-pos-option {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background .12s, border-color .12s;
+      font-size: .75rem;
+      color: #444;
+    }
+    #${ID} .lxd-pos-option:hover { background: #f7f6f2; border-color: #e4e2dc; }
+    #${ID} .lxd-pos-option.selected {
+      background: #eff6ff;
+      border-color: #00274C;
+      color: #00274C;
+      font-weight: 600;
+    }
+    #${ID} .lxd-pos-arrow { font-size: .75rem; opacity: .5; width: 12px; text-align: center; }
+    #${ID} .lxd-pos-option.selected .lxd-pos-arrow { opacity: 1; }
+    #${ID} .lxd-pos-badge {
+      font-size: .62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    #${ID} .lxd-pos-badge-text  { background: #e0e7ff; color: #3730a3; }
+    #${ID} .lxd-pos-badge-video { background: #fef9c3; color: #854d0e; }
+    #${ID} .lxd-pos-badge-other { background: #f3f4f6; color: #6b7280; }
+    #${ID} .lxd-pos-label { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     #${ID} .lxd-search-wrap {
       padding: 7px 12px 6px;
@@ -1114,8 +1175,16 @@
     </div>
 
     <div class="lxd-editor-tools">
-      <button class="lxd-blocks-btn" id="${ID}-show-blocks" title="Outline text &amp; video blocks in the editor (editor-only, not published)">👁 Show Blocks</button>
-      <span class="lxd-target-label" id="${ID}-target-label" style="display:none">↓ target set</span>
+      <button class="lxd-blocks-btn" id="${ID}-show-blocks" title="Outline text &amp; video blocks in the editor (editor-only, not published)">👁 Blocks</button>
+      <button class="lxd-blocks-btn" id="${ID}-scan-btn" title="Scan editor and choose where to insert">📍 Position</button>
+    </div>
+
+    <div class="lxd-position-panel" id="${ID}-position-panel" style="display:none">
+      <div class="lxd-pos-header">
+        <span class="lxd-pos-title">Insert position</span>
+        <button class="lxd-pos-close" id="${ID}-pos-close">✕</button>
+      </div>
+      <div class="lxd-pos-list" id="${ID}-pos-list"></div>
     </div>
 
     <div class="lxd-search-wrap" id="${ID}-search-wrap">
@@ -1170,10 +1239,9 @@
   document.body.style.marginRight = PUSH_W;
 
   // ── State ──────────────────────────────────────────────────────────────────
-  let compView      = 'home';  // 'home' | 'browse' | 'search'
-  let blocksVisible = false;
-  let lxdInsertTarget = null;  // { afterSection: el } — set by zone button click
-  let _zoneHandler  = null;    // stored NodeChange handler so it can be removed
+  let compView        = 'home';  // 'home' | 'browse' | 'search'
+  let blocksVisible   = false;
+  let lxdInsertTarget = null;    // { beforeSection: el } | { afterSection: el } | null
 
   // ── Helpers ────────────────────────────────────────────────────────────────
   function showToast(msg) {
@@ -1237,20 +1305,84 @@
     ed.undoManager.transact(() => { section.insertAdjacentHTML('beforebegin', html); });
   }
 
-  // Show/clear the sidebar target indicator
-  function setTargetLabel(target) {
-    const label = document.getElementById(ID + '-target-label');
-    if (!label) return;
-    if (!target) { label.style.display = 'none'; return; }
-    const section = target.afterSection || target.beforeSection;
-    const arrow   = target.beforeSection ? '↑ before' : '↓ after';
-    const cls     = section.classList;
-    const kind    = cls.contains('video-block')    ? 'video block'
-                  : cls.contains('display-header') ? 'display header'
-                  : cls.contains('accordion')      ? 'accordion'
-                  : 'text block';
-    label.textContent = `${arrow} ${kind}`;
-    label.style.display = '';
+  // ── Position scanner ────────────────────────────────────────────────────────
+  // Reads current sections from the editor and renders radio-style options in
+  // the sidebar. Entirely sidebar-native — no TinyMCE DOM injection needed.
+  function sectionLabel(section) {
+    const cls = section.classList;
+    if (cls.contains('video-block'))    return ['video',  'Video Block'];
+    if (cls.contains('display-header')) return ['other',  'Display Header'];
+    if (cls.contains('accordion'))      return ['other',  'Accordion'];
+    if (cls.contains('graphical-highlight')) return ['other', 'Graphical Highlight'];
+    if (cls.contains('assignment'))     return ['other',  'Assignment Block'];
+    if (cls.contains('gamut-intro'))    return ['other',  'Gamut Intro'];
+    // Try to get heading text for plain text-blocks
+    const h = section.querySelector('h2,h3,h4');
+    const heading = h ? h.textContent.trim().slice(0, 28) : '';
+    return ['text', heading || 'Text Block'];
+  }
+
+  function buildPositionPanel() {
+    const panel = document.getElementById(ID + '-position-panel');
+    const list  = document.getElementById(ID + '-pos-list');
+    if (!panel || !list) return;
+
+    const ed = getEditor();
+    if (!ed) { showToast('Open an editor first'); return; }
+
+    const wrapper  = ed.getBody().querySelector('.new-canvas');
+    const sections = wrapper
+      ? Array.from(wrapper.children).filter(el => el.tagName === 'SECTION')
+      : [];
+
+    list.innerHTML = '';
+
+    // Helper to create a clickable row
+    function addOption({ arrow, label, badgeType, badgeText, target }) {
+      const isSelected = target === null
+        ? lxdInsertTarget === null
+        : (target.beforeSection && lxdInsertTarget?.beforeSection === target.beforeSection) ||
+          (target.afterSection  && lxdInsertTarget?.afterSection  === target.afterSection);
+
+      const row = document.createElement('div');
+      row.className = 'lxd-pos-option' + (isSelected ? ' selected' : '');
+      row.innerHTML = `
+        <span class="lxd-pos-arrow">${arrow}</span>
+        <span class="lxd-pos-label">${label}</span>
+        ${badgeText ? `<span class="lxd-pos-badge lxd-pos-badge-${badgeType}">${badgeText}</span>` : ''}
+      `;
+      row.addEventListener('click', () => {
+        lxdInsertTarget = target;
+        buildPositionPanel(); // redraw to show selection
+      });
+      list.appendChild(row);
+    }
+
+    // "End of page" default
+    addOption({ arrow: '↓', label: 'End of page (default)', badgeType: '', badgeText: '', target: null });
+
+    if (sections.length) {
+      // Before first section
+      const [firstType, firstLabel] = sectionLabel(sections[0]);
+      addOption({
+        arrow: '↑', label: `Before "${firstLabel}"`, badgeType: `${firstType}`,
+        badgeText: firstType === 'video' ? 'VIDEO' : firstType === 'text' ? 'TEXT' : 'BLOCK',
+        target: { beforeSection: sections[0] },
+      });
+
+      // After each section
+      sections.forEach((section, i) => {
+        const [type, label] = sectionLabel(section);
+        addOption({
+          arrow: '↓', label: `After "${label}"`,
+          badgeType: type === 'video' ? 'video' : type === 'text' ? 'text' : 'other',
+          badgeText: type === 'video' ? 'VIDEO' : type === 'text' ? 'TEXT' : 'BLOCK',
+          target: { afterSection: section },
+        });
+      });
+    }
+
+    panel.style.display = '';
   }
 
   // ── Smart insertion ─────────────────────────────────────────────────────────
@@ -1291,17 +1423,14 @@
     }
     const wrapBlock = c => `<section class="text-block">\n${c}\n</section>`;
 
-    // ── 1. Explicit zone target (highest priority) ───────────────────────────
+    // ── 1. Explicit position target (set via sidebar position panel) ────────────
     if (lxdInsertTarget) {
       const isBefore = !!lxdInsertTarget.beforeSection;
       const anchor   = isBefore ? lxdInsertTarget.beforeSection : lxdInsertTarget.afterSection;
       lxdInsertTarget = null;
-      setTargetLabel(null);
-      if (blocksVisible) buildZoneOverlay(ed);
-
       const insertFn = isBefore ? insertBeforeSection : insertAfterSection;
-      // Zone targets always place an exact new block — never silently merge
       insertFn(ed, anchor, type === 'text' ? wrapBlock(innerContent) : html);
+      buildPositionPanel(); // redraw to show "End of page" is now selected
       showToast('Inserted ✓');
       return;
     }
@@ -1316,7 +1445,6 @@
       if (type === 'text') {
         if (isPlainTextBlock(cursorSection)) {
           // Merge into the text-block the cursor is in
-          ed.focus();
           ed.focus();
           const range = ed.dom.createRng();
           range.selectNodeContents(cursorSection);
@@ -1370,78 +1498,6 @@
       .catch(() => showToast('Could not insert — click inside the editor first'));
   }
 
-  // ── Show Blocks zone overlay ────────────────────────────────────────────────
-  // Injects a fixed-position overlay into the TinyMCE iframe document body
-  // (NOT into the editor content, so zones are never saved or published).
-  // One zone ABOVE the first section and one BELOW each section.
-  // Clicking a zone sets it as the explicit insert target; click again to deselect.
-  function buildZoneOverlay(ed) {
-    if (!blocksVisible) return;
-    const edDoc = ed.getDoc();
-
-    let overlay = edDoc.getElementById('lxd-zone-overlay');
-    if (!overlay) {
-      overlay = edDoc.createElement('div');
-      overlay.id = 'lxd-zone-overlay';
-      overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:9997;overflow:hidden;';
-      edDoc.body.appendChild(overlay);
-    }
-    overlay.innerHTML = '';
-
-    const wrapper  = ed.getBody().querySelector('.new-canvas');
-    if (!wrapper) return;
-    const wRect    = wrapper.getBoundingClientRect();
-    const sections = Array.from(wrapper.children).filter(el => el.tagName === 'SECTION');
-    if (!sections.length) return;
-
-    // Zone ABOVE the first section (beforeSection target)
-    const firstRect = sections[0].getBoundingClientRect();
-    makeZone({ overlay, edDoc, ed, top: firstRect.top - 10,
-      left: wRect.left, width: wRect.width, section: sections[0], isBefore: true });
-
-    // Zone BELOW each section (afterSection targets)
-    sections.forEach(section => {
-      const sRect = section.getBoundingClientRect();
-      makeZone({ overlay, edDoc, ed, top: sRect.bottom - 10,
-        left: wRect.left, width: wRect.width, section, isBefore: false });
-    });
-  }
-
-  function makeZone({ overlay, edDoc, ed, top, left, width, section, isBefore }) {
-    const isSelected = () => isBefore
-      ? lxdInsertTarget?.beforeSection === section
-      : lxdInsertTarget?.afterSection  === section;
-
-    const zone = edDoc.createElement('div');
-    zone.style.cssText = `position:fixed;left:${left}px;width:${width}px;top:${top}px;height:20px;pointer-events:auto;display:flex;align-items:center;cursor:pointer;opacity:${isSelected() ? '1' : '0'};transition:opacity .15s;z-index:9998;`;
-    zone.innerHTML = `
-      <div style="flex:1;height:2px;background:#FFCB05;opacity:.85;border-radius:1px"></div>
-      <div style="flex-shrink:0;background:#FFCB05;color:#1c1c1e;font-size:11px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif;line-height:1;margin:0 4px">+</div>
-      <div style="flex:1;height:2px;background:#FFCB05;opacity:.85;border-radius:1px"></div>
-    `;
-    zone.addEventListener('mouseenter', () => { zone.style.opacity = '1'; });
-    zone.addEventListener('mouseleave', () => { if (!isSelected()) zone.style.opacity = '0'; });
-    zone.addEventListener('click', e => {
-      e.stopPropagation();
-      if (isSelected()) {
-        lxdInsertTarget = null;
-        setTargetLabel(null);
-      } else {
-        lxdInsertTarget = isBefore ? { beforeSection: section } : { afterSection: section };
-        setTargetLabel(lxdInsertTarget);
-      }
-      buildZoneOverlay(ed);
-    });
-    overlay.appendChild(zone);
-  }
-
-  function removeZoneOverlay(ed) {
-    try {
-      const el = ed.getDoc().getElementById('lxd-zone-overlay');
-      if (el) el.remove();
-    } catch (e) {}
-  }
-
   function copyHTML(html) {
     navigator.clipboard.writeText(html)
       .then(() => showToast('Copied ✓'))
@@ -1486,12 +1542,7 @@
     // Clean up any editor-injected styles/overlays before removing sidebar
     const ed = getEditor();
     if (ed) {
-      try {
-        const edDoc = ed.getDoc();
-        edDoc.getElementById('lxd-block-vis')?.remove();
-        edDoc.getElementById('lxd-zone-overlay')?.remove();
-      } catch (e) {}
-      if (_zoneHandler) { ed.off('NodeChange', _zoneHandler); _zoneHandler = null; }
+      try { ed.getDoc().getElementById('lxd-block-vis')?.remove(); } catch (e) {}
     }
     sidebar.remove(); toast.remove(); styleEl.remove();
     document.body.style.marginRight = '';
@@ -1530,12 +1581,7 @@
 
     if (blocksVisible) {
       // ── Turn off ──────────────────────────────────────────────────────────
-      const existingStyle = edDoc.getElementById('lxd-block-vis');
-      if (existingStyle) existingStyle.remove();
-      removeZoneOverlay(ed);
-      if (_zoneHandler) { ed.off('NodeChange', _zoneHandler); _zoneHandler = null; }
-      lxdInsertTarget = null;
-      setTargetLabel(null);
+      edDoc.getElementById('lxd-block-vis')?.remove();
       blocksVisible = false;
       this.classList.remove('active');
     } else {
@@ -1585,12 +1631,25 @@
       edDoc.head.appendChild(style);
       blocksVisible = true;
       this.classList.add('active');
-      buildZoneOverlay(ed);
-      // Rebuild zone positions whenever content or cursor changes
-      _zoneHandler = () => buildZoneOverlay(ed);
-      ed.on('NodeChange', _zoneHandler);
-      showToast('Block outlines on — click + to set insert position');
+      showToast('Block outlines on');
     }
+  });
+
+  // ── Position panel ─────────────────────────────────────────────────────────
+  document.getElementById(ID + '-scan-btn').addEventListener('click', () => {
+    const ed = getEditor();
+    if (!ed) { showToast('Open a page editor first'); return; }
+    const panel = document.getElementById(ID + '-position-panel');
+    const isOpen = panel.style.display !== 'none';
+    if (isOpen) {
+      panel.style.display = 'none';
+    } else {
+      buildPositionPanel(); // also sets panel.style.display = ''
+    }
+  });
+
+  document.getElementById(ID + '-pos-close').addEventListener('click', () => {
+    document.getElementById(ID + '-position-panel').style.display = 'none';
   });
 
   sidebar.querySelectorAll('.lxd-tab').forEach(tab => {
