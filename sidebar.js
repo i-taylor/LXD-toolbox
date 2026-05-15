@@ -1096,7 +1096,7 @@
 
   function catTilesHTML() {
     const cats = [...new Set(COMPONENTS.map(c => c.cat))];
-    return cats.map(cat => {
+    const builtIn = cats.map(cat => {
       const count = COMPONENTS.filter(c => c.cat === cat).length;
       const color = CAT_COLORS[cat] || '#888';
       return `<div class="lxd-cat-tile" data-cat="${cat}" style="--accent:${color}">
@@ -1107,6 +1107,92 @@
         </div>
       </div>`;
     }).join('');
+    // Cookbook tile — lazy-loads from external JSON feed
+    const cookbook = `<div class="lxd-cat-tile lxd-cat-tile--cookbook" data-cat="__cookbook" style="--accent:#6B7280">
+      <div class="lxd-cat-tile-accent"></div>
+      <div class="lxd-cat-tile-body">
+        <div class="lxd-cat-tile-name">Cookbook ↗</div>
+        <div class="lxd-cat-tile-count">MO component library</div>
+      </div>
+    </div>`;
+    return builtIn + cookbook;
+  }
+
+  // ── MO Cookbook integration ────────────────────────────────────────────────
+  // Fetches https://i-taylor.github.io/MO-Image-Cookbook/new-canvas-elements.json
+  // and normalises entries into the same shape as COMPONENTS items.
+  const COOKBOOK_URL = 'https://i-taylor.github.io/MO-Image-Cookbook/new-canvas-elements.json';
+  let cookbookData = null; // null = not yet fetched
+
+  const COOKBOOK_CAT_COLORS = {
+    'Accordions':    '#6B7280',
+    'Tables':        '#F59E0B',
+    'Callout Boxes': '#3B82F6',
+    'Buttons':       '#10B981',
+    'Images':        '#10B981',
+    'Navigation':    '#8B5CF6',
+    'Text':          '#00274C',
+    'Video':         '#EF4444',
+  };
+
+  function normalizeCookbookItem(item) {
+    const color = COOKBOOK_CAT_COLORS[item.category] || '#6B7280';
+    const snippet = item.snippetHtml || '';
+    return {
+      name:          item.title,
+      cat:           '__cookbook',
+      cookbookCat:   item.category || 'Other',
+      type:          'standalone',
+      color,
+      desc:          item.description || '',
+      html:          `<div class="new-canvas">\n${snippet}\n</div>`,
+      previewHtmlRaw: item.previewHtml || snippet,
+      keywords:      item.keywords || '',
+      preview: `<div style="padding:6px 10px;height:52px;display:flex;align-items:center;gap:9px">
+        <div style="width:4px;height:34px;background:${color};border-radius:3px;flex-shrink:0"></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:5px">
+          <div style="height:7px;width:65%;background:#e5e7eb;border-radius:3px"></div>
+          <div style="height:5px;width:100%;background:#f3f4f6;border-radius:3px"></div>
+          <div style="height:5px;width:80%;background:#f3f4f6;border-radius:3px"></div>
+        </div>
+      </div>`,
+    };
+  }
+
+  function fetchCookbook(onDone) {
+    if (cookbookData !== null) { onDone(cookbookData); return; }
+    fetch(COOKBOOK_URL)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(data => { cookbookData = data.map(normalizeCookbookItem); onDone(cookbookData); })
+      .catch(() => { cookbookData = []; onDone([]); });
+  }
+
+  // Render cookbook items grouped by their sub-category
+  function showCookbookBrowse() {
+    compView = 'browse';
+    document.getElementById(ID + '-comp-home').style.display   = 'none';
+    document.getElementById(ID + '-comp-browse').style.display = '';
+    document.getElementById(ID + '-comp-search').style.display = 'none';
+    document.getElementById(ID + '-browse-title').textContent  = 'Cookbook';
+
+    const tilesEl = document.getElementById(ID + '-comp-tiles');
+    tilesEl.innerHTML = '<div style="padding:32px 16px;text-align:center;color:#aaa;font-size:.8rem">Loading cookbook…</div>';
+
+    fetchCookbook(items => {
+      if (!items.length) {
+        tilesEl.innerHTML = '<div style="padding:32px 16px;text-align:center;color:#aaa;font-size:.8rem">Could not load cookbook.</div>';
+        return;
+      }
+      // Group by cookbook sub-category
+      const byCat = {};
+      items.forEach(item => {
+        (byCat[item.cookbookCat] = byCat[item.cookbookCat] || []).push(item);
+      });
+      tilesEl.innerHTML = Object.entries(byCat).map(([subCat, comps]) =>
+        `<div style="padding:8px 0 4px;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.7px;color:#bbb">${subCat}</div>
+         <div class="lxd-comp-tiles">${compTilesHTML(comps)}</div>`
+      ).join('');
+    });
   }
 
   function compTilesHTML(list) {
@@ -1740,8 +1826,13 @@
     document.getElementById(ID + '-comp-home').style.display = 'none';
     document.getElementById(ID + '-comp-browse').style.display = 'none';
     document.getElementById(ID + '-comp-search').style.display = '';
+    const builtIn  = COMPONENTS.filter(c => c.name.toLowerCase().includes(q));
+    // Include cookbook items in search if they've already been fetched
+    const cookbook = (cookbookData || []).filter(c =>
+      c.name.toLowerCase().includes(q) || c.keywords.toLowerCase().includes(q)
+    );
     document.getElementById(ID + '-search-tiles').innerHTML =
-      compTilesHTML(COMPONENTS.filter(c => c.name.toLowerCase().includes(q)));
+      compTilesHTML([...builtIn, ...cookbook]);
   }
 
   // ── Events ─────────────────────────────────────────────────────────────────
@@ -1918,7 +2009,8 @@
   sidebar.addEventListener('click', e => {
     const tile = e.target.closest('.lxd-cat-tile');
     if (!tile) return;
-    showCompBrowse(tile.dataset.cat);
+    if (tile.dataset.cat === '__cookbook') showCookbookBrowse();
+    else showCompBrowse(tile.dataset.cat);
   });
 
   // ── Back button ────────────────────────────────────────────────────────────
@@ -1936,24 +2028,36 @@
     const preview = e.target.closest('.lxd-comp-tile-preview');
     if (!preview) return;
     const tile    = preview.closest('.lxd-comp-tile');
-    const pmComp  = COMPONENTS.find(c => c.name.toLowerCase() === tile.dataset.name);
+    const tileName = tile.dataset.name;
     const name    = tile.querySelector('.lxd-comp-tile-name').textContent.trim();
-    const desc    = pmComp?.desc || '';
     const htmlEnc = tile.querySelector('.lxd-btn-insert')?.dataset.html || '';
     const IMG_PH   = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4MDAiIGhlaWdodD0iNDUwIiB2aWV3Qm94PSIwIDAgODAwIDQ1MCI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0NTAiIGZpbGw9IiNlNWU3ZWIiLz48Y2lyY2xlIGN4PSIyMjAiIGN5PSIxMzAiIHI9IjY1IiBmaWxsPSIjOWNhM2FmIi8+PHBhdGggZD0iTTAgMzEwIEwyMjAgMTcwIEwzNTAgMjgwIEw0NjAgMjEwIEw4MDAgMzcwIEw4MDAgNDUwIEwwIDQ1MCBaIiBmaWxsPSIjOWNhM2FmIi8+PC9zdmc+';
     const PHOTO_PH = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjAwIDIwMCI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSIxMDAiIGZpbGw9IiNlNWU3ZWIiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSI3OCIgcj0iMzgiIGZpbGw9IiM5Y2EzYWYiLz48cGF0aCBkPSJNMjAgMjAwIFEyMCAxMzggMTAwIDEzOCBRMTgwIDEzOCAxODAgMjAwIFoiIGZpbGw9IiM5Y2EzYWYiLz48L3N2Zz4=';
-    const inner = decodeURIComponent(htmlEnc)
-      .replace(/PASTE_IMAGE_URL/g, IMG_PH)
-      .replace(/PASTE_PHOTO_URL/g, PHOTO_PH);
+
+    // Resolve the component — check built-ins first, then cookbook cache
+    const pmComp = COMPONENTS.find(c => c.name.toLowerCase() === tileName)
+                || (cookbookData || []).find(c => c.name.toLowerCase() === tileName);
+
+    let iframeInner;
+    if (pmComp?.previewHtmlRaw) {
+      // Cookbook item: use cookbook's own previewHtml directly
+      iframeInner = pmComp.previewHtmlRaw;
+    } else {
+      // Built-in component: swap placeholder images
+      iframeInner = decodeURIComponent(htmlEnc)
+        .replace(/PASTE_IMAGE_URL/g, IMG_PH)
+        .replace(/PASTE_PHOTO_URL/g, PHOTO_PH);
+    }
+
     document.getElementById(ID + '-pm-name').textContent       = name;
-    document.getElementById(ID + '-pm-desc').textContent       = desc;
+    document.getElementById(ID + '-pm-desc').textContent       = pmComp?.desc || '';
     document.getElementById(ID + '-pm-insert').dataset.html    = htmlEnc;
     document.getElementById(ID + '-pm-insert').dataset.type    = pmComp?.type || 'standalone';
     document.getElementById(ID + '-pm-copy').dataset.html      = htmlEnc;
     document.getElementById(ID + '-pm-frame').srcdoc = `<!DOCTYPE html><html><head>
       <link rel="stylesheet" href="https://academic-innovation.github.io/canvas-css/dist/canvas-style.css">
       <style>body{margin:0;padding:16px;}</style>
-    </head><body><div class="new-canvas">${inner}</div></body></html>`;
+    </head><body><div class="new-canvas">${iframeInner}</div></body></html>`;
     document.getElementById(ID + '-preview-modal').style.display = 'flex';
   });
 
