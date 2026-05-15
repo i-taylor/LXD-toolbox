@@ -1975,31 +1975,23 @@
   });
 
   // ── Pages tab — Insert and Copy HTML ──────────────────────────────────────
-  // page.sections is an array of component name strings (e.g. "Video Block")
-  // resolved at insert time against the COMPONENTS array.
-
-  function resolvePageSections(page) {
-    return (page.sections || []).map(name => {
-      const comp = COMPONENTS.find(c => c.name === name);
-      return comp ? { html: stripWrapper(comp.html), type: comp.type || 'standalone' } : null;
-    }).filter(Boolean);
-  }
+  // page.html is the raw full-page HTML string (the <div class="new-canvas">…</div> block).
 
   function insertPage(page) {
     const ed = getEditor();
     if (!ed) { showToast('Open a page editor first'); return; }
-    const sections = resolvePageSections(page);
-    if (!sections.length) { showToast('No valid components in this template'); return; }
-    sections.forEach(s => doInsert(ed, s.html, s.type));
+    if (!page.html) { showToast('No HTML in this template'); return; }
+    const body = ed.getBody();
+    const hasContent = body.textContent.trim().length > 0
+      || body.querySelector('.new-canvas, section');
+    if (hasContent && !confirm(`Replace the current page content with "${page.name}"?`)) return;
+    ed.undoManager.transact(() => ed.setContent(page.html));
     showToast(`"${page.name}" inserted ✓`);
   }
 
   function copyPageHTML(page) {
-    const sections = resolvePageSections(page);
-    if (!sections.length) { showToast('No valid components to copy'); return; }
-    const combined = sections.map(s => s.html).join('\n');
-    const full = `<div class="new-canvas">\n${combined}\n</div>`;
-    navigator.clipboard.writeText(full)
+    if (!page.html) { showToast('No HTML in this template'); return; }
+    navigator.clipboard.writeText(page.html)
       .then(() => showToast('Page HTML copied ✓'))
       .catch(() => showToast('Copy failed'));
   }
