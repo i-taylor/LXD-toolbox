@@ -353,77 +353,7 @@
   // together. 'sections' is an array of { html, type } objects so doInsert
   // handles each one with the correct merging / standalone rules.
   const PAGES = [
-    {
-      name: 'Course Introduction',
-      desc: 'Display header with welcome text, learning objectives callout, and navigation links.',
-      color: '#00274C',
-      sections: [
-        { type: 'standalone', html: `<div class="new-canvas">\n<section class="display-header">\n  <div class="heading">\n    <div>\n      <h2>Welcome to <strong>Course Title</strong></h2>\n      <img class="um-logo" role="presentation" src="https://courses.online.umich.edu/courses/284/files/9377/preview" alt="" width="71" height="75">\n    </div>\n    <div class="collage">\n      <div>&nbsp;</div>\n      <div><img src="PASTE_IMAGE_URL" alt="Describe the image"></div>\n    </div>\n  </div>\n  <div class="nav-links">\n    <ul>\n      <li><p><a href="PASTE_LINK_URL">Start Here</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Syllabus</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">See Modules</a></p></li>\n      <li><p><a href="PASTE_LINK_URL">Get Course Support</a></p></li>\n    </ul>\n  </div>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Welcome</h2>\n  <p>Write your welcome message here. Introduce yourself, the course, and what learners can expect.</p>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box">\n    <p class="tag">Learning Objectives</p>\n    <p>By the end of this course, you will be able to:</p>\n    <ul>\n      <li>Objective 1</li>\n      <li>Objective 2</li>\n      <li>Objective 3</li>\n    </ul>\n  </div>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>How This Course Works</h2>\n  <p>Describe the course structure, weekly rhythm, and what learners should do first.</p>\n</section>\n</div>` },
-      ]
-    },
-    {
-      name: 'Module Overview',
-      desc: 'Module header, overview paragraph, learning objectives, and estimated time callout.',
-      color: '#3B82F6',
-      sections: [
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Module #: Module Title</h2>\n  <p>Brief overview of what this module covers and why it matters to learners.</p>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box">\n    <p class="tag">Learning Objectives</p>\n    <p>By the end of this module, you will be able to:</p>\n    <ul>\n      <li>Objective 1</li>\n      <li>Objective 2</li>\n      <li>Objective 3</li>\n    </ul>\n  </div>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Estimated Time</p>\n    <p>This module takes approximately <strong>X hours</strong> to complete.</p>\n  </div>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>What You'll Need</h2>\n  <p>List any readings, tools, or materials learners should have ready before starting.</p>\n</section>\n</div>` },
-      ]
-    },
-    {
-      name: 'Lecture Page',
-      desc: 'Video block, key concepts text section, and a key takeaways callout.',
-      color: '#1a3a5c',
-      sections: [
-        { type: 'video', html: `<div class="new-canvas">\n<section class="text-block video-block">\n  <div class="video-tag-wrapper">\n    <p class="tag">Lecture</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of what this video covers.</p>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Key Concepts</h2>\n  <p>Expand on the main ideas from the video. Add context, definitions, or examples here.</p>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box highlight">\n    <p class="tag">Key Takeaways</p>\n    <ul>\n      <li>Takeaway 1</li>\n      <li>Takeaway 2</li>\n      <li>Takeaway 3</li>\n    </ul>\n  </div>\n</section>\n</div>` },
-      ]
-    },
-    {
-      name: 'Guest Lecture Page',
-      desc: 'Guest lecture video block, speaker bio section, and reflection prompt.',
-      color: '#FFCB05',
-      sections: [
-        { type: 'video', html: `<div class="new-canvas">\n<section class="text-block video-block highlight">\n  <div class="video-tag-wrapper">\n    <p class="tag">Guest Lecture</p>\n  </div>\n  <h2>Talk Title</h2>\n  <p>Brief description of the guest lecture and what learners will hear.</p>\n</section>\n</div>` },
-        { type: 'standalone', html: `<div class="new-canvas">\n<section>\n  <div class="instructor">\n    <div>\n      <img src="PASTE_PHOTO_URL" alt="Headshot of Guest Name">\n      <h2>Guest Name</h2>\n      <p><strong>Title, Organization</strong></p>\n    </div>\n    <div>\n      <p>Guest bio and relevant background goes here.</p>\n    </div>\n  </div>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Reflection</p>\n    <p>As you watch, consider: <strong>What stood out to you? How does this connect to the course themes?</strong></p>\n  </div>\n</section>\n</div>` },
-      ]
-    },
-    {
-      name: 'Assignment Page',
-      desc: 'Assignment block with overview, instructions, and a submission action callout.',
-      color: '#8B5CF6',
-      sections: [
-        { type: 'standalone', html: `<div class="new-canvas">\n<section class="text-block assignment">\n  <h2>Assignment Title</h2>\n  <h3>Overview</h3>\n  <p>Describe the assignment purpose and what learners will produce.</p>\n  <h3>Instructions</h3>\n  <ol>\n    <li>Step one of the assignment.</li>\n    <li>Step two of the assignment.</li>\n    <li>Step three of the assignment.</li>\n  </ol>\n  <h3>Evaluation Criteria</h3>\n  <p>Explain how the assignment will be graded or what success looks like.</p>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Submission</p>\n    <p>Submit your work via <a href="PASTE_LINK_URL">this link</a> by <strong>Date / Time</strong>.</p>\n  </div>\n</section>\n</div>` },
-      ]
-    },
-    {
-      name: 'Reading & Discussion Page',
-      desc: 'Reading prompt, key questions callout, and a discussion action block.',
-      color: '#10B981',
-      sections: [
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Reading: Title</h2>\n  <p>Introduce the reading — why it was chosen and what learners should focus on as they read.</p>\n  <p><a href="PASTE_LINK_URL">Access the reading here →</a></p>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box">\n    <p class="tag">Guiding Questions</p>\n    <ul>\n      <li>Question 1?</li>\n      <li>Question 2?</li>\n      <li>Question 3?</li>\n    </ul>\n  </div>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Discussion Prompt</p>\n    <p>Write your discussion prompt here. Specify where learners should post and any response requirements.</p>\n    <p><a href="PASTE_LINK_URL">Go to the discussion →</a></p>\n  </div>\n</section>\n</div>` },
-      ]
-    },
-    {
-      name: 'Meet Your Instructor',
-      desc: 'Welcome text, instructor bio panel, and an invitation to connect callout.',
-      color: '#F97316',
-      sections: [
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <h2>Meet Your Instructor</h2>\n  <p>We'd like to introduce you to the instructor leading this course.</p>\n</section>\n</div>` },
-        { type: 'standalone', html: `<div class="new-canvas">\n<section>\n  <div class="instructor">\n    <div>\n      <img src="PASTE_PHOTO_URL" alt="Headshot of Instructor Name">\n      <h2>Instructor Name</h2>\n      <p><strong>Title, Department</strong></p>\n    </div>\n    <div>\n      <p>Instructor bio goes here. Share research interests, teaching philosophy, and relevant experience.</p>\n    </div>\n  </div>\n</section>\n</div>` },
-        { type: 'text', html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="callout-box action">\n    <p class="tag">Connect</p>\n    <p>Have questions? Reach out during <a href="PASTE_LINK_URL">office hours</a> or post in the <a href="PASTE_LINK_URL">Q&amp;A discussion</a>.</p>\n  </div>\n</section>\n</div>` },
-      ]
-    },
+    // Add page templates here
   ];
 
   // ── Style guide data ───────────────────────────────────────────────────────
@@ -755,9 +685,20 @@
       border-radius: 3px;
       flex-shrink: 0;
     }
-    #${ID} .lxd-arrange-badge-text  { background: #e0e7ff; color: #3730a3; }
-    #${ID} .lxd-arrange-badge-video { background: #fef9c3; color: #854d0e; }
-    #${ID} .lxd-arrange-badge-other { background: #f3f4f6; color: #6b7280; }
+    #${ID} .lxd-arrange-badge-text          { background: #e0e7ff; color: #3730a3; }
+    #${ID} .lxd-arrange-badge-video         { background: #fef9c3; color: #854d0e; }
+    #${ID} .lxd-arrange-badge-other         { background: #f3f4f6; color: #6b7280; }
+    #${ID} .lxd-arrange-badge-callout-info  { background: #dbeafe; color: #1d4ed8; }
+    #${ID} .lxd-arrange-badge-callout-action{ background: #fef9c3; color: #854d0e; }
+    #${ID} .lxd-arrange-badge-callout-hl   { background: #1c1c1e; color: #FFCB05; }
+    #${ID} .lxd-arrange-badge-image         { background: #ffedd5; color: #c2410c; }
+    #${ID} .lxd-arrange-badge-table         { background: #e0f2fe; color: #0369a1; }
+    #${ID} .lxd-arrange-badge-quote         { background: #fdf4ff; color: #7e22ce; }
+    #${ID} .lxd-arrange-row--sub {
+      margin-left: 14px;
+      background: #fafaf9;
+      border-color: #ece9e2;
+    }
     #${ID} .lxd-arrange-label {
       flex: 1;
       min-width: 0;
@@ -1174,6 +1115,7 @@
   }
 
   function pageCards(list) {
+    if (!list.length) return `<div class="lxd-arrange-empty">No page templates yet.</div>`;
     return list.map((p, i) => `
       <div class="lxd-page-card">
         <div class="lxd-page-card-head">
@@ -1446,59 +1388,156 @@
     }
 
     listEl.innerHTML = '';
-    let dragSrc = null;
+    let dragSrc = null; // { el, moveEls, parentSection, isSection }
 
-    sections.forEach((section, idx) => {
-      const [type, label] = sectionLabel(section);
-      const badgeCls = type === 'video' ? 'video' : type === 'text' ? 'text' : 'other';
-      const badgeText = type === 'video' ? 'VIDEO' : type === 'text' ? 'TEXT' : 'BLOCK';
+    // ── Sub-element classifier ──────────────────────────────────────────────
+    const SUB_SELECTOR = ':scope > .callout-box, :scope > blockquote, :scope > .two-col, :scope > .img-caption, :scope > .table-container';
 
+    function subInfo(el) {
+      const cls = el.classList;
+      if (el.tagName === 'BLOCKQUOTE') return { badge: 'QUOTE',   badgeCls: 'quote',          label: 'Pull Quote' };
+      if (cls.contains('callout-box')) {
+        if (cls.contains('action'))    return { badge: 'CALLOUT', badgeCls: 'callout-action',  label: 'Action Callout' };
+        if (cls.contains('highlight')) return { badge: 'CALLOUT', badgeCls: 'callout-hl',      label: 'Highlight Callout' };
+        return                                { badge: 'CALLOUT', badgeCls: 'callout-info',    label: 'Info Callout' };
+      }
+      if (cls.contains('two-col')) {
+        const l = cls.contains('text-img') ? 'Two Col – Text / Image' : 'Two Col – Text / Text';
+        return { badge: 'LAYOUT', badgeCls: 'other', label: l };
+      }
+      if (cls.contains('img-caption'))    return { badge: 'IMAGE', badgeCls: 'image', label: 'Image' };
+      if (cls.contains('table-container'))return { badge: 'TABLE', badgeCls: 'table', label: 'Table' };
+      return { badge: 'BLOCK', badgeCls: 'other', label: 'Block' };
+    }
+
+    // ── Build flat item list ────────────────────────────────────────────────
+    // Each item: { el, moveEls[], parentSection, isSection, isSub, badge, badgeCls, label }
+    const items = [];
+
+    sections.forEach(section => {
+      if (isPlainTextBlock(section)) {
+        const namedEls = Array.from(section.querySelectorAll(SUB_SELECTOR));
+
+        if (!namedEls.length) {
+          // Plain text section with no sub-elements — single row
+          const [, label] = sectionLabel(section);
+          items.push({ el: section, moveEls: [section], parentSection: wrapper,
+            isSection: true, isSub: false, badge: 'TEXT', badgeCls: 'text', label });
+        } else {
+          // Walk direct children in DOM order, grouping adjacent text nodes
+          const children = Array.from(section.children);
+          let textGroup = [];
+
+          const flushTextGroup = () => {
+            if (!textGroup.length) return;
+            const h = textGroup.find(e => e.matches('h2,h3,h4'));
+            const label = h ? h.textContent.trim().slice(0, 30) : 'Text Content';
+            items.push({ el: textGroup[0], moveEls: [...textGroup], parentSection: section,
+              isSection: false, isSub: true, badge: 'TEXT', badgeCls: 'text', label });
+            textGroup = [];
+          };
+
+          children.forEach(child => {
+            if (child.matches('.callout-box, blockquote, .two-col, .img-caption, .table-container')) {
+              flushTextGroup();
+              const info = subInfo(child);
+              items.push({ el: child, moveEls: [child], parentSection: section,
+                isSection: false, isSub: true, ...info });
+            } else {
+              textGroup.push(child);
+            }
+          });
+          flushTextGroup();
+        }
+      } else {
+        // Standalone section (video, accordion, etc.)
+        const [type, label] = sectionLabel(section);
+        const badgeCls = type === 'video' ? 'video' : 'other';
+        const badge    = type === 'video' ? 'VIDEO' : 'BLOCK';
+        items.push({ el: section, moveEls: [section], parentSection: wrapper,
+          isSection: true, isSub: false, badge, badgeCls, label });
+      }
+    });
+
+    // ── Render rows ─────────────────────────────────────────────────────────
+    items.forEach(item => {
       const row = document.createElement('div');
-      row.className = 'lxd-arrange-row';
+      row.className = 'lxd-arrange-row' + (item.isSub ? ' lxd-arrange-row--sub' : '');
       row.draggable = true;
-      row.dataset.idx = idx;
       row.innerHTML = `
         <span class="lxd-arrange-handle">⠿</span>
-        <span class="lxd-arrange-badge lxd-arrange-badge-${badgeCls}">${badgeText}</span>
-        <span class="lxd-arrange-label" title="${label.replace(/"/g, '&quot;')}">${label}</span>
-        <button class="lxd-arrange-del" title="Delete section">🗑</button>
+        <span class="lxd-arrange-badge lxd-arrange-badge-${item.badgeCls}">${item.badge}</span>
+        <span class="lxd-arrange-label" title="${item.label.replace(/"/g, '&quot;')}">${item.label}</span>
+        ${item.isSection ? `<button class="lxd-arrange-del" title="Delete section">🗑</button>` : ''}
       `;
 
-      // ── Drag events ──
       row.addEventListener('dragstart', e => {
-        dragSrc = section;
+        dragSrc = item;
         row.classList.add('dragging');
         e.dataTransfer.effectAllowed = 'move';
       });
       row.addEventListener('dragend', () => {
+        dragSrc = null;
         row.classList.remove('dragging');
         listEl.querySelectorAll('.lxd-arrange-row').forEach(r => r.classList.remove('drag-over'));
       });
       row.addEventListener('dragover', e => {
         e.preventDefault();
-        e.dataTransfer.dropEffect = 'move';
+        if (!dragSrc || dragSrc.el === item.el) return;
         listEl.querySelectorAll('.lxd-arrange-row').forEach(r => r.classList.remove('drag-over'));
-        if (dragSrc !== section) row.classList.add('drag-over');
+        row.classList.add('drag-over');
       });
       row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
       row.addEventListener('drop', e => {
         e.preventDefault();
         row.classList.remove('drag-over');
-        if (!dragSrc || dragSrc === section) return;
-        // Move dragSrc immediately before the drop target in the editor DOM
-        ed.undoManager.transact(() => {
-          section.insertAdjacentElement('beforebegin', dragSrc);
-          ensurePlaceholder(ed); // keep placeholder at bottom
-        });
-        buildArrangePanel(); // redraw
-      });
+        if (!dragSrc || dragSrc.el === item.el) return;
 
-      // ── Delete button ──
-      row.querySelector('.lxd-arrange-del').addEventListener('click', () => {
-        if (!confirm(`Delete "${label}"? This cannot be undone.`)) return;
-        ed.undoManager.transact(() => section.remove());
+        const src = dragSrc;
+        const tgt = item;
+
+        ed.undoManager.transact(() => {
+          if (src.isSection && tgt.isSection) {
+            // Section → Section
+            tgt.el.insertAdjacentElement('beforebegin', src.el);
+
+          } else if (!src.isSection && !tgt.isSection) {
+            // Sub-element → Sub-element (may cross sections)
+            src.moveEls.forEach(el => tgt.el.insertAdjacentElement('beforebegin', el));
+            // Remove source parent section if it became empty
+            if (src.parentSection !== wrapper && !src.parentSection.children.length) {
+              src.parentSection.remove();
+            }
+
+          } else if (src.isSection && !tgt.isSection) {
+            // Section dragged onto a sub-element → insert section before sub's parent section
+            tgt.parentSection.insertAdjacentElement('beforebegin', src.el);
+
+          } else {
+            // Sub-element dragged onto a standalone section → move into that section's start
+            const firstChild = tgt.el.firstElementChild;
+            if (firstChild) {
+              src.moveEls.forEach(el => firstChild.insertAdjacentElement('beforebegin', el));
+            } else {
+              src.moveEls.forEach(el => tgt.el.appendChild(el));
+            }
+            if (src.parentSection !== wrapper && !src.parentSection.children.length) {
+              src.parentSection.remove();
+            }
+          }
+          ensurePlaceholder(ed);
+        });
+
         buildArrangePanel();
       });
+
+      if (item.isSection) {
+        row.querySelector('.lxd-arrange-del').addEventListener('click', () => {
+          if (!confirm(`Delete "${item.label}"? This cannot be undone.`)) return;
+          ed.undoManager.transact(() => item.el.remove());
+          buildArrangePanel();
+        });
+      }
 
       listEl.appendChild(row);
     });
