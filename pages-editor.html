@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LXD Page Template Editor</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f3f2ef;
+      color: #1c1c1e;
+      min-height: 100vh;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      background: #00274C;
+      color: white;
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar h1 { font-size: .95rem; font-weight: 700; margin: 0; }
+    .topbar .badge {
+      background: #FFCB05;
+      color: #1c1c1e;
+      font-size: .65rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: .4px;
+    }
+    .topbar .spacer { flex: 1; }
+    .topbar a {
+      color: rgba(255,255,255,.6);
+      font-size: .78rem;
+      text-decoration: none;
+    }
+    .topbar a:hover { color: white; }
+
+    /* ── Layout ── */
+    .app {
+      display: grid;
+      grid-template-columns: 280px 1fr 380px;
+      gap: 0;
+      height: calc(100vh - 52px);
+    }
+
+    /* ── Panel shared ── */
+    .panel {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #e4e2dc;
+      background: white;
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid #e4e2dc;
+      flex-shrink: 0;
+    }
+    .panel-head h2 {
+      margin: 0 0 2px;
+      font-size: .82rem;
+      font-weight: 700;
+      color: #1c1c1e;
+    }
+    .panel-head p {
+      margin: 0;
+      font-size: .72rem;
+      color: #aaa;
+    }
+    .panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    /* ── Component list (left) ── */
+    .cat-label {
+      font-size: .62rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      color: #bbb;
+      padding: 10px 6px 4px;
+    }
+    .comp-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    .comp-row:hover { background: #f5f4f0; }
+    .comp-row:active { background: #eceae4; }
+    .comp-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .comp-name { font-size: .78rem; font-weight: 600; flex: 1; }
+    .comp-cat  { font-size: .65rem; color: #bbb; }
+    .add-icon  { font-size: 16px; color: #ccc; line-height: 1; }
+    .comp-row:hover .add-icon { color: #00274C; }
+
+    /* ── Builder (middle) ── */
+    .builder-panel { border-right: 1px solid #e4e2dc; background: #faf9f7; }
+    .builder-form {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border-bottom: 1px solid #e4e2dc;
+      flex-shrink: 0;
+    }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label {
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #aaa;
+    }
+    .field input[type=text],
+    .field textarea {
+      padding: 6px 10px;
+      border: 1px solid #e4e2dc;
+      border-radius: 7px;
+      font-size: .82rem;
+      background: white;
+      color: #1c1c1e;
+      outline: none;
+      font-family: inherit;
+      transition: border-color .15s;
+    }
+    .field input[type=text]:focus,
+    .field textarea:focus { border-color: #00274C; }
+    .field textarea { min-height: 56px; resize: vertical; }
+    .color-row { flex-direction: row; align-items: center; gap: 10px; }
+    .color-row input[type=color] {
+      width: 36px; height: 32px; border: 1px solid #e4e2dc;
+      border-radius: 6px; padding: 2px; cursor: pointer; background: white;
+    }
+    .color-hex {
+      font-size: .78rem;
+      color: #888;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* ── Section list ── */
+    .sec-list-head {
+      padding: 10px 16px 6px;
+      font-size: .68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+    .sec-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 10px 10px;
+    }
+    .sec-empty {
+      margin: 16px 6px;
+      padding: 24px;
+      border: 2px dashed #e4e2dc;
+      border-radius: 10px;
+      text-align: center;
+      color: #ccc;
+      font-size: .78rem;
+      line-height: 1.5;
+    }
+    .sec-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 9px;
+      background: white;
+      border: 1px solid #e4e2dc;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      transition: border-color .12s, box-shadow .12s;
+    }
+    .sec-item:hover { border-color: #bbb; }
+    .sec-handle { color: #ccc; font-size: 14px; cursor: grab; flex-shrink: 0; }
+    .sec-num { color: #ccc; font-size: .7rem; font-weight: 700; width: 16px; flex-shrink: 0; }
+    .sec-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .sec-label { flex: 1; font-size: .78rem; font-weight: 600; min-width: 0;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sec-cat { font-size: .65rem; color: #bbb; flex-shrink: 0; }
+    .sec-btn {
+      background: none; border: none; font-size: 13px; color: #ccc;
+      cursor: pointer; padding: 0 2px; line-height: 1; flex-shrink: 0;
+    }
+    .sec-btn:hover { color: #444; }
+    .sec-btn.del:hover { color: #e53e3e; }
+    .sec-item.drag-over { border-color: #00274C; box-shadow: 0 0 0 2px rgba(0,39,76,.15); }
+    .sec-item.dragging  { opacity: .4; }
+
+    /* ── JSON output (right) ── */
+    .json-panel { background: #1c1c1e; color: #e5e7eb; border-right: none; }
+    .json-panel .panel-head { background: #1c1c1e; border-bottom-color: #333; }
+    .json-panel .panel-head h2 { color: #e5e7eb; }
+    .json-panel .panel-head p  { color: #666; }
+    .json-panel .panel-body    { padding: 0; }
+    #json-out {
+      width: 100%;
+      height: 100%;
+      padding: 14px 16px;
+      background: transparent;
+      color: #a5f3fc;
+      font-family: 'SF Mono', 'Fira Code', 'Menlo', monospace;
+      font-size: .72rem;
+      line-height: 1.7;
+      border: none;
+      outline: none;
+      resize: none;
+      white-space: pre;
+    }
+
+    /* ── Action bar ── */
+    .actions {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      border-top: 1px solid #333;
+      flex-shrink: 0;
+      background: #1c1c1e;
+    }
+    .btn {
+      flex: 1;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s, opacity .15s;
+    }
+    .btn-primary { background: #FFCB05; color: #1c1c1e; }
+    .btn-primary:hover { background: #f0c000; }
+    .btn-secondary { background: #333; color: #e5e7eb; }
+    .btn-secondary:hover { background: #444; }
+    .btn:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ── Instructions ── */
+    .instructions {
+      padding: 14px 16px;
+      border-top: 1px solid #333;
+      flex-shrink: 0;
+      background: #1c1c1e;
+    }
+    .instructions h3 {
+      margin: 0 0 8px;
+      font-size: .7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #555;
+    }
+    .step {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 7px;
+      font-size: .72rem;
+      color: #888;
+      line-height: 1.4;
+    }
+    .step-num {
+      width: 18px; height: 18px;
+      background: #333;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .65rem; font-weight: 700; color: #aaa;
+      flex-shrink: 0;
+    }
+    .step code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      background: #2a2a2a;
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #a5f3fc;
+    }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #1c1c1e; color: white;
+      font-size: .8rem; padding: 8px 18px; border-radius: 20px;
+      opacity: 0; transition: opacity .25s; pointer-events: none;
+      z-index: 9999;
+    }
+    #toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🛠 LXD Template Editor</h1>
+  <span class="badge">pages.json</span>
+  <span class="spacer"></span>
+  <a href="preview.html" target="_blank">Open Preview →</a>
+</div>
+
+<div class="app">
+
+  <!-- ── Left: Component picker ── -->
+  <div class="panel">
+    <div class="panel-head">
+      <h2>Components</h2>
+      <p>Click to add to your template</p>
+    </div>
+    <div class="panel-body" id="comp-list"></div>
+  </div>
+
+  <!-- ── Middle: Template builder ── -->
+  <div class="panel builder-panel">
+    <div class="builder-form">
+      <div class="field">
+        <label>Template name</label>
+        <input type="text" id="tmpl-name" placeholder="e.g. Standard Lecture Page">
+      </div>
+      <div class="field">
+        <label>Description</label>
+        <textarea id="tmpl-desc" placeholder="Brief description of when to use this template…"></textarea>
+      </div>
+      <div class="field color-row">
+        <label>Color</label>
+        <input type="color" id="tmpl-color" value="#00274C">
+        <span class="color-hex" id="color-hex">#00274C</span>
+      </div>
+    </div>
+
+    <div class="sec-list-head">Sections <span id="sec-count" style="color:#ccc;font-weight:400">(0)</span></div>
+    <div class="sec-list" id="sec-list">
+      <div class="sec-empty" id="sec-empty">
+        Click a component on the left<br>to add it to this template
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right: JSON output ── -->
+  <div class="panel json-panel">
+    <div class="panel-head">
+      <h2>pages.json output</h2>
+      <p>Copy this and replace the file in your repo</p>
+    </div>
+    <div class="panel-body">
+      <textarea id="json-out" readonly spellcheck="false">[]</textarea>
+    </div>
+    <div class="actions">
+      <button class="btn btn-primary" id="btn-add-tmpl">＋ Add to JSON</button>
+      <button class="btn btn-secondary" id="btn-copy-json">Copy JSON</button>
+    </div>
+    <div class="actions" style="padding-top:0;gap:8px">
+      <button class="btn btn-secondary" id="btn-reset">Clear All</button>
+      <button class="btn btn-secondary" id="btn-new-tmpl">New Template</button>
+    </div>
+    <div class="instructions">
+      <h3>How to publish</h3>
+      <div class="step">
+        <span class="step-num">1</span>
+        <span>Build your template, click <strong style="color:#FFCB05">＋ Add to JSON</strong>. Repeat for each template.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <span>Click <strong>Copy JSON</strong>, then open <code>pages.json</code> in your repo.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <span>Paste the JSON, commit and push. The sidebar fetches it live.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+  // ── Component data (mirrors sidebar.js COMPONENTS) ────────────────────────
+  const COMPONENTS = [
+    { name: 'Text Block',                cat: 'Text',     color: '#00274C' },
+    { name: 'Text Block (Assignment)',   cat: 'Text',     color: '#00274C' },
+    { name: 'Graphical Highlight',       cat: 'Text',     color: '#8B5CF6' },
+    { name: 'Gamut Intro (Gallery)',     cat: 'Text',     color: '#10B981' },
+    { name: 'Gamut Intro (Workbook)',    cat: 'Text',     color: '#10B981' },
+    { name: 'Callout Box',              cat: 'Callouts', color: '#3B82F6' },
+    { name: 'Callout Box (Action)',      cat: 'Callouts', color: '#FFCB05' },
+    { name: 'Callout Box (Highlight)',   cat: 'Callouts', color: '#00274C' },
+    { name: 'Pull Quote',               cat: 'Callouts', color: '#FFCB05' },
+    { name: 'Side-by-Side Callout',     cat: 'Callouts', color: '#6B7280' },
+    { name: 'Video Block',              cat: 'Video',    color: '#00274C' },
+    { name: 'Video Block (Guest Lecture)', cat: 'Video', color: '#1a3a5c' },
+    { name: 'Video Block (Blue)',        cat: 'Video',    color: '#3B82F6' },
+    { name: 'Course Display Header',     cat: 'Layout',   color: '#00274C' },
+    { name: 'Course Display Header (Series)', cat: 'Layout', color: '#00274C' },
+    { name: 'Course Header (Series)',    cat: 'Layout',   color: '#1a3a5c' },
+    { name: 'Accordion',                cat: 'Layout',   color: '#6B7280' },
+    { name: 'Two-Col (Text / Text)',     cat: 'Layout',   color: '#8B5CF6' },
+    { name: 'Two-Col (Text / Text Light Blue)', cat: 'Layout', color: '#8B5CF6' },
+    { name: 'Two-Col (Text / Image)',    cat: 'Layout',   color: '#8B5CF6' },
+    { name: 'Two-Col (Text / Image Dark)', cat: 'Layout', color: '#8B5CF6' },
+    { name: 'Two-Col (Text / Image Highlight)', cat: 'Layout', color: '#8B5CF6' },
+    { name: 'Instructor Panel (Blue)',   cat: 'Layout',   color: '#00274C' },
+    { name: 'Instructor Panel (Maize)',  cat: 'Layout',   color: '#FFCB05' },
+    { name: 'Image (Sharp Corners)',     cat: 'Media',    color: '#10B981' },
+    { name: 'Image (Rounded Corners)',   cat: 'Media',    color: '#10B981' },
+    { name: 'Table',                    cat: 'Tables',   color: '#F59E0B' },
+    { name: 'Table (Alternate Rows)',    cat: 'Tables',   color: '#F59E0B' },
+    { name: 'Table (Alternate Columns)', cat: 'Tables',  color: '#F59E0B' },
+  ];
+
+  // ── State ─────────────────────────────────────────────────────────────────
+  let sections = [];      // array of component names for current template
+  let allTemplates = [];  // built-up list of templates ready to export
+  let dragSrc = null;
+
+  // ── Toast ─────────────────────────────────────────────────────────────────
+  const toastEl = document.getElementById('toast');
+  function showToast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastEl._t);
+    toastEl._t = setTimeout(() => toastEl.classList.remove('show'), 2200);
+  }
+
+  // ── Render component list ─────────────────────────────────────────────────
+  function renderCompList() {
+    const el = document.getElementById('comp-list');
+    const cats = [...new Set(COMPONENTS.map(c => c.cat))];
+    el.innerHTML = cats.map(cat => {
+      const comps = COMPONENTS.filter(c => c.cat === cat);
+      return `<div class="cat-label">${cat}</div>` +
+        comps.map(c => `
+          <div class="comp-row" data-name="${c.name}">
+            <span class="comp-dot" style="background:${c.color}"></span>
+            <span class="comp-name">${c.name}</span>
+            <span class="add-icon">＋</span>
+          </div>`).join('');
+    }).join('');
+
+    el.querySelectorAll('.comp-row').forEach(row => {
+      row.addEventListener('click', () => addSection(row.dataset.name));
+    });
+  }
+
+  // ── Section management ────────────────────────────────────────────────────
+  function addSection(name) {
+    sections.push(name);
+    renderSections();
+  }
+
+  function removeSection(idx) {
+    sections.splice(idx, 1);
+    renderSections();
+  }
+
+  function moveSection(from, to) {
+    const item = sections.splice(from, 1)[0];
+    sections.splice(to, 0, item);
+    renderSections();
+  }
+
+  function renderSections() {
+    const list = document.getElementById('sec-list');
+    const count = document.getElementById('sec-count');
+    count.textContent = `(${sections.length})`;
+
+    if (!sections.length) {
+      list.innerHTML = `<div class="sec-empty" id="sec-empty">
+        Click a component on the left<br>to add it to this template
+      </div>`;
+      updateJSON();
+      return;
+    }
+
+    list.innerHTML = sections.map((name, i) => {
+      const comp = COMPONENTS.find(c => c.name === name);
+      const color = comp ? comp.color : '#888';
+      const cat   = comp ? comp.cat   : '';
+      return `<div class="sec-item" draggable="true" data-idx="${i}">
+        <span class="sec-handle">⠿</span>
+        <span class="sec-num">${i + 1}</span>
+        <span class="sec-dot" style="background:${color}"></span>
+        <span class="sec-label" title="${name}">${name}</span>
+        <span class="sec-cat">${cat}</span>
+        <button class="sec-btn" data-move="-1" data-idx="${i}" title="Move up">↑</button>
+        <button class="sec-btn" data-move="1"  data-idx="${i}" title="Move down">↓</button>
+        <button class="sec-btn del" data-del="${i}" title="Remove">✕</button>
+      </div>`;
+    }).join('');
+
+    // Move up/down buttons
+    list.querySelectorAll('[data-move]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = +btn.dataset.idx;
+        const d = +btn.dataset.move;
+        const j = i + d;
+        if (j < 0 || j >= sections.length) return;
+        moveSection(i, j);
+      });
+    });
+
+    // Delete buttons
+    list.querySelectorAll('[data-del]').forEach(btn => {
+      btn.addEventListener('click', () => removeSection(+btn.dataset.del));
+    });
+
+    // Drag to reorder
+    list.querySelectorAll('.sec-item').forEach(row => {
+      row.addEventListener('dragstart', e => {
+        dragSrc = +row.dataset.idx;
+        row.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      row.addEventListener('dragend', () => {
+        dragSrc = null;
+        row.classList.remove('dragging');
+        list.querySelectorAll('.sec-item').forEach(r => r.classList.remove('drag-over'));
+      });
+      row.addEventListener('dragover', e => {
+        e.preventDefault();
+        const tgt = +row.dataset.idx;
+        if (dragSrc === null || dragSrc === tgt) return;
+        list.querySelectorAll('.sec-item').forEach(r => r.classList.remove('drag-over'));
+        row.classList.add('drag-over');
+      });
+      row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
+      row.addEventListener('drop', e => {
+        e.preventDefault();
+        const tgt = +row.dataset.idx;
+        row.classList.remove('drag-over');
+        if (dragSrc === null || dragSrc === tgt) return;
+        moveSection(dragSrc, tgt);
+      });
+    });
+
+    updateJSON();
+  }
+
+  // ── JSON output ───────────────────────────────────────────────────────────
+  function updateJSON() {
+    document.getElementById('json-out').value =
+      JSON.stringify(allTemplates, null, 2);
+  }
+
+  function currentTemplate() {
+    const name  = document.getElementById('tmpl-name').value.trim();
+    const desc  = document.getElementById('tmpl-desc').value.trim();
+    const color = document.getElementById('tmpl-color').value;
+    return { name, desc, color, sections: [...sections] };
+  }
+
+  document.getElementById('btn-add-tmpl').addEventListener('click', () => {
+    const t = currentTemplate();
+    if (!t.name) { showToast('Give the template a name first'); return; }
+    if (!t.sections.length) { showToast('Add at least one component'); return; }
+    allTemplates.push(t);
+    updateJSON();
+    showToast(`"${t.name}" added ✓`);
+    // Reset builder for next template
+    resetBuilder();
+  });
+
+  document.getElementById('btn-new-tmpl').addEventListener('click', resetBuilder);
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    if (!allTemplates.length || confirm('Clear all templates from the JSON?')) {
+      allTemplates = [];
+      updateJSON();
+      resetBuilder();
+      showToast('Cleared');
+    }
+  });
+
+  function resetBuilder() {
+    document.getElementById('tmpl-name').value = '';
+    document.getElementById('tmpl-desc').value = '';
+    document.getElementById('tmpl-color').value = '#00274C';
+    document.getElementById('color-hex').textContent = '#00274C';
+    sections = [];
+    renderSections();
+  }
+
+  // Color hex display
+  document.getElementById('tmpl-color').addEventListener('input', function () {
+    document.getElementById('color-hex').textContent = this.value;
+    updateJSON();
+  });
+
+  // Live JSON update as user types
+  ['tmpl-name', 'tmpl-desc'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateJSON);
+  });
+
+  document.getElementById('btn-copy-json').addEventListener('click', () => {
+    const json = document.getElementById('json-out').value;
+    navigator.clipboard.writeText(json)
+      .then(() => showToast('JSON copied ✓'))
+      .catch(() => showToast('Copy failed — select the text and copy manually'));
+  });
+
+  // ── Allow editing the JSON directly ──────────────────────────────────────
+  document.getElementById('json-out').addEventListener('dblclick', function () {
+    this.readOnly = false;
+    this.style.color = '#fde68a';
+    showToast('Editing mode — paste or modify JSON directly');
+  });
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  renderCompList();
+  renderSections();
+</script>
+</body>
+</html>

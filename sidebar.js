@@ -801,6 +801,21 @@
     }
     #${ID} .lxd-page-desc { font-size: .73rem; color: #888; line-height: 1.3; margin-bottom: 10px; }
     #${ID} .lxd-page-actions { display: flex; gap: 6px; }
+    #${ID} .lxd-page-del {
+      background: none; border: none; color: #ccc; font-size: 13px;
+      cursor: pointer; padding: 0 2px; line-height: 1; flex-shrink: 0;
+    }
+    #${ID} .lxd-page-del:hover { color: #e53e3e; }
+    /* ── Pages edit link ── */
+    #${ID} .lxd-pages-edit-link {
+      display: block;
+      text-align: center;
+      font-size: .7rem;
+      color: #aaa;
+      padding: 10px 0 4px;
+      text-decoration: none;
+    }
+    #${ID} .lxd-pages-edit-link:hover { color: #00274C; }
 
     #${ID} .lxd-sg-label {
       font-size: .68rem;
@@ -1114,21 +1129,60 @@
     }).join('');
   }
 
-  function pageCards(list) {
-    if (!list.length) return `<div class="lxd-arrange-empty">No page templates yet.</div>`;
-    return list.map((p, i) => `
-      <div class="lxd-page-card">
-        <div class="lxd-page-card-head">
-          <div class="lxd-page-dot" style="background:${p.color}"></div>
-          <span class="lxd-page-name">${p.name}</span>
-          <span class="lxd-page-sections">${p.sections.length} section${p.sections.length !== 1 ? 's' : ''}</span>
-        </div>
-        <div class="lxd-page-desc">${p.desc}</div>
-        <div class="lxd-page-actions">
-          <button class="lxd-btn-insert" data-page-idx="${i}">Insert</button>
-          <button class="lxd-btn-copy"   data-page-idx="${i}">Copy HTML</button>
-        </div>
-      </div>`).join('');
+  // ── Pages panel — fetch templates from pages.json ─────────────────────────
+  // In local dev (localhost) fall back to same-origin so preview.html works.
+  const _isLocal = /^localhost|^127\./.test(window.location.hostname);
+  const PAGES_JSON_URL   = _isLocal
+    ? window.location.origin + '/pages.json'
+    : 'https://i-taylor.github.io/LXD-toolbox/pages.json';
+  const PAGES_EDITOR_URL = _isLocal
+    ? window.location.origin + '/pages-editor.html'
+    : 'https://i-taylor.github.io/LXD-toolbox/pages-editor.html';
+
+  function renderPagesPanel() {
+    const list = document.getElementById(ID + '-pages-list');
+    if (!list) return;
+    list.innerHTML = '<div class="lxd-arrange-empty">Loading templates…</div>';
+
+    fetch(PAGES_JSON_URL + '?_=' + Date.now())
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(pages => {
+        list._lxd_pages = pages;
+        if (!pages.length) {
+          list.innerHTML = `
+            <div class="lxd-arrange-empty">
+              No page templates yet.<br><br>
+              <a href="${PAGES_EDITOR_URL}" target="_blank"
+                 style="color:#00274C;font-weight:700;text-decoration:none">
+                Open Template Editor →
+              </a>
+            </div>`;
+          return;
+        }
+        const editLink = `<a class="lxd-pages-edit-link" href="${PAGES_EDITOR_URL}" target="_blank">Edit templates →</a>`;
+        list.innerHTML = pages.map((p, i) => {
+          const n = p.sections.length;
+          return `<div class="lxd-page-card">
+            <div class="lxd-page-card-head">
+              <div class="lxd-page-dot" style="background:${p.color || '#00274C'}"></div>
+              <span class="lxd-page-name">${p.name}</span>
+              <span class="lxd-page-sections">${n} section${n !== 1 ? 's' : ''}</span>
+            </div>
+            <div class="lxd-page-desc">${p.desc || ''}</div>
+            <div class="lxd-page-actions">
+              <button class="lxd-btn-insert" data-page-idx="${i}">Insert</button>
+              <button class="lxd-btn-copy"   data-page-idx="${i}">Copy HTML</button>
+            </div>
+          </div>`;
+        }).join('') + editLink;
+      })
+      .catch(() => {
+        list.innerHTML = `
+          <div class="lxd-arrange-empty">
+            Could not load templates.<br>
+            <small style="color:#bbb">Check your connection or try again.</small>
+          </div>`;
+      });
   }
 
   const sidebar = document.createElement('div');
@@ -1180,7 +1234,7 @@
     </div>
 
     <div class="lxd-panel" id="${ID}-panel-pages">
-      ${pageCards(PAGES)}
+      <div id="${ID}-pages-list"></div>
     </div>
 
     <div class="lxd-panel" id="${ID}-panel-styleguide">
@@ -1856,6 +1910,7 @@
         if (ed) ensurePlaceholder(ed);
         buildArrangePanel();
       }
+      if (isPages) renderPagesPanel();
     });
   });
 
@@ -1919,22 +1974,29 @@
   });
 
   // ── Pages tab — Insert and Copy HTML ──────────────────────────────────────
+  // page.sections is an array of component name strings (e.g. "Video Block")
+  // resolved at insert time against the COMPONENTS array.
+
+  function resolvePageSections(page) {
+    return (page.sections || []).map(name => {
+      const comp = COMPONENTS.find(c => c.name === name);
+      return comp ? { html: stripWrapper(comp.html), type: comp.type || 'standalone' } : null;
+    }).filter(Boolean);
+  }
+
   function insertPage(page) {
     const ed = getEditor();
     if (!ed) { showToast('Open a page editor first'); return; }
-    // Insert each section in sequence using the same smart-insert rules
-    page.sections.forEach(s => doInsert(ed, s.html, s.type));
+    const sections = resolvePageSections(page);
+    if (!sections.length) { showToast('No valid components in this template'); return; }
+    sections.forEach(s => doInsert(ed, s.html, s.type));
     showToast(`"${page.name}" inserted ✓`);
   }
 
   function copyPageHTML(page) {
-    const combined = page.sections.map(s => {
-      // Strip the outer <div class="new-canvas"> wrapper from each section
-      return s.html
-        .replace(/^<div class="new-canvas">\n?/, '')
-        .replace(/\n?<\/div>$/, '')
-        .trim();
-    }).join('\n');
+    const sections = resolvePageSections(page);
+    if (!sections.length) { showToast('No valid components to copy'); return; }
+    const combined = sections.map(s => s.html).join('\n');
     const full = `<div class="new-canvas">\n${combined}\n</div>`;
     navigator.clipboard.writeText(full)
       .then(() => showToast('Page HTML copied ✓'))
@@ -1944,7 +2006,8 @@
   document.getElementById(ID + '-panel-pages').addEventListener('click', e => {
     const btn = e.target.closest('.lxd-btn-insert, .lxd-btn-copy');
     if (!btn || btn.dataset.pageIdx === undefined) return;
-    const page = PAGES[+btn.dataset.pageIdx];
+    const pages = document.getElementById(ID + '-pages-list')._lxd_pages || [];
+    const page = pages[+btn.dataset.pageIdx];
     if (!page) return;
     if (btn.classList.contains('lxd-btn-insert')) insertPage(page);
     else copyPageHTML(page);
