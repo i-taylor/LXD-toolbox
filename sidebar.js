@@ -1160,21 +1160,17 @@
           return;
         }
         const editLink = `<a class="lxd-pages-edit-link" href="${PAGES_EDITOR_URL}" target="_blank">Edit templates →</a>`;
-        list.innerHTML = pages.map((p, i) => {
-          const n = p.sections.length;
-          return `<div class="lxd-page-card">
+        list.innerHTML = pages.map((p, i) => `<div class="lxd-page-card">
             <div class="lxd-page-card-head">
               <div class="lxd-page-dot" style="background:${p.color || '#00274C'}"></div>
               <span class="lxd-page-name">${p.name}</span>
-              <span class="lxd-page-sections">${n} section${n !== 1 ? 's' : ''}</span>
             </div>
-            <div class="lxd-page-desc">${p.desc || ''}</div>
+            ${p.desc ? `<div class="lxd-page-desc">${p.desc}</div>` : ''}
             <div class="lxd-page-actions">
               <button class="lxd-btn-insert" data-page-idx="${i}">Insert</button>
               <button class="lxd-btn-copy"   data-page-idx="${i}">Copy HTML</button>
             </div>
-          </div>`;
-        }).join('') + editLink;
+          </div>`).join('') + editLink;
       })
       .catch(() => {
         list.innerHTML = `
