@@ -527,7 +527,7 @@
       border-bottom: 2px solid transparent;
       font-size: .75rem;
       font-weight: 600;
-      color: #999;
+      color: #646464;
       cursor: pointer;
       transition: color .15s, border-color .15s;
       letter-spacing: .2px;
@@ -555,7 +555,7 @@
     #${ID} .lxd-cat-tile-accent { height: 4px; background: var(--accent); }
     #${ID} .lxd-cat-tile-body { padding: 10px 10px 9px; }
     #${ID} .lxd-cat-tile-name { font-weight: 700; font-size: .85rem; margin-bottom: 3px; color: #1c1c1e; }
-    #${ID} .lxd-cat-tile-count { font-size: .7rem; color: #aaa; }
+    #${ID} .lxd-cat-tile-count { font-size: .7rem; color: #767676; }
 
     /* ── Browse header ── */
     #${ID} .lxd-browse-head {
@@ -571,7 +571,7 @@
       border: none;
       font-size: .75rem;
       font-weight: 600;
-      color: #888;
+      color: #595959;
       cursor: pointer;
       padding: 2px 6px 2px 2px;
       border-radius: 5px;
@@ -645,7 +645,7 @@
     #${ID} .lxd-arrange-empty {
       padding: 32px 16px;
       text-align: center;
-      color: #aaa;
+      color: #767676;
       font-size: .8rem;
     }
     #${ID} .lxd-arrange-list {
@@ -670,7 +670,7 @@
     #${ID} .lxd-arrange-row.drag-over { border-color: #00274C; box-shadow: 0 0 0 2px rgba(0,39,76,.18); }
     #${ID} .lxd-arrange-row.dragging { opacity: .4; }
     #${ID} .lxd-arrange-handle {
-      color: #ccc;
+      color: #767676;
       font-size: 14px;
       line-height: 1;
       cursor: grab;
@@ -687,7 +687,7 @@
     }
     #${ID} .lxd-arrange-badge-text          { background: #e0e7ff; color: #3730a3; }
     #${ID} .lxd-arrange-badge-video         { background: #fef9c3; color: #854d0e; }
-    #${ID} .lxd-arrange-badge-other         { background: #f3f4f6; color: #6b7280; }
+    #${ID} .lxd-arrange-badge-other         { background: #f3f4f6; color: #4b5563; }
     #${ID} .lxd-arrange-badge-callout-info  { background: #dbeafe; color: #1d4ed8; }
     #${ID} .lxd-arrange-badge-callout-action{ background: #fef9c3; color: #854d0e; }
     #${ID} .lxd-arrange-badge-callout-hl   { background: #1c1c1e; color: #FFCB05; }
@@ -711,7 +711,7 @@
     #${ID} .lxd-arrange-del {
       background: none;
       border: none;
-      color: #ccc;
+      color: #767676;
       font-size: 13px;
       cursor: pointer;
       padding: 0 2px;
@@ -794,15 +794,15 @@
     #${ID} .lxd-page-name { font-weight: 700; font-size: .85rem; flex: 1; }
     #${ID} .lxd-page-sections {
       font-size: .68rem;
-      color: #aaa;
+      color: #767676;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: .4px;
     }
-    #${ID} .lxd-page-desc { font-size: .73rem; color: #888; line-height: 1.3; margin-bottom: 10px; }
+    #${ID} .lxd-page-desc { font-size: .73rem; color: #595959; line-height: 1.3; margin-bottom: 10px; }
     #${ID} .lxd-page-actions { display: flex; gap: 6px; }
     #${ID} .lxd-page-del {
-      background: none; border: none; color: #ccc; font-size: 13px;
+      background: none; border: none; color: #767676; font-size: 13px;
       cursor: pointer; padding: 0 2px; line-height: 1; flex-shrink: 0;
     }
     #${ID} .lxd-page-del:hover { color: #e53e3e; }
@@ -811,7 +811,7 @@
       display: block;
       text-align: center;
       font-size: .7rem;
-      color: #aaa;
+      color: #767676;
       padding: 10px 0 4px;
       text-decoration: none;
     }
@@ -822,7 +822,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: .8px;
-      color: #aaa;
+      color: #767676;
       margin-bottom: 8px;
     }
     #${ID} .lxd-colors { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 4px; }
@@ -837,22 +837,22 @@
     #${ID} .lxd-swatch:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
     #${ID} .lxd-swatch-block { width: 100%; height: 28px; background: var(--c); border-radius: 5px; margin-bottom: 5px; }
     #${ID} .lxd-swatch span { display: block; font-size: .72rem; font-weight: 600; color: #555; }
-    #${ID} .lxd-swatch code { font-size: .68rem; color: #aaa; }
+    #${ID} .lxd-swatch code { font-size: .68rem; color: #ffffff; background: #1c1c1e; padding: 1px 5px; border-radius: 3px; }
 
     #${ID} .lxd-type { display: flex; flex-direction: column; gap: 4px; }
     #${ID} .lxd-type-row {
       background: white; border: 1px solid #e4e2dc; border-radius: 7px;
       padding: 7px 10px; display: flex; align-items: center; justify-content: space-between;
     }
-    #${ID} .lxd-type-row code { font-size: .7rem; color: #aaa; }
+    #${ID} .lxd-type-row code { font-size: .7rem; color: #595959; background: #f0ede6; padding: 1px 5px; border-radius: 3px; }
 
     #${ID} .lxd-classes { display: flex; flex-direction: column; gap: 4px; }
     #${ID} .lxd-class-row {
       background: white; border: 1px solid #e4e2dc; border-radius: 7px;
       padding: 7px 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
-    #${ID} .lxd-class-row code { font-size: .73rem; color: #1c1c1e; white-space: nowrap; }
-    #${ID} .lxd-class-row span { font-size: .7rem; color: #888; text-align: right; }
+    #${ID} .lxd-class-row code { font-size: .73rem; color: #1c1c1e; background: #f0ede6; padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+    #${ID} .lxd-class-row span { font-size: .7rem; color: #595959; text-align: right; }
 
     /* ── Preview modal ── */
     #${ID} .lxd-preview-modal {
@@ -908,7 +908,7 @@
     }
     #${ID} .lxd-pm-desc {
       font-size: .8rem;
-      color: #888;
+      color: #595959;
       line-height: 1.45;
     }
     #${ID} .lxd-pm-actions {
@@ -947,7 +947,7 @@
       border: 1px solid #e4e2dc;
       border-radius: 6px;
       font-size: .75rem;
-      color: #888;
+      color: #595959;
       cursor: pointer;
       transition: background .15s, color .15s;
       line-height: 1;
@@ -974,7 +974,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: .6px;
-      color: #aaa;
+      color: #767676;
     }
     #${ID} .lxd-sf-input {
       padding: 4px 7px;
@@ -1392,7 +1392,7 @@
         [${PH_ATTR}]::after {
           content: '↓  Click here, then insert a component';
           position: absolute;
-          color: #bbb;
+          color: #767676;
           font-size: 12px;
           font-family: -apple-system, BlinkMacSystemFont, sans-serif;
           pointer-events: none;
