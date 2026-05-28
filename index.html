@@ -11,7 +11,7 @@
     --bg:     #f7f6f2;
     --white:  #ffffff;
     --ink:    #1c1c1e;
-    --muted:  #6b6b72;
+    --muted:  #595959;
     --border: #e4e2dc;
     --radius: 14px;
   }
@@ -117,11 +117,11 @@
   }
 
   .card-tag {
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    color: var(--accent, var(--muted));
+    color: var(--muted);
     display: flex;
     align-items: center;
     gap: 5px;
@@ -157,7 +157,7 @@
 
   .card-meta {
     font-size: 0.73rem;
-    color: #bbb;
+    color: #767676;
   }
 
   .card-actions {
@@ -213,8 +213,8 @@
   }
 
   .bookmarklet-label {
-    font-size: 0.72rem;
-    color: #bbb;
+    font-size: 0.75rem;
+    color: #767676;
     line-height: 1.4;
     flex: 1;
   }
@@ -264,7 +264,7 @@
     background: rgba(255,255,255,0.5);
   }
   .card-suggest .suggest-icon { font-size: 1.6rem; }
-  .card-suggest p { font-size: 0.82rem; line-height: 1.55; color: #aaa; }
+  .card-suggest p { font-size: 0.82rem; line-height: 1.55; color: #767676; }
   .card-suggest strong { color: var(--muted); }
 
   /* ── Modal ───────────────────────────────────────── */
@@ -321,7 +321,7 @@
     text-align: center;
     padding: 32px 0 0;
     font-size: 0.75rem;
-    color: #bbb;
+    color: #767676;
   }
 
   @keyframes fade-up {
@@ -426,10 +426,10 @@
 </div>
 
 <!-- Modal -->
-<div id="modal-backdrop" onclick="handleBackdropClick(event)">
+<div id="modal-backdrop" onclick="handleBackdropClick(event)" role="dialog" aria-modal="true" aria-label="Tool preview">
   <div id="modal">
-    <button id="modal-close" onclick="closeTool()">×</button>
-    <iframe id="modal-iframe" src="" title="Tool"></iframe>
+    <button id="modal-close" onclick="closeTool()" aria-label="Close preview">×</button>
+    <iframe id="modal-iframe" src="" title="Tool preview"></iframe>
   </div>
 </div>
 
