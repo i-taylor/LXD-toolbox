@@ -837,21 +837,21 @@
     #${ID} .lxd-swatch:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
     #${ID} .lxd-swatch-block { width: 100%; height: 28px; background: var(--c); border-radius: 5px; margin-bottom: 5px; }
     #${ID} .lxd-swatch span { display: block; font-size: .72rem; font-weight: 600; color: #555; }
-    #${ID} .lxd-swatch code { font-size: .68rem; color: #767676; }
+    #${ID} .lxd-swatch code { font-size: .68rem; color: #ffffff; background: #1c1c1e; padding: 1px 5px; border-radius: 3px; }
 
     #${ID} .lxd-type { display: flex; flex-direction: column; gap: 4px; }
     #${ID} .lxd-type-row {
       background: white; border: 1px solid #e4e2dc; border-radius: 7px;
       padding: 7px 10px; display: flex; align-items: center; justify-content: space-between;
     }
-    #${ID} .lxd-type-row code { font-size: .7rem; color: #767676; }
+    #${ID} .lxd-type-row code { font-size: .7rem; color: #595959; background: #f0ede6; padding: 1px 5px; border-radius: 3px; }
 
     #${ID} .lxd-classes { display: flex; flex-direction: column; gap: 4px; }
     #${ID} .lxd-class-row {
       background: white; border: 1px solid #e4e2dc; border-radius: 7px;
       padding: 7px 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
-    #${ID} .lxd-class-row code { font-size: .73rem; color: #1c1c1e; white-space: nowrap; }
+    #${ID} .lxd-class-row code { font-size: .73rem; color: #1c1c1e; background: #f0ede6; padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
     #${ID} .lxd-class-row span { font-size: .7rem; color: #595959; text-align: right; }
 
     /* ── Preview modal ── */
