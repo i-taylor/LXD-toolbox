@@ -208,12 +208,18 @@
     padding: 10px 22px 14px;
     border-top: 1px solid var(--border);
     display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bookmarklet-row {
+    display: flex;
     align-items: center;
     gap: 10px;
   }
 
   .bookmarklet-label {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: #767676;
     line-height: 1.4;
     flex: 1;
@@ -242,6 +248,28 @@
     color: var(--ink);
   }
   .bookmarklet-link:active { cursor: grabbing; }
+
+  .bookmarklet-link-dev {
+    background: #fff7ed;
+    border-color: #F97316;
+    border-style: dashed;
+    color: #9a3412;
+  }
+  .bookmarklet-link-dev:hover {
+    background: #ffedd5;
+    border-color: #ea580c;
+    color: #7c2d12;
+  }
+  .bm-dev-tag {
+    background: #F97316;
+    color: white;
+    font-size: 0.58rem;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+  }
 
   /* ── Suggest card ─────────────────────────────────── */
   .card-suggest {
@@ -405,10 +433,18 @@
         </div>
       </div>
       <div class="bookmarklet-wrap">
-        <span class="bookmarklet-label">Drag to bookmarks bar,<br>click on any Canvas page</span>
-        <a class="bookmarklet-link"
-          href="javascript:(function(){var s=document.createElement('script');s.src='https://i-taylor.github.io/LXD-toolbox/sidebar.js?v='+Date.now();document.head.appendChild(s);})();"
-          title="Drag to bookmarks bar">🛠 LXD Sidebar</a>
+        <div class="bookmarklet-row">
+          <span class="bookmarklet-label">Production — stable release</span>
+          <a class="bookmarklet-link"
+            href="javascript:(function(){var s=document.createElement('script');s.src='https://i-taylor.github.io/LXD-toolbox/sidebar.js?v='+Date.now();document.head.appendChild(s);})();"
+            title="Drag to bookmarks bar — production build">🛠 LXD Sidebar</a>
+        </div>
+        <div class="bookmarklet-row">
+          <span class="bookmarklet-label">Development — latest features, may have bugs</span>
+          <a class="bookmarklet-link bookmarklet-link-dev"
+            href="javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/i-taylor/LXD-toolbox@develop/sidebar.js?v='+Date.now();document.head.appendChild(s);})();"
+            title="Drag to bookmarks bar — development build">🛠 LXD Sidebar <span class="bm-dev-tag">Dev</span></a>
+        </div>
       </div>
     </div>
 
