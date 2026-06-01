@@ -204,90 +204,62 @@
   }
 
   /* ── Bookmarklet drag target ─────────────────────── */
-  /* ── Bookmarklet drag target ─────────────────────── */
   .bookmarklet-wrap {
+    padding: 10px 22px 14px;
     border-top: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    border-radius: 0 0 var(--radius) var(--radius);
+    gap: 8px;
   }
 
-  .bookmarklet-tier {
+  .bookmarklet-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 20px 12px;
+    gap: 10px;
   }
 
-  .bookmarklet-tier-prod {
-    background: #f0fdf4;
-    border-top: 2px solid #bbf7d0;
-  }
-
-  .bookmarklet-tier-dev {
-    background: #fff7ed;
-    border-top: 2px solid #fed7aa;
-  }
-
-  .bm-tier-info { flex: 1; }
-  .bm-tier-title {
+  .bookmarklet-label {
     font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .bm-tier-title .bm-pill {
-    font-size: 0.6rem;
-    font-weight: 800;
-    padding: 1px 6px;
-    border-radius: 99px;
-    text-transform: uppercase;
-    letter-spacing: .4px;
-  }
-  .bookmarklet-tier-prod .bm-pill { background: #dcfce7; color: #166534; }
-  .bookmarklet-tier-dev  .bm-pill { background: #ffedd5; color: #9a3412; border: 1px dashed #F97316; }
-
-  .bm-tier-desc {
-    font-size: 0.68rem;
     color: #767676;
-    margin-top: 2px;
-    line-height: 1.35;
+    line-height: 1.4;
+    flex: 1;
   }
 
   .bookmarklet-link {
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    padding: 6px 11px;
+    padding: 5px 10px;
+    background: #f0ede6;
+    border: 1px dashed #c8c4bb;
     border-radius: 7px;
     font-size: 0.75rem;
     font-weight: 600;
+    color: var(--muted);
     cursor: grab;
     text-decoration: none;
     white-space: nowrap;
     transition: background 0.15s, border-color 0.15s;
     user-select: none;
-    flex-shrink: 0;
+  }
+  .bookmarklet-link:hover {
+    background: #e8e4db;
+    border-color: #aaa;
+    color: var(--ink);
   }
   .bookmarklet-link:active { cursor: grabbing; }
 
-  .bookmarklet-link-prod {
-    background: white;
-    border: 1.5px solid #86efac;
-    color: #166534;
-  }
-  .bookmarklet-link-prod:hover { background: #f0fdf4; border-color: #4ade80; }
-
   .bookmarklet-link-dev {
-    background: white;
-    border: 1.5px dashed #F97316;
+    background: #fff7ed;
+    border-color: #F97316;
+    border-style: dashed;
     color: #9a3412;
   }
-  .bookmarklet-link-dev:hover { background: #fff7ed; border-color: #ea580c; }
-
+  .bookmarklet-link-dev:hover {
+    background: #ffedd5;
+    border-color: #ea580c;
+    color: #7c2d12;
+  }
   .bm-dev-tag {
     background: #F97316;
     color: white;
@@ -461,26 +433,14 @@
         </div>
       </div>
       <div class="bookmarklet-wrap">
-        <div class="bookmarklet-tier bookmarklet-tier-prod">
-          <div class="bm-tier-info">
-            <div class="bm-tier-title">
-              Production
-              <span class="bm-pill">Stable</span>
-            </div>
-            <div class="bm-tier-desc">Drag to your bookmarks bar for everyday use</div>
-          </div>
-          <a class="bookmarklet-link bookmarklet-link-prod"
+        <div class="bookmarklet-row">
+          <span class="bookmarklet-label">Production — stable release</span>
+          <a class="bookmarklet-link"
             href="javascript:(function(){var s=document.createElement('script');s.src='https://i-taylor.github.io/LXD-toolbox/sidebar.js?v='+Date.now();document.head.appendChild(s);})();"
             title="Drag to bookmarks bar — production build">🛠 LXD Sidebar</a>
         </div>
-        <div class="bookmarklet-tier bookmarklet-tier-dev">
-          <div class="bm-tier-info">
-            <div class="bm-tier-title">
-              Development
-              <span class="bm-pill">Dev</span>
-            </div>
-            <div class="bm-tier-desc">Latest features — may have bugs</div>
-          </div>
+        <div class="bookmarklet-row">
+          <span class="bookmarklet-label">Development — latest features, may have bugs</span>
           <a class="bookmarklet-link bookmarklet-link-dev"
             href="javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/i-taylor/LXD-toolbox@develop/sidebar.js?v='+Date.now();document.head.appendChild(s);})();"
             title="Drag to bookmarks bar — development build">🛠 LXD Sidebar <span class="bm-dev-tag">Dev</span></a>
