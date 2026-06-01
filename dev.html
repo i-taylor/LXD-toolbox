@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Toolbox — Dev Preview</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:     #f7f6f2;
+    --white:  #ffffff;
+    --ink:    #1c1c1e;
+    --muted:  #595959;
+    --border: #e4e2dc;
+    --radius: 14px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image: radial-gradient(circle, #c8c5bc 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* ── Dev banner ──────────────────────────────────── */
+  .dev-banner {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    background: #F97316;
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 7px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.2px;
+  }
+  .dev-banner-badge {
+    background: white;
+    color: #c2410c;
+    font-size: 0.6rem;
+    font-weight: 900;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+  .dev-banner-note {
+    font-weight: 400;
+    opacity: 0.85;
+    font-size: 0.73rem;
+  }
+  .dev-banner-spacer { flex: 1; }
+  .dev-banner a {
+    color: white;
+    font-size: 0.72rem;
+    opacity: 0.75;
+    text-decoration: none;
+  }
+  .dev-banner a:hover { opacity: 1; text-decoration: underline; }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+
+  /* ── Header ──────────────────────────────────────── */
+  .site-header {
+    padding: 48px 0 40px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .site-header h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    color: var(--ink);
+  }
+
+  .site-header h1 span {
+    display: inline-block;
+    background: #FFCB05;
+    border-radius: 6px;
+    padding: 0 6px 2px;
+    margin-left: 2px;
+    font-size: 2rem;
+    vertical-align: middle;
+    transform: rotate(-2deg);
+    line-height: 1.2;
+  }
+
+  .site-header p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .pill-count {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 6px 14px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  .pill-count b { color: var(--ink); }
+
+  /* ── Grid ────────────────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Card ────────────────────────────────────────── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent, #e4e2dc);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    animation: fade-up 0.3s ease both;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.04s; }
+  .card:nth-child(2) { animation-delay: 0.08s; }
+  .card:nth-child(3) { animation-delay: 0.12s; }
+
+  .card:hover {
+    transform: translateY(-4px) rotate(0.3deg);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+  }
+
+  .card-body {
+    padding: 20px 22px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .card-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .card-tag .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent, var(--muted));
+    flex-shrink: 0;
+  }
+
+  .card h2 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.2px;
+  }
+
+  .card p {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .card-footer {
+    padding: 12px 22px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-meta {
+    font-size: 0.73rem;
+    color: #767676;
+  }
+
+  .card-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-preview {
+    padding: 7px 14px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, transform 0.1s;
+    letter-spacing: 0.1px;
+  }
+  .btn-preview:hover {
+    border-color: var(--accent, #aaa);
+    color: var(--accent, var(--ink));
+    transform: scale(1.03);
+  }
+
+  .btn-open {
+    padding: 7px 14px;
+    background: var(--ink);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    letter-spacing: 0.1px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  .btn-open:hover {
+    background: var(--accent, #333);
+    transform: scale(1.03);
+  }
+
+  /* ── Bookmarklet drag target ─────────────────────── */
+  .bookmarklet-wrap {
+    padding: 10px 22px 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bookmarklet-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .bookmarklet-label {
+    font-size: 0.72rem;
+    color: #767676;
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  .bookmarklet-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    background: #f0ede6;
+    border: 1px dashed #c8c4bb;
+    border-radius: 7px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: grab;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s;
+    user-select: none;
+  }
+  .bookmarklet-link:hover {
+    background: #e8e4db;
+    border-color: #aaa;
+    color: var(--ink);
+  }
+  .bookmarklet-link:active { cursor: grabbing; }
+
+  .bookmarklet-link-dev {
+    background: #fff7ed;
+    border-color: #F97316;
+    border-style: dashed;
+    color: #9a3412;
+  }
+  .bookmarklet-link-dev:hover {
+    background: #ffedd5;
+    border-color: #ea580c;
+    color: #7c2d12;
+  }
+  .bm-dev-tag {
+    background: #F97316;
+    color: white;
+    font-size: 0.58rem;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 3px;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+  }
+
+  /* ── Suggest card ─────────────────────────────────── */
+  .card-suggest {
+    background: transparent;
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 36px 24px;
+    text-align: center;
+    gap: 10px;
+    min-height: 180px;
+    transition: border-color 0.2s, background 0.2s;
+    animation: fade-up 0.3s ease 0.16s both;
+  }
+  .card-suggest:hover {
+    border-color: #bbb;
+    background: rgba(255,255,255,0.5);
+  }
+  .card-suggest .suggest-icon { font-size: 1.6rem; }
+  .card-suggest p { font-size: 0.82rem; line-height: 1.55; color: #767676; }
+  .card-suggest strong { color: var(--muted); }
+
+  /* ── Modal ───────────────────────────────────────── */
+  #modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20,18,14,0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  #modal-backdrop.open { display: flex; }
+
+  #modal {
+    position: relative;
+    width: 92vw;
+    height: 92vh;
+    max-width: 1200px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+    background: white;
+    animation: modal-in 0.22s ease;
+  }
+
+  @keyframes modal-in {
+    from { transform: scale(0.96) translateY(8px); opacity: 0; }
+    to   { transform: scale(1)    translateY(0);   opacity: 1; }
+  }
+
+  #modal-close {
+    position: absolute;
+    top: 12px; right: 14px;
+    z-index: 10;
+    background: rgba(0,0,0,0.35);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px; height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  #modal-close:hover { background: rgba(0,0,0,0.6); }
+
+  #modal-iframe { width: 100%; height: 100%; border: none; display: block; }
+
+  /* ── Footer ──────────────────────────────────────── */
+  footer {
+    text-align: center;
+    padding: 32px 0 0;
+    font-size: 0.75rem;
+    color: #767676;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 0 20px 60px; }
+    .site-header h1 { font-size: 2rem; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Dev preview banner — not present in index.html -->
+<div class="dev-banner">
+  <span class="dev-banner-badge">Dev Preview</span>
+  <span>You're viewing a staging copy of the Toolbox page.</span>
+  <span class="dev-banner-note">Changes here go live after merging to <code style="background:rgba(255,255,255,.2);padding:1px 5px;border-radius:3px;font-size:.68rem">main</code>.</span>
+  <span class="dev-banner-spacer"></span>
+  <a href="/LXD-toolbox/" target="_blank">View production →</a>
+</div>
+
+<div class="page">
+
+  <header class="site-header">
+    <div>
+      <h1>The Toolbox<span>🛠</span></h1>
+      <p>Small utilities for the LXD team. Open, use, done.</p>
+    </div>
+    <div class="pill-count"><b>2</b> live</div>
+  </header>
+
+  <div class="grid">
+
+    <div class="card" style="--accent: #F97316;">
+      <div class="card-body">
+        <div class="card-tag"><span class="dot"></span> Image tool</div>
+        <h2>Course Image Composer</h2>
+        <p>Upload a photo, drag to set your focal point, scroll to zoom, export a pre-cropped PNG sized for the Canvas homepage collage.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-meta">Pan · Zoom · Export</span>
+        <div class="card-actions">
+          <button class="btn-preview" style="--accent: #F97316;"
+            onclick="previewTool('https://i-taylor.github.io/course-homepage-image-generator/')">Preview</button>
+          <a class="btn-open" style="--accent: #F97316;"
+            href="https://i-taylor.github.io/course-homepage-image-generator/" target="_blank" rel="noopener">Open ↗</a>
+        </div>
+      </div>
+      <div class="bookmarklet-wrap">
+        <span class="bookmarklet-label">Drag to bookmarks bar<br>for quick access anywhere</span>
+        <a class="bookmarklet-link"
+          href="javascript:(function(){const x=document.getElementById('__ic');if(x){x.remove();return;}const o=document.createElement('div');o.id='__ic';o.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2147483647;display:flex;align-items:center;justify-content:center;';const m=document.createElement('div');m.style.cssText='position:relative;width:92vw;height:92vh;max-width:1200px;border-radius:12px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.45);';const b=document.createElement('button');b.innerHTML='&times;';b.style.cssText='position:absolute;top:10px;right:14px;z-index:1;background:rgba(0,0,0,.45);color:#fff;border:none;border-radius:50%;width:30px;height:30px;font-size:20px;cursor:pointer;line-height:1;';b.onclick=()=>o.remove();const f=document.createElement('iframe');f.src='https://i-taylor.github.io/course-homepage-image-generator/';f.style.cssText='width:100%;height:100%;border:none;';m.append(b,f);o.appendChild(m);document.body.appendChild(o);o.addEventListener('click',e=>{if(e.target===o)o.remove();});document.addEventListener('keydown',function d(e){if(e.key==='Escape'){o.remove();document.removeEventListener('keydown',d);}});})();"
+          title="Drag me to your bookmarks bar">🔖 Image Composer</a>
+      </div>
+    </div>
+
+    <div class="card" style="--accent: #10B981;">
+      <div class="card-body">
+        <div class="card-tag"><span class="dot"></span> Assets</div>
+        <h2>MO Image Cookbook</h2>
+        <p>Approved logos, course images, and icons with ready-to-paste HTML snippets — accessibility attributes already included.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-meta">Copy · Paste · Done</span>
+        <div class="card-actions">
+          <button class="btn-preview" style="--accent: #10B981;"
+            onclick="previewTool('https://i-taylor.github.io/MO-Image-Cookbook/')">Preview</button>
+          <a class="btn-open" style="--accent: #10B981;"
+            href="https://i-taylor.github.io/MO-Image-Cookbook/" target="_blank" rel="noopener">Open ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="--accent: #8B5CF6;">
+      <div class="card-body">
+        <div class="card-tag"><span class="dot"></span> Canvas</div>
+        <h2>Canvas Sidebar</h2>
+        <p>Components, snippets, and style guide — injected as a panel directly inside Canvas. Drag the bookmarklet to your bar and click it on any Canvas page.</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-meta">Components · Snippets · Style Guide</span>
+        <div class="card-actions">
+          <button class="btn-preview" style="--accent: #8B5CF6;"
+            onclick="previewTool('https://i-taylor.github.io/LXD-toolbox/sidebar-preview.html')">Preview</button>
+          <span class="btn-open" style="--accent:#8B5CF6;opacity:.4;cursor:default;">Canvas only</span>
+        </div>
+      </div>
+      <div class="bookmarklet-wrap">
+        <div class="bookmarklet-row">
+          <span class="bookmarklet-label">Production — stable release</span>
+          <a class="bookmarklet-link"
+            href="javascript:(function(){var s=document.createElement('script');s.src='https://i-taylor.github.io/LXD-toolbox/sidebar.js?v='+Date.now();document.head.appendChild(s);})();"
+            title="Drag to bookmarks bar — production build">🛠 LXD Sidebar</a>
+        </div>
+        <div class="bookmarklet-row">
+          <span class="bookmarklet-label">Development — latest features, may have bugs</span>
+          <a class="bookmarklet-link bookmarklet-link-dev"
+            href="javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/i-taylor/LXD-toolbox@develop/sidebar.js?v='+Date.now();document.head.appendChild(s);})();"
+            title="Drag to bookmarks bar — development build">🛠 LXD Sidebar <span class="bm-dev-tag">Dev</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-suggest">
+      <span class="suggest-icon">💬</span>
+      <p><strong>Got an idea?</strong><br>What takes you too long?<br>Drop it in #lxd_team.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    Built by the LXD team &nbsp;·&nbsp; Michigan Online &nbsp;·&nbsp; University of Michigan
+  </footer>
+
+</div>
+
+<!-- Modal -->
+<div id="modal-backdrop" onclick="handleBackdropClick(event)" role="dialog" aria-modal="true" aria-label="Tool preview">
+  <div id="modal">
+    <button id="modal-close" onclick="closeTool()" aria-label="Close preview">×</button>
+    <iframe id="modal-iframe" src="" title="Tool preview"></iframe>
+  </div>
+</div>
+
+<script>
+  const backdrop = document.getElementById('modal-backdrop');
+  const iframe   = document.getElementById('modal-iframe');
+
+  function previewTool(url) {
+    iframe.src = url;
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeTool() {
+    backdrop.classList.remove('open');
+    iframe.src = '';
+    document.body.style.overflow = '';
+  }
+
+  function handleBackdropClick(e) {
+    if (e.target === backdrop) closeTool();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeTool();
+  });
+</script>
+
+</body>
+</html>
