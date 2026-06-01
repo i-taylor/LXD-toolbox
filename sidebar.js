@@ -1394,13 +1394,14 @@
         html += `<div class="lxd-img-section-label">Images (${images.length})</div>
           <div class="lxd-img-grid">
             ${images.map(img => {
-              const name     = img.display_name || img.filename || 'Image';
+              const name      = img.display_name || img.filename || 'Image';
               // Strip ?download_frd=1 so the URL serves inline rather than forcing a download
               const inlineUrl = img.url.replace(/([?&])download_frd=1(&|$)/, '$2').replace(/[?&]$/, '');
-              // Prefer the API-provided thumbnail; fall back to inline URL
-              const thumb    = img.thumbnail_url || inlineUrl;
-              // onerror: if thumbnail fails, try the inline file URL directly
-              const onerr    = `this.onerror=null;this.src='${imgEscAttr(inlineUrl)}'`;
+              // Canvas returns "no_pic.gif" when no thumbnail has been generated — skip it
+              const hasRealThumb = img.thumbnail_url && !img.thumbnail_url.includes('no_pic');
+              const thumb     = hasRealThumb ? img.thumbnail_url : inlineUrl;
+              // onerror: if thumb still fails, try the inline URL as a last resort
+              const onerr     = `this.onerror=null;this.src='${imgEscAttr(inlineUrl)}'`;
               return `<div class="lxd-img-thumb"
                 data-img-url="${imgEscAttr(img.url)}"
                 data-img-name="${imgEscAttr(name)}"
