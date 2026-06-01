@@ -45,10 +45,10 @@
       preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#ede9fe;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div><div style="background:#ddd6fe;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="width:20px;height:20px;background:#8B5CF6;border-radius:50%;opacity:.4"></div></div></div>',
       html: `<div class="new-canvas">\n<section class="graphical-highlight">\n  <div>\n    <p>Highlight content goes here.</p>\n  </div>\n  <div></div>\n</section>\n</div>`,
       variants: [
-        { label: 'Default',    cls: '',                                bg: '#FFEA9B' },
-        { label: 'UM Blue',    cls: 'graphical-highlight--umblue',     bg: '#00274C' },
-        { label: 'Maize',      cls: 'graphical-highlight--maize',      bg: '#FFCB05' },
-        { label: 'Cool Blue',  cls: 'graphical-highlight--cool-blue',  bg: '#305CDE' },
+        { label: 'Default',    cls: '',          bg: '#FFEA9B' },
+        { label: 'UM Blue',    cls: 'umblue',    bg: '#00274C' },
+        { label: 'Maize',      cls: 'maize',     bg: '#FFCB05' },
+        { label: 'Cool Blue',  cls: 'coolblue',  bg: '#305CDE' },
       ]
     },
     {
