@@ -493,6 +493,10 @@
       justify-content: space-between;
       flex-shrink: 0;
     }
+    #${ID} .lxd-head-dev {
+      background: #1c1c1e;
+      border-top: 3px solid #F97316;
+    }
     #${ID} .lxd-head-title {
       font-weight: 700;
       font-size: .9rem;
@@ -1580,7 +1584,7 @@
   sidebar.id = ID;
   sidebar.innerHTML = `
     <div class="lxd-resize-handle" id="${ID}-resize"></div>
-    <div class="lxd-head">
+    <div class="lxd-head${_isDev ? ' lxd-head-dev' : ''}">
       <div class="lxd-head-title">
         🛠 LXD Sidebar
         ${_isDev ? '<span class="lxd-head-badge">Dev</span>' : ''}
@@ -1592,7 +1596,7 @@
       <button class="lxd-tab active" data-tab="components">Components</button>
       <button class="lxd-tab"        data-tab="arrange">Arrange</button>
       <button class="lxd-tab"        data-tab="pages">Pages</button>
-      <button class="lxd-tab"        data-tab="images">Images</button>
+      ${_isDev ? '<button class="lxd-tab" data-tab="images">Images</button>' : ''}
       <button class="lxd-tab"        data-tab="styleguide">Style</button>
     </div>
 
@@ -1629,6 +1633,7 @@
       <div id="${ID}-pages-list"></div>
     </div>
 
+    ${_isDev ? `
     <div class="lxd-panel" id="${ID}-panel-images">
       <!-- Browse view: folder nav + image grid -->
       <div class="lxd-img-view" id="${ID}-img-browse">
@@ -1664,7 +1669,7 @@
           <button class="lxd-img-alt-submit" id="${ID}-img-alt-submit">Insert Image</button>
         </div>
       </div>
-    </div>
+    </div>` : ''}
 
     <div class="lxd-panel" id="${ID}-panel-styleguide">
       ${STYLE_GUIDE_HTML}
@@ -2486,56 +2491,57 @@
       .then(() => showToast(swatch.dataset.hex + ' copied'));
   });
 
-  // ── Course Images tab interactions ─────────────────────────────────────────
+  // ── Course Images tab interactions (dev only) ─────────────────────────────
+  if (_isDev) {
+    // Folder button → navigate into folder
+    document.getElementById(ID + '-img-content').addEventListener('click', e => {
+      const folderBtn = e.target.closest('.lxd-img-folder-btn');
+      if (folderBtn) {
+        const fid  = folderBtn.dataset.folderId;
+        const name = folderBtn.dataset.folderName || 'Folder';
+        loadImgFolder(fid, { name, id: fid });
+        return;
+      }
+      // Image thumbnail → show alt text screen
+      const thumb = e.target.closest('.lxd-img-thumb');
+      if (thumb) {
+        const url   = thumb.dataset.imgUrl;
+        const name  = thumb.dataset.imgName || 'Image';
+        const turl  = thumb.dataset.imgThumb || url;
+        showImgAltScreen(url, name, turl);
+      }
+    });
 
-  // Folder button → navigate into folder
-  document.getElementById(ID + '-img-content').addEventListener('click', e => {
-    const folderBtn = e.target.closest('.lxd-img-folder-btn');
-    if (folderBtn) {
-      const fid  = folderBtn.dataset.folderId;
-      const name = folderBtn.dataset.folderName || 'Folder';
-      loadImgFolder(fid, { name, id: fid });
-      return;
-    }
-    // Image thumbnail → show alt text screen
-    const thumb = e.target.closest('.lxd-img-thumb');
-    if (thumb) {
-      const url   = thumb.dataset.imgUrl;
-      const name  = thumb.dataset.imgName || 'Image';
-      const turl  = thumb.dataset.imgThumb || url;
-      showImgAltScreen(url, name, turl);
-    }
-  });
+    // Breadcrumb navigation
+    document.getElementById(ID + '-img-breadcrumb').addEventListener('click', e => {
+      const btn = e.target.closest('.lxd-img-crumb-btn');
+      if (!btn) return;
+      const idx = +btn.dataset.crumbIdx;
+      const target = imgState.breadcrumb[idx];
+      if (!target) return;
+      imgState.breadcrumb = imgState.breadcrumb.slice(0, idx + 1);
+      loadImgFolder(target.id, null);
+    });
 
-  // Breadcrumb navigation
-  document.getElementById(ID + '-img-breadcrumb').addEventListener('click', e => {
-    const btn = e.target.closest('.lxd-img-crumb-btn');
-    if (!btn) return;
-    const idx = +btn.dataset.crumbIdx;
-    const target = imgState.breadcrumb[idx];
-    if (!target) return;
-    imgState.breadcrumb = imgState.breadcrumb.slice(0, idx + 1);
-    loadImgFolder(target.id, null);
-  });
+    // Reload button
+    document.getElementById(ID + '-img-reload').addEventListener('click', () => {
+      renderImagesTab();
+    });
 
-  // Reload button
-  document.getElementById(ID + '-img-reload').addEventListener('click', () => {
-    renderImagesTab();
-  });
+    // Alt text back button
+    document.getElementById(ID + '-img-alt-back').addEventListener('click', () => {
+      imgAltView().classList.add('hidden');
+      imgBrowseView().classList.remove('hidden');
+    });
 
-  // Alt text back button
-  document.getElementById(ID + '-img-alt-back').addEventListener('click', () => {
-    imgAltView().classList.add('hidden');
-    imgBrowseView().classList.remove('hidden');
-  });
+    // Decorative checkbox → toggle alt text input
+    document.getElementById(ID + '-img-alt-decorative').addEventListener('change', function () {
+      document.getElementById(ID + '-img-alt-input').disabled = this.checked;
+    });
 
-  // Decorative checkbox → toggle alt text input
-  document.getElementById(ID + '-img-alt-decorative').addEventListener('change', function () {
-    document.getElementById(ID + '-img-alt-input').disabled = this.checked;
-  });
-
-  // Submit (Insert/Swap) button
-  document.getElementById(ID + '-img-alt-submit').addEventListener('click', doInsertImage);
+    // Submit (Insert/Swap) button
+    document.getElementById(ID + '-img-alt-submit').addEventListener('click', doInsertImage);
+  }
 
   document.getElementById(ID + '-search').addEventListener('input', e => {
     const q = e.target.value.toLowerCase().trim();
