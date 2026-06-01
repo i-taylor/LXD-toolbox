@@ -1,8 +1,12 @@
 (function () {
   'use strict';
 
+  // Detect dev vs production: document.currentScript.src contains "@develop" for the dev CDN URL
+  const _scriptSrc = (document.currentScript && document.currentScript.src) || '';
+  const _isDev = _scriptSrc.includes('@develop') || /^localhost|^127\./.test(window.location.hostname);
+
   const ID = '__lxd-sidebar';
-  const PUSH_W = '320px';
+  const PUSH_W = '360px';
 
   // ── Toggle ─────────────────────────────────────────────────────────────────
   const existing = document.getElementById(ID);
@@ -497,14 +501,15 @@
       gap: 7px;
     }
     #${ID} .lxd-head-badge {
-      background: #FFCB05;
-      color: #1c1c1e;
       font-size: .62rem;
       font-weight: 800;
-      padding: 2px 6px;
+      padding: 2px 7px;
       border-radius: 4px;
       letter-spacing: .5px;
       text-transform: uppercase;
+      background: #F97316;
+      color: white;
+      border: 1px dashed rgba(255,255,255,.5);
     }
     #${ID} .lxd-close {
       background: rgba(255,255,255,.15);
@@ -527,16 +532,15 @@
     }
     #${ID} .lxd-tab {
       flex: 1;
-      padding: 9px 3px;
+      padding: 9px 4px;
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
-      font-size: .7rem;
+      font-size: .73rem;
       font-weight: 600;
       color: #646464;
       cursor: pointer;
       transition: color .15s, border-color .15s;
-      letter-spacing: .1px;
       white-space: nowrap;
     }
     #${ID} .lxd-tab:hover { color: #555; }
@@ -1051,7 +1055,7 @@
 
     #${ID}-toast {
       position: fixed;
-      bottom: 24px; right: 340px;
+      bottom: 24px; right: 380px;
       background: #1c1c1e;
       color: white;
       font-size: .78rem;
@@ -1579,7 +1583,7 @@
     <div class="lxd-head">
       <div class="lxd-head-title">
         🛠 LXD Sidebar
-        <span class="lxd-head-badge">Beta</span>
+        ${_isDev ? '<span class="lxd-head-badge">Dev</span>' : ''}
       </div>
       <button class="lxd-close" id="${ID}-close">×</button>
     </div>
@@ -1589,7 +1593,7 @@
       <button class="lxd-tab"        data-tab="arrange">Arrange</button>
       <button class="lxd-tab"        data-tab="pages">Pages</button>
       <button class="lxd-tab"        data-tab="images">Images</button>
-      <button class="lxd-tab"        data-tab="styleguide">Style Guide</button>
+      <button class="lxd-tab"        data-tab="styleguide">Style</button>
     </div>
 
     <div class="lxd-editor-tools">
