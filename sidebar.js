@@ -1366,8 +1366,12 @@
       fetch(`/api/v1/folders/${folderId}/folders?per_page=100&sort=name`).then(r => { if (!r.ok) throw r; return r.json(); }),
       fetch(`/api/v1/folders/${folderId}/files?per_page=100&sort=name`).then(r => { if (!r.ok) throw r; return r.json(); })
     ]).then(([folders, files]) => {
+      // Canvas API uses the hyphenated key "content-type"; also check mime_class for reliability
       const images = Array.isArray(files)
-        ? files.filter(f => f.content_type && f.content_type.startsWith('image/'))
+        ? files.filter(f =>
+            f.mime_class === 'image' ||
+            (f['content-type'] || f.content_type || '').startsWith('image/')
+          )
         : [];
 
       let html = '';
@@ -1387,13 +1391,16 @@
         html += `<div class="lxd-img-section-label">Images (${images.length})</div>
           <div class="lxd-img-grid">
             ${images.map(img => {
+              // Use thumbnail for the grid preview; fall back to full URL if no thumb
               const thumb = img.thumbnail_url || img.url;
               const name  = img.display_name || img.filename || 'Image';
+              // onerror: swap to full URL if thumbnail fails to load
+              const onerr = `this.onerror=null;this.src='${imgEscAttr(img.url)}'`;
               return `<div class="lxd-img-thumb"
                 data-img-url="${imgEscAttr(img.url)}"
                 data-img-name="${imgEscAttr(name)}"
                 data-img-thumb="${imgEscAttr(thumb)}">
-                  <img src="${imgEscAttr(thumb)}" alt="${imgEscAttr(name)}" loading="lazy">
+                  <img src="${imgEscAttr(thumb)}" alt="" loading="lazy" onerror="${onerr}">
                   <div class="lxd-img-thumb-name" title="${imgEscAttr(name)}">${imgEsc(name)}</div>
               </div>`;
             }).join('')}
