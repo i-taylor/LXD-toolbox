@@ -1395,11 +1395,10 @@
           <div class="lxd-img-grid">
             ${images.map(img => {
               const name = img.display_name || img.filename || 'Image';
-              // Canvas returns no_pic.gif when no thumbnail has been generated — skip it.
-              // Fall back to img.url directly; browsers render <img src> regardless of
-              // Content-Disposition: attachment headers.
-              const hasRealThumb = img.thumbnail_url && !img.thumbnail_url.includes('no_pic');
-              const thumb = hasRealThumb ? img.thumbnail_url : img.url;
+              // thumbnail_url may redirect to no_pic.gif even when the URL looks legitimate,
+              // because Canvas hasn't processed the thumbnail yet. img.url always serves
+              // the real file (browsers render <img src> regardless of Content-Disposition).
+              const thumb = img.url;
               const onerr = `this.onerror=null;this.src='${imgEscAttr(img.url)}'`;
               return `<div class="lxd-img-thumb"
                 data-img-url="${imgEscAttr(img.url)}"
