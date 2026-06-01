@@ -1131,7 +1131,10 @@
       transition: border-color .15s, box-shadow .15s;
     }
     #${ID} .lxd-img-thumb:hover { border-color: #00274C; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
-    #${ID} .lxd-img-thumb img { width: 100%; height: 80px; object-fit: cover; display: block; }
+    #${ID} .lxd-img-thumb img {
+      width: 100%; height: 80px; object-fit: contain; display: block;
+      background: repeating-conic-gradient(#e4e2dc 0% 25%, #f3f2ef 0% 50%) 0 0 / 12px 12px;
+    }
     #${ID} .lxd-img-thumb-name {
       font-size: .6rem; color: #595959; padding: 3px 5px 4px;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.3;
@@ -1391,11 +1394,13 @@
         html += `<div class="lxd-img-section-label">Images (${images.length})</div>
           <div class="lxd-img-grid">
             ${images.map(img => {
-              // Use thumbnail for the grid preview; fall back to full URL if no thumb
-              const thumb = img.thumbnail_url || img.url;
-              const name  = img.display_name || img.filename || 'Image';
-              // onerror: swap to full URL if thumbnail fails to load
-              const onerr = `this.onerror=null;this.src='${imgEscAttr(img.url)}'`;
+              const name     = img.display_name || img.filename || 'Image';
+              // Strip ?download_frd=1 so the URL serves inline rather than forcing a download
+              const inlineUrl = img.url.replace(/([?&])download_frd=1(&|$)/, '$2').replace(/[?&]$/, '');
+              // Prefer the API-provided thumbnail; fall back to inline URL
+              const thumb    = img.thumbnail_url || inlineUrl;
+              // onerror: if thumbnail fails, try the inline file URL directly
+              const onerr    = `this.onerror=null;this.src='${imgEscAttr(inlineUrl)}'`;
               return `<div class="lxd-img-thumb"
                 data-img-url="${imgEscAttr(img.url)}"
                 data-img-name="${imgEscAttr(name)}"
@@ -1465,8 +1470,15 @@
       if (isSwap) {
         const node = ed.selection.getNode();
         if (node && node.nodeName === 'IMG') {
+          // Snapshot rendered size before src changes so layout doesn't reflow
+          const snapW = node.getAttribute('width')  || (node.offsetWidth  ? String(node.offsetWidth)  : null);
+          const snapH = node.getAttribute('height') || (node.offsetHeight ? String(node.offsetHeight) : null);
+          const snapStyle = node.getAttribute('style') || null;
           node.setAttribute('src', url);
           node.setAttribute('alt', altText);
+          if (snapW) node.setAttribute('width',  snapW);
+          if (snapH) node.setAttribute('height', snapH);
+          if (snapStyle) node.setAttribute('style', snapStyle);
           ed.nodeChanged();
         } else {
           // Selection moved — fall back to insert
