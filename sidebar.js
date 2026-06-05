@@ -270,6 +270,42 @@
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col text-img highlight">\n    <div>\n      <h3>Column Heading</h3>\n      <p>Text content for the left column.</p>\n    </div>\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" loading="lazy">\n    </div>\n  </div>\n</section>\n</div>`
     },
     {
+      name: 'Two-Col (Image / Text)',
+      cat: 'Layout',
+      type: 'text',
+      color: '#8B5CF6',
+      desc: 'Image left, text right — flexible to the image\'s native aspect ratio.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px"><div style="background:#ede9fe;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="#ddd6fe"/><circle cx="10" cy="8" r="3" fill="#c4b5fd"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="#c4b5fd"/></svg></div><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col img-text">\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" width="" height="" loading="lazy">\n    </div>\n    <div>\n      <p class="tag">optional tag</p>\n      <h3>Optional H3 Heading</h3>\n      <p>Text content for the right column.</p>\n    </div>\n  </div>\n</section>\n</div>`
+    },
+    {
+      name: 'Two-Col (Image / Text Dark)',
+      cat: 'Layout',
+      type: 'text',
+      color: '#1c1c1e',
+      desc: 'Image left, text right — dark background.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#1c1c1e;border-radius:6px;padding:6px"><div style="background:rgba(255,255,255,.08);border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="rgba(255,255,255,.08)"/><circle cx="10" cy="8" r="3" fill="rgba(255,255,255,.3)"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="rgba(255,255,255,.3)"/></svg></div><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="height:5px;background:rgba(255,255,255,.2);border-radius:3px"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col img-text dark">\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" width="" height="" loading="lazy">\n    </div>\n    <div>\n      <p class="tag">optional tag</p>\n      <h3>Optional H3 Heading</h3>\n      <p>Text content for the right column.</p>\n    </div>\n  </div>\n</section>\n</div>`
+    },
+    {
+      name: 'Two-Col (Image / Text Corner Accent)',
+      cat: 'Layout',
+      type: 'text',
+      color: '#8B5CF6',
+      desc: 'Image left, text right — with a corner accent decoration.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;position:relative"><div style="background:#ede9fe;border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="#ddd6fe"/><circle cx="10" cy="8" r="3" fill="#c4b5fd"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="#c4b5fd"/></svg><div style="position:absolute;top:0;left:0;width:10px;height:10px;background:#8B5CF6;border-radius:0 0 4px 0"></div></div><div style="background:#f3f4f6;border-radius:4px;padding:6px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:#c4b5fd;border-radius:3px"></div><div style="height:5px;background:#e9d5ff;border-radius:3px;width:80%"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col img-text corner-accent">\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" width="" height="" loading="lazy">\n    </div>\n    <div>\n      <p class="tag">optional tag</p>\n      <h3>Optional H3 Heading</h3>\n      <p>Text content for the right column.</p>\n    </div>\n  </div>\n</section>\n</div>`
+    },
+    {
+      name: 'Two-Col (Image / Text Corner Accent Dark)',
+      cat: 'Layout',
+      type: 'text',
+      color: '#1c1c1e',
+      desc: 'Image left, text right — corner accent, dark background.',
+      preview: '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;height:52px;background:#1c1c1e;border-radius:6px;padding:6px"><div style="background:rgba(255,255,255,.08);border-radius:3px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative"><svg width="36" height="28" viewBox="0 0 36 28"><rect width="36" height="28" fill="rgba(255,255,255,.08)"/><circle cx="10" cy="8" r="3" fill="rgba(255,255,255,.3)"/><path d="M0 20 L10 12 L16 18 L21 14 L36 23 L36 28 L0 28 Z" fill="rgba(255,255,255,.3)"/></svg><div style="position:absolute;top:0;left:0;width:8px;height:8px;background:rgba(255,203,5,.8);border-radius:0 0 3px 0"></div></div><div style="border-radius:3px;padding:4px;display:flex;flex-direction:column;gap:4px"><div style="height:7px;background:rgba(255,203,5,.7);border-radius:3px"></div><div style="height:5px;background:rgba(255,255,255,.2);border-radius:3px"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="two-col img-text corner-accent dark">\n    <div>\n      <img src="PASTE_IMAGE_URL" alt="Put alternative text here" width="" height="" loading="lazy">\n    </div>\n    <div>\n      <p class="tag">optional tag</p>\n      <h3>Optional H3 Heading</h3>\n      <p>Text content for the right column.</p>\n    </div>\n  </div>\n</section>\n</div>`
+    },
+    {
       name: 'Instructor Panel (Blue)',
       cat: 'Layout',
       type: 'standalone',
@@ -353,6 +389,26 @@
       ],
       build(s) { return buildTable('alternate-columns', s); },
       html: `<div class="new-canvas">\n<section class="text-block">\n  <div class="table-container">\n    <table class="alternate-columns">\n      <thead>\n        <tr>\n          <th>Header</th>\n          <th>Header</th>\n          <th>Header</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n        <tr>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n          <td>Sample text here</td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n</section>\n</div>`
+    },
+
+    // ── Footer ─────────────────────────────────────────────────────────────
+    {
+      name: 'MO Logo Footer',
+      cat: 'Footer',
+      type: 'standalone',
+      color: '#00274C',
+      desc: 'Michigan Online logo footer — place at the bottom of the page.',
+      preview: '<div style="background:#00274c;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;padding:8px 14px"><div style="height:14px;width:80px;background:white;border-radius:2px;opacity:.9"></div></div>',
+      html: `<div class="new-canvas">\n<section class="mo-logo-footer">\n  <img role="presentation" src="https://shared-files.online.umich.edu/michigan-online/course-images/current/michiganOnline.png" alt="" width="318" height="56" />\n</section>\n</div>`
+    },
+    {
+      name: 'Button Footer + MO Logo',
+      cat: 'Footer',
+      type: 'standalone',
+      color: '#00274C',
+      desc: 'CTA button above the Michigan Online logo footer.',
+      preview: '<div style="display:flex;flex-direction:column;gap:4px;height:52px"><div style="background:#FFCB05;border-radius:5px;height:18px;display:flex;align-items:center;justify-content:center"><div style="width:50px;height:6px;background:#1c1c1e;border-radius:2px;opacity:.6"></div></div><div style="background:#00274c;border-radius:5px;flex:1;display:flex;align-items:center;justify-content:center"><div style="height:10px;width:60px;background:white;border-radius:2px;opacity:.7"></div></div></div>',
+      html: `<div class="new-canvas">\n<section class="btn-footer">\n  <a href="URL here" class="btn">Start Here</a>\n</section>\n<section class="mo-logo-footer">\n  <img role="presentation" src="https://shared-files.online.umich.edu/michigan-online/course-images/current/michiganOnline.png" alt="" width="318" height="56" />\n</section>\n</div>`
     },
 
   ];
