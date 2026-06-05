@@ -1,0 +1,15 @@
+name: Purge jsDelivr cache
+
+on:
+  push:
+    branches: [develop]
+    paths: [sidebar.js]
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge sidebar.js from jsDelivr
+        run: |
+          curl -s "https://purge.jsdelivr.net/gh/i-taylor/LXD-toolbox@develop/sidebar.js" \
+            | grep -o '"status":"[^"]*"' || true
