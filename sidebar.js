@@ -1467,7 +1467,8 @@
               return `<div class="lxd-img-thumb"
                 data-img-url="${imgEscAttr(img.url)}"
                 data-img-name="${imgEscAttr(name)}"
-                data-img-thumb="${imgEscAttr(thumb)}">
+                data-img-thumb="${imgEscAttr(thumb)}"
+                data-img-id="${img.id || ''}">
                   <img src="${imgEscAttr(thumb)}" alt="" loading="lazy" onerror="${onerr}">
                   <div class="lxd-img-thumb-name" title="${imgEscAttr(name)}">${imgEsc(name)}</div>
               </div>`;
@@ -1484,8 +1485,8 @@
     });
   }
 
-  function showImgAltScreen(imgUrl, imgName, imgThumb) {
-    imgState.selectedImg = { url: imgUrl, name: imgName, thumbnailUrl: imgThumb };
+  function showImgAltScreen(imgUrl, imgName, imgThumb, fileId) {
+    imgState.selectedImg = { url: imgUrl, name: imgName, thumbnailUrl: imgThumb, fileId: fileId || '' };
 
     // Determine mode: swap if cursor is on an <img> in the editor
     const ed = getEditor();
@@ -1537,7 +1538,23 @@
           const snapW = node.getAttribute('width')  || (node.offsetWidth  ? String(node.offsetWidth)  : null);
           const snapH = node.getAttribute('height') || (node.offsetHeight ? String(node.offsetHeight) : null);
           const snapStyle = node.getAttribute('style') || null;
-          node.setAttribute('src', url);
+
+          // Update Canvas RCE metadata — without this Canvas re-resolves the old
+          // file from data-api-endpoint on save, overwriting the new src
+          const { fileId } = imgState.selectedImg;
+          const existingEndpoint = node.getAttribute('data-api-endpoint') || '';
+          const courseId = existingEndpoint.match(/\/courses\/(\d+)\//)?.[1]
+                        || window.location.pathname.match(/\/courses\/(\d+)\//)?.[1];
+          if (fileId && courseId) {
+            const origin = window.location.origin;
+            node.setAttribute('src', `${origin}/courses/${courseId}/files/${fileId}/preview`);
+            node.setAttribute('id', fileId);
+            node.setAttribute('data-api-endpoint', `${origin}/api/v1/courses/${courseId}/files/${fileId}`);
+            node.setAttribute('data-api-returntype', 'File');
+          } else {
+            node.setAttribute('src', url);
+          }
+
           node.setAttribute('alt', altText);
           if (snapW) node.setAttribute('width',  snapW);
           if (snapH) node.setAttribute('height', snapH);
@@ -2561,10 +2578,11 @@
       // Image thumbnail → show alt text screen
       const thumb = e.target.closest('.lxd-img-thumb');
       if (thumb) {
-        const url   = thumb.dataset.imgUrl;
-        const name  = thumb.dataset.imgName || 'Image';
-        const turl  = thumb.dataset.imgThumb || url;
-        showImgAltScreen(url, name, turl);
+        const url    = thumb.dataset.imgUrl;
+        const name   = thumb.dataset.imgName || 'Image';
+        const turl   = thumb.dataset.imgThumb || url;
+        const fileId = thumb.dataset.imgId || '';
+        showImgAltScreen(url, name, turl, fileId);
       }
     });
 
