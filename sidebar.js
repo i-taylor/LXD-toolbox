@@ -1467,7 +1467,8 @@
               return `<div class="lxd-img-thumb"
                 data-img-url="${imgEscAttr(img.url)}"
                 data-img-name="${imgEscAttr(name)}"
-                data-img-thumb="${imgEscAttr(thumb)}">
+                data-img-thumb="${imgEscAttr(thumb)}"
+                data-img-id="${img.id || ''}">
                   <img src="${imgEscAttr(thumb)}" alt="" loading="lazy" onerror="${onerr}">
                   <div class="lxd-img-thumb-name" title="${imgEscAttr(name)}">${imgEsc(name)}</div>
               </div>`;
@@ -1484,8 +1485,8 @@
     });
   }
 
-  function showImgAltScreen(imgUrl, imgName, imgThumb) {
-    imgState.selectedImg = { url: imgUrl, name: imgName, thumbnailUrl: imgThumb };
+  function showImgAltScreen(imgUrl, imgName, imgThumb, fileId) {
+    imgState.selectedImg = { url: imgUrl, name: imgName, thumbnailUrl: imgThumb, fileId: fileId || '' };
 
     // Determine mode: swap if cursor is on an <img> in the editor
     const ed = getEditor();
@@ -1533,15 +1534,41 @@
       if (isSwap) {
         const node = ed.selection.getNode();
         if (node && node.nodeName === 'IMG') {
-          // Snapshot rendered size before src changes so layout doesn't reflow
-          const snapW = node.getAttribute('width')  || (node.offsetWidth  ? String(node.offsetWidth)  : null);
-          const snapH = node.getAttribute('height') || (node.offsetHeight ? String(node.offsetHeight) : null);
-          const snapStyle = node.getAttribute('style') || null;
-          node.setAttribute('src', url);
-          node.setAttribute('alt', altText);
-          if (snapW) node.setAttribute('width',  snapW);
-          if (snapH) node.setAttribute('height', snapH);
-          if (snapStyle) node.setAttribute('style', snapStyle);
+          // Snapshot size and carry-over attributes before replacing the node
+          const snapW     = node.getAttribute('width')  || (node.offsetWidth  ? String(node.offsetWidth)  : null);
+          const snapH     = node.getAttribute('height') || (node.offsetHeight ? String(node.offsetHeight) : null);
+          const snapStyle = node.getAttribute('style')  || null;
+          const snapRole  = node.getAttribute('role')   || null;
+
+          // Build new attribute map — replacing the node entirely avoids
+          // TinyMCE resetting data-mce-src on a live node after mutation
+          const { fileId } = imgState.selectedImg;
+          const existingEndpoint = node.getAttribute('data-api-endpoint') || '';
+          const courseId = existingEndpoint.match(/\/courses\/(\d+)\//)?.[1]
+                        || window.location.pathname.match(/\/courses\/(\d+)\//)?.[1];
+
+          const attrs = { alt: altText };
+          if (snapW)     attrs.width  = snapW;
+          if (snapH)     attrs.height = snapH;
+          if (snapStyle) attrs.style  = snapStyle;
+          if (snapRole)  attrs.role   = snapRole;
+
+          if (fileId && courseId) {
+            const origin     = window.location.origin;
+            const previewUrl = `${origin}/courses/${courseId}/files/${fileId}/preview`;
+            attrs.src                  = previewUrl;
+            attrs['data-mce-src']      = previewUrl;
+            attrs.id                   = fileId;
+            attrs['data-api-endpoint'] = `${origin}/api/v1/courses/${courseId}/files/${fileId}`;
+            attrs['data-api-returntype'] = 'File';
+          } else {
+            attrs.src             = url;
+            attrs['data-mce-src'] = url;
+          }
+
+          const newNode = ed.dom.create('img', attrs);
+          ed.dom.replace(newNode, node);
+          ed.selection.select(newNode);
           ed.nodeChanged();
         } else {
           // Selection moved — fall back to insert
@@ -2561,10 +2588,11 @@
       // Image thumbnail → show alt text screen
       const thumb = e.target.closest('.lxd-img-thumb');
       if (thumb) {
-        const url   = thumb.dataset.imgUrl;
-        const name  = thumb.dataset.imgName || 'Image';
-        const turl  = thumb.dataset.imgThumb || url;
-        showImgAltScreen(url, name, turl);
+        const url    = thumb.dataset.imgUrl;
+        const name   = thumb.dataset.imgName || 'Image';
+        const turl   = thumb.dataset.imgThumb || url;
+        const fileId = thumb.dataset.imgId || '';
+        showImgAltScreen(url, name, turl, fileId);
       }
     });
 
