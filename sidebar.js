@@ -1534,33 +1534,41 @@
       if (isSwap) {
         const node = ed.selection.getNode();
         if (node && node.nodeName === 'IMG') {
-          // Snapshot rendered size before src changes so layout doesn't reflow
-          const snapW = node.getAttribute('width')  || (node.offsetWidth  ? String(node.offsetWidth)  : null);
-          const snapH = node.getAttribute('height') || (node.offsetHeight ? String(node.offsetHeight) : null);
-          const snapStyle = node.getAttribute('style') || null;
+          // Snapshot size and carry-over attributes before replacing the node
+          const snapW     = node.getAttribute('width')  || (node.offsetWidth  ? String(node.offsetWidth)  : null);
+          const snapH     = node.getAttribute('height') || (node.offsetHeight ? String(node.offsetHeight) : null);
+          const snapStyle = node.getAttribute('style')  || null;
+          const snapRole  = node.getAttribute('role')   || null;
 
-          // Update Canvas RCE metadata — without this Canvas re-resolves the old
-          // file from data-api-endpoint on save, overwriting the new src
+          // Build new attribute map — replacing the node entirely avoids
+          // TinyMCE resetting data-mce-src on a live node after mutation
           const { fileId } = imgState.selectedImg;
           const existingEndpoint = node.getAttribute('data-api-endpoint') || '';
           const courseId = existingEndpoint.match(/\/courses\/(\d+)\//)?.[1]
                         || window.location.pathname.match(/\/courses\/(\d+)\//)?.[1];
+
+          const attrs = { alt: altText };
+          if (snapW)     attrs.width  = snapW;
+          if (snapH)     attrs.height = snapH;
+          if (snapStyle) attrs.style  = snapStyle;
+          if (snapRole)  attrs.role   = snapRole;
+
           if (fileId && courseId) {
-            const origin = window.location.origin;
+            const origin     = window.location.origin;
             const previewUrl = `${origin}/courses/${courseId}/files/${fileId}/preview`;
-            // Use TinyMCE's DOM API for src — it keeps data-mce-src in sync
-            ed.dom.setAttrib(node, 'src', previewUrl);
-            node.setAttribute('id', fileId);
-            node.setAttribute('data-api-endpoint', `${origin}/api/v1/courses/${courseId}/files/${fileId}`);
-            node.setAttribute('data-api-returntype', 'File');
+            attrs.src                  = previewUrl;
+            attrs['data-mce-src']      = previewUrl;
+            attrs.id                   = fileId;
+            attrs['data-api-endpoint'] = `${origin}/api/v1/courses/${courseId}/files/${fileId}`;
+            attrs['data-api-returntype'] = 'File';
           } else {
-            ed.dom.setAttrib(node, 'src', url);
+            attrs.src             = url;
+            attrs['data-mce-src'] = url;
           }
 
-          node.setAttribute('alt', altText);
-          if (snapW) node.setAttribute('width',  snapW);
-          if (snapH) node.setAttribute('height', snapH);
-          if (snapStyle) node.setAttribute('style', snapStyle);
+          const newNode = ed.dom.create('img', attrs);
+          ed.dom.replace(newNode, node);
+          ed.selection.select(newNode);
           ed.nodeChanged();
         } else {
           // Selection moved — fall back to insert
