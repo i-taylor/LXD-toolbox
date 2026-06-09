@@ -1548,13 +1548,13 @@
           if (fileId && courseId) {
             const origin = window.location.origin;
             const previewUrl = `${origin}/courses/${courseId}/files/${fileId}/preview`;
-            node.setAttribute('src', previewUrl);
-            node.setAttribute('data-mce-src', previewUrl);
+            // Use TinyMCE's DOM API for src — it keeps data-mce-src in sync
+            ed.dom.setAttrib(node, 'src', previewUrl);
             node.setAttribute('id', fileId);
             node.setAttribute('data-api-endpoint', `${origin}/api/v1/courses/${courseId}/files/${fileId}`);
             node.setAttribute('data-api-returntype', 'File');
           } else {
-            node.setAttribute('src', url);
+            ed.dom.setAttrib(node, 'src', url);
           }
 
           node.setAttribute('alt', altText);
