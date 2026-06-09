@@ -1547,7 +1547,9 @@
                         || window.location.pathname.match(/\/courses\/(\d+)\//)?.[1];
           if (fileId && courseId) {
             const origin = window.location.origin;
-            node.setAttribute('src', `${origin}/courses/${courseId}/files/${fileId}/preview`);
+            const previewUrl = `${origin}/courses/${courseId}/files/${fileId}/preview`;
+            node.setAttribute('src', previewUrl);
+            node.setAttribute('data-mce-src', previewUrl);
             node.setAttribute('id', fileId);
             node.setAttribute('data-api-endpoint', `${origin}/api/v1/courses/${courseId}/files/${fileId}`);
             node.setAttribute('data-api-returntype', 'File');
