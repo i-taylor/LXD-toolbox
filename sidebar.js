@@ -138,7 +138,7 @@
       color: '#00274C',
       desc: 'Standard lecture video section.',
       preview: '<div style="background:#f3f4f6;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:#00274c;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid white;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:#9ca3af;border-radius:3px"></div><div style="width:38px;height:5px;background:#d1d5db;border-radius:3px"></div></div></div>',
-      html: `<div class="new-canvas">\n<section class="text-block video-block">\n  <div class="video-tag-wrapper">\n    <p class="tag">Lecture</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block video-block">\n  <div class="video-tag-wrapper">\n    <p class="tag">Video</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
     },
     {
       name: 'Video Block (Guest Lecture)',
@@ -147,7 +147,7 @@
       color: '#1a3a5c',
       desc: 'Highlighted video block for guest lecture content.',
       preview: '<div style="background:#00274c;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:rgba(255,203,5,.9);border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid #00274c;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:rgba(255,255,255,.4);border-radius:3px"></div><div style="width:38px;height:5px;background:rgba(255,255,255,.25);border-radius:3px"></div></div></div>',
-      html: `<div class="new-canvas">\n<section class="text-block video-block highlight">\n  <div class="video-tag-wrapper">\n    <p class="tag">Guest lecture</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block video-block highlight">\n  <div class="video-tag-wrapper">\n    <p class="tag">Guest Video</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
     },
     {
       name: 'Video Block (Blue)',
