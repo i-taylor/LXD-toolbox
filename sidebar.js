@@ -138,7 +138,7 @@
       color: '#00274C',
       desc: 'Standard lecture video section.',
       preview: '<div style="background:#f3f4f6;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:#00274c;border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid white;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:#9ca3af;border-radius:3px"></div><div style="width:38px;height:5px;background:#d1d5db;border-radius:3px"></div></div></div>',
-      html: `<div class="new-canvas">\n<section class="text-block video-block">\n  <div class="video-tag-wrapper">\n    <p class="tag">Lecture</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block video-block">\n  <div class="video-tag-wrapper">\n    <p class="tag">Video</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
     },
     {
       name: 'Video Block (Guest Lecture)',
@@ -147,7 +147,7 @@
       color: '#1a3a5c',
       desc: 'Highlighted video block for guest lecture content.',
       preview: '<div style="background:#00274c;border-radius:6px;height:52px;display:flex;align-items:center;justify-content:center;gap:8px"><div style="width:28px;height:28px;background:rgba(255,203,5,.9);border-radius:4px;display:flex;align-items:center;justify-content:center"><div style="border-left:9px solid #00274c;border-top:5px solid transparent;border-bottom:5px solid transparent;margin-left:2px"></div></div><div style="display:flex;flex-direction:column;gap:4px"><div style="width:55px;height:6px;background:rgba(255,255,255,.4);border-radius:3px"></div><div style="width:38px;height:5px;background:rgba(255,255,255,.25);border-radius:3px"></div></div></div>',
-      html: `<div class="new-canvas">\n<section class="text-block video-block highlight">\n  <div class="video-tag-wrapper">\n    <p class="tag">Guest lecture</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
+      html: `<div class="new-canvas">\n<section class="text-block video-block highlight">\n  <div class="video-tag-wrapper">\n    <p class="tag">Guest Video</p>\n  </div>\n  <h2>Video Title</h2>\n  <p>Brief description of the video content.</p>\n</section>\n</div>`
     },
     {
       name: 'Video Block (Blue)',
@@ -1534,31 +1534,41 @@
       if (isSwap) {
         const node = ed.selection.getNode();
         if (node && node.nodeName === 'IMG') {
-          // Snapshot rendered size before src changes so layout doesn't reflow
-          const snapW = node.getAttribute('width')  || (node.offsetWidth  ? String(node.offsetWidth)  : null);
-          const snapH = node.getAttribute('height') || (node.offsetHeight ? String(node.offsetHeight) : null);
-          const snapStyle = node.getAttribute('style') || null;
+          // Snapshot size and carry-over attributes before replacing the node
+          const snapW     = node.getAttribute('width')  || (node.offsetWidth  ? String(node.offsetWidth)  : null);
+          const snapH     = node.getAttribute('height') || (node.offsetHeight ? String(node.offsetHeight) : null);
+          const snapStyle = node.getAttribute('style')  || null;
+          const snapRole  = node.getAttribute('role')   || null;
 
-          // Update Canvas RCE metadata — without this Canvas re-resolves the old
-          // file from data-api-endpoint on save, overwriting the new src
+          // Build new attribute map — replacing the node entirely avoids
+          // TinyMCE resetting data-mce-src on a live node after mutation
           const { fileId } = imgState.selectedImg;
           const existingEndpoint = node.getAttribute('data-api-endpoint') || '';
           const courseId = existingEndpoint.match(/\/courses\/(\d+)\//)?.[1]
                         || window.location.pathname.match(/\/courses\/(\d+)\//)?.[1];
+
+          const attrs = { alt: altText };
+          if (snapW)     attrs.width  = snapW;
+          if (snapH)     attrs.height = snapH;
+          if (snapStyle) attrs.style  = snapStyle;
+          if (snapRole)  attrs.role   = snapRole;
+
           if (fileId && courseId) {
-            const origin = window.location.origin;
-            node.setAttribute('src', `${origin}/courses/${courseId}/files/${fileId}/preview`);
-            node.setAttribute('id', fileId);
-            node.setAttribute('data-api-endpoint', `${origin}/api/v1/courses/${courseId}/files/${fileId}`);
-            node.setAttribute('data-api-returntype', 'File');
+            const origin     = window.location.origin;
+            const previewUrl = `${origin}/courses/${courseId}/files/${fileId}/preview`;
+            attrs.src                  = previewUrl;
+            attrs['data-mce-src']      = previewUrl;
+            attrs.id                   = fileId;
+            attrs['data-api-endpoint'] = `${origin}/api/v1/courses/${courseId}/files/${fileId}`;
+            attrs['data-api-returntype'] = 'File';
           } else {
-            node.setAttribute('src', url);
+            attrs.src             = url;
+            attrs['data-mce-src'] = url;
           }
 
-          node.setAttribute('alt', altText);
-          if (snapW) node.setAttribute('width',  snapW);
-          if (snapH) node.setAttribute('height', snapH);
-          if (snapStyle) node.setAttribute('style', snapStyle);
+          const newNode = ed.dom.create('img', attrs);
+          ed.dom.replace(newNode, node);
+          ed.selection.select(newNode);
           ed.nodeChanged();
         } else {
           // Selection moved — fall back to insert
