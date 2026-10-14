@@ -4,6 +4,8 @@
   // Detect dev vs production: document.currentScript.src contains "@develop" for the dev CDN URL
   const _scriptSrc = (document.currentScript && document.currentScript.src) || '';
   const _isDev = _scriptSrc.includes('@develop') || /^localhost|^127\./.test(window.location.hostname);
+  // Feature flag: Course Images tab. Shipped to production — set to _isDev to gate it to dev again.
+  const _showImages = true;
 
   const ID = '__lxd-sidebar';
   const PUSH_W = '360px';
@@ -1679,7 +1681,7 @@
       <button class="lxd-tab active" data-tab="components">Components</button>
       <button class="lxd-tab"        data-tab="arrange">Arrange</button>
       <button class="lxd-tab"        data-tab="pages">Pages</button>
-      ${_isDev ? '<button class="lxd-tab" data-tab="images">Images</button>' : ''}
+      ${_showImages ? '<button class="lxd-tab" data-tab="images">Images</button>' : ''}
       <button class="lxd-tab"        data-tab="styleguide">Style</button>
     </div>
 
@@ -1716,7 +1718,7 @@
       <div id="${ID}-pages-list"></div>
     </div>
 
-    ${_isDev ? `
+    ${_showImages ? `
     <div class="lxd-panel" id="${ID}-panel-images">
       <!-- Browse view: folder nav + image grid -->
       <div class="lxd-img-view" id="${ID}-img-browse">
@@ -2574,8 +2576,8 @@
       .then(() => showToast(swatch.dataset.hex + ' copied'));
   });
 
-  // ── Course Images tab interactions (dev only) ─────────────────────────────
-  if (_isDev) {
+  // ── Course Images tab interactions ────────────────────────────────────────
+  if (_showImages) {
     // Folder button → navigate into folder
     document.getElementById(ID + '-img-content').addEventListener('click', e => {
       const folderBtn = e.target.closest('.lxd-img-folder-btn');
