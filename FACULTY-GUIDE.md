@@ -24,6 +24,10 @@ The sidebar is installed as a bookmark that opens a tool instead of a website. T
    - Clicking the button on the Toolbox page does nothing. It only works once it's dragged to the bar.
 5. **Done.** You never need to reinstall it. Each click loads the newest version.
 
+![Dragging the LXD Sidebar production button from the Toolbox page onto the Chrome bookmarks bar](docs/faculty-guide/01-drag-bookmarklet.png)
+
+*Step 4: drag the Production button up to the bookmarks bar. The new LXD Sidebar bookmark appears where you drop it.*
+
 ## Part 2: Open the sidebar in Canvas
 
 1. **Go to your course in Canvas** and open the **Page** you want to change.
@@ -33,12 +37,20 @@ The sidebar is installed as a bookmark that opens a tool instead of a website. T
 5. **Click Save** in Canvas as usual. The sidebar removes its own editing guides before the page saves, so students never see them.
 6. **Close the sidebar** with the **×** in its header, or click the bookmark again.
 
+![The LXD Sidebar open on the right of a Canvas page in edit mode, showing the Components tab](docs/faculty-guide/02-sidebar-open.jpg)
+
+*Step 3: the sidebar opens on the right, with the page editor still on the left.*
+
 To make the panel wider or narrower, drag its left edge.
 
 At the top of the panel are five tabs (**Components, Arrange, Pages, Images, Style**) and two buttons:
 
 - **👁 Blocks** outlines each section of the page in the editor, so you can see where one ends and the next begins. The outlines are never saved.
 - **¶ Paragraph** adds an empty paragraph where your cursor is. This helps when you can't click below a box to type.
+
+![Blocks turned on: a dashed outline labelled TEXT BLOCK around the first section in the editor](docs/faculty-guide/03-blocks-on.jpg)
+
+*With Blocks on, each section gets a dashed outline and a label.*
 
 ## Part 3: Common tasks
 
@@ -48,17 +60,29 @@ Components are ready-made, on-brand sections: text blocks, callout boxes, video 
 
 1. **Click where the new section should go** in the editor, for example at the end of the section before it. If you don't click anywhere, the new section is added at the bottom of the page.
 2. Open the **Components** tab and **pick a category** (Text, Callouts, Video, Layout, Media, Tables, Footer), or type in the **Search** box.
-3. **Click 👁 to preview** a component. Some components, such as Accordion and Table, have settings here (for example, number of items or rows).
+3. **Click a component's picture to preview** it. Some components, such as Accordion and Table, have settings here (for example, number of items or rows).
 4. **Click Insert.** The section is added after the one your cursor is in.
    - A text component inserted inside a text block is added to that block instead of starting a new section.
 5. **Replace the placeholder text and images** with your own.
 
+![The Callouts category, listing Callout Box, Callout Box (Action) and Callout Box (Highlight), each with Insert and Copy buttons](docs/faculty-guide/04-components-callouts.jpg)
+
+*Step 2: a category lists its components, each with an Insert button.*
+
+![Preview of the Callout Box component with an Insert button at the bottom](docs/faculty-guide/05-component-preview.jpg)
+
+*Step 3: the preview shows the component before you insert it.*
+
 ### Move or delete a section (Arrange tab)
 
-1. Open the **Arrange** tab. Each section of the page is listed in order, labelled TEXT, VIDEO or BLOCK.
+1. Open the **Arrange** tab. Each section of the page is listed in order, with a label such as TEXT, VIDEO or CALLOUT.
 2. **Drag a row by its ⠿ handle** to a new position. The page updates right away.
 3. To remove a section, **click 🗑** on its row and confirm.
 4. Made a mistake? Press **Cmd+Z** (Mac) or **Ctrl+Z** (Windows) to undo.
+
+![The Arrange tab listing the page's sections in order, each with a drag handle, a type label and a delete icon](docs/faculty-guide/06-arrange.jpg)
+
+*Each row is one section. Items set in slightly are inside the section above them.*
 
 ### Replace or add an image (Images tab)
 
@@ -70,6 +94,10 @@ The Images tab shows the images already uploaded to the course's **Files**. Uplo
 4. **Write alt text:** a short description of what the image shows, for screen-reader users. If the image is purely decorative, tick **Decorative** instead.
 5. **Click Swap Image or Insert Image.** A swapped image keeps the original's size and position.
 
+![The Images tab after choosing umichlogo.png: a preview, an Insert Image badge, an alt text box, a Decorative checkbox and an Insert Image button](docs/faculty-guide/07-images-alt.jpg)
+
+*Steps 3 to 5: write the alt text, then click the button. Here nothing was selected on the page, so the badge says Insert Image.*
+
 ### Start a page from a template (Pages tab)
 
 The Pages tab holds full page layouts, such as the course home page and module overview.
@@ -79,10 +107,18 @@ The Pages tab holds full page layouts, such as the course home page and module o
    - If the page already has content, you'll be asked to confirm, because the template **replaces everything on the page**.
 3. **Replace all bracketed placeholder text**, such as \[Course Name\] and \[Title\], and update the links.
 
+![The Pages tab listing templates such as Course Home Page (Series) and Module Overview Page, each with Insert and Copy HTML buttons](docs/faculty-guide/08-pages.jpg)
+
+*The Pages tab lists each template with an Insert button.*
+
 ### Match the course colours (Style tab)
 
 1. Open the **Style** tab to see the Michigan Online colour palette.
 2. **Click any colour swatch** to copy its hex code, for example #00274C (UM Blue). Paste it wherever Canvas asks for a colour.
+
+![The Style tab showing colour swatches such as um-blue #00274C and um-maize #FFCB05](docs/faculty-guide/09-style.jpg)
+
+*Click a swatch to copy its hex code.*
 
 ## Keeping the design intact
 
