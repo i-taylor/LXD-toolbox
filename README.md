@@ -2,6 +2,8 @@
 
 A bookmarklet-powered design sidebar for building Canvas LMS pages with the Michigan Online component library. Drag in pre-built components, reorder sections, copy brand snippets, and reference the style guide — all without leaving the Canvas rich content editor.
 
+> **Faculty:** see the [Faculty Guide](FACULTY-GUIDE.md) for plain-language install and how-to steps.
+
 ---
 
 ## Table of Contents
